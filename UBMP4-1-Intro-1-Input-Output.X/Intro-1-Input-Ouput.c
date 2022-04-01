@@ -53,7 +53,11 @@ int main(void)
         }
         
         // Add code for your Program Analysis and Programming Activities here:
-
+        if (SW3 == 3) {
+            for(int i = 0; i < 20; i++) {
+                playC4();
+            }
+        }
         // Activate bootloader if SW1 is pressed.
         if(SW1 == 0)
         {
