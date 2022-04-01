@@ -62,6 +62,21 @@ int main(void)
     }
 }
 
+void playC4() {
+    BEEPER = !BEEPER;
+    __delay_us(3822);
+}
+
+void playCSharp4() {
+    BEEPER = !BEEPER;
+    __delay_us(3608);
+}
+
+void playD4() {
+    BEEPER = !BEEPER;
+    __delay_us(3405);
+}
+
 /* Learn More - Program Analysis Activities
  * 
  * 1. How many times do the LEDs flash if SW2 is quickly pressed and released?
