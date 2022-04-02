@@ -22,6 +22,21 @@
 
 // The main function is required, and the program begins executing from here.
 
+void playC4(void) {
+    BEEPER = !BEEPER;
+    __delay_us(3822);
+}
+
+void playCSharp4(void) {
+    BEEPER = !BEEPER;
+    __delay_us(3608);
+}
+
+void playD4(void) {
+    BEEPER = !BEEPER;
+    __delay_us(3405);
+}
+
 int main(void)
 {
     // Configure oscillator and I/O ports. These functions run once at start-up.
@@ -54,9 +69,18 @@ int main(void)
         
         // Add code for your Program Analysis and Programming Activities here:
         if (SW3 == 0) {
-            for(int i = 0; i < 20; i++) {
+            //349 is roughly 1 second
+            //123 is roughly 1 quarter note 170bpm
+            for(int i = 0; i < 123; i++) {
                 playC4();
             }
+            
+            for(int i = 0; i < 123; i++) {
+                playCSharp4();
+            }
+            for(int i = 0; i < 123; i++) {
+                playD4();
+            } 
         }
         // Activate bootloader if SW1 is pressed.
         if(SW1 == 0)
@@ -64,21 +88,6 @@ int main(void)
             RESET();
         }
     }
-}
-
-void playC4() {
-    BEEPER = !BEEPER;
-    __delay_us(3822);
-}
-
-void playCSharp4() {
-    BEEPER = !BEEPER;
-    __delay_us(3608);
-}
-
-void playD4() {
-    BEEPER = !BEEPER;
-    __delay_us(3405);
 }
 
 /* Learn More - Program Analysis Activities
