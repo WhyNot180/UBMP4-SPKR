@@ -53,7 +53,7 @@ int main(void)
         }
         
         // Add code for your Program Analysis and Programming Activities here:
-        if (SW3 == 3) {
+        if (SW3 == 0) {
             for(int i = 0; i < 20; i++) {
                 playC4();
             }
