@@ -12,6 +12,7 @@
 ==============================================================================*/
 
 #include    "xc.h"              // Microchip XC8 compiler include file
+#include    <math.h>
 #include    "stdint.h"          // Include integer definitions
 #include    "stdbool.h"         // Include Boolean (true/false) definitions
 
@@ -22,20 +23,8 @@
 
 // The main function is required, and the program begins executing from here.
 
-void playC4(void) {
-    BEEPER = !BEEPER;
-    __delay_us(3822);
-}
-
-void playCSharp4(void) {
-    BEEPER = !BEEPER;
-    __delay_us(3608);
-}
-
-void playD4(void) {
-    BEEPER = !BEEPER;
-    __delay_us(3405);
-}
+double frequency;
+double count = 0;
 
 int main(void)
 {
@@ -47,6 +36,7 @@ int main(void)
     while(1)
 	{
         // If SW2 is pressed, make a flashy light pattern
+        
         if(SW2 == 0)
         {
             LED3 = 1;
@@ -65,23 +55,15 @@ int main(void)
             __delay_ms(100);
             LED6 = 0;
             __delay_ms(100);
-        }
-        
+        } 
+        //frequency = 440 * 2/12;
         // Add code for your Program Analysis and Programming Activities here:
-        if (SW3 == 0) {
-            //349 is roughly 1 second
-            //123 is roughly 1 quarter note 170bpm
-            for(int i = 0; i < 123; i++) {
-                playC4();
-            }
-            
-            for(int i = 0; i < 123; i++) {
-                playCSharp4();
-            }
-            for(int i = 0; i < 123; i++) {
-                playD4();
-            } 
+        if (SW3 == 0 && frequency == 0.083) {
+            LED4 = 1;
+        } else if (SW3 == 1) {
+            LED4 = 0;
         }
+
         // Activate bootloader if SW1 is pressed.
         if(SW1 == 0)
         {

@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=PIC16F1459-config.c UBMP410.c Main.c
+SOURCEFILES_QUOTED_IF_SPACED=PIC16F1459-config.c UBMP410.c Main.c Sound.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/PIC16F1459-config.p1 ${OBJECTDIR}/UBMP410.p1 ${OBJECTDIR}/Main.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/PIC16F1459-config.p1.d ${OBJECTDIR}/UBMP410.p1.d ${OBJECTDIR}/Main.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/PIC16F1459-config.p1 ${OBJECTDIR}/UBMP410.p1 ${OBJECTDIR}/Main.p1 ${OBJECTDIR}/Sound.p1
+POSSIBLE_DEPFILES=${OBJECTDIR}/PIC16F1459-config.p1.d ${OBJECTDIR}/UBMP410.p1.d ${OBJECTDIR}/Main.p1.d ${OBJECTDIR}/Sound.p1.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/PIC16F1459-config.p1 ${OBJECTDIR}/UBMP410.p1 ${OBJECTDIR}/Main.p1
+OBJECTFILES=${OBJECTDIR}/PIC16F1459-config.p1 ${OBJECTDIR}/UBMP410.p1 ${OBJECTDIR}/Main.p1 ${OBJECTDIR}/Sound.p1
 
 # Source Files
-SOURCEFILES=PIC16F1459-config.c UBMP410.c Main.c
+SOURCEFILES=PIC16F1459-config.c UBMP410.c Main.c Sound.c
 
 
 
@@ -118,6 +118,14 @@ ${OBJECTDIR}/Main.p1: Main.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/Main.d ${OBJECTDIR}/Main.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/Main.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
+${OBJECTDIR}/Sound.p1: Sound.c  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Sound.p1.d 
+	@${RM} ${OBJECTDIR}/Sound.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=none   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -mrom=default,-0-7FF -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file -mcodeoffset=800  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-osccal -mno-resetbits -mno-save-resetbits -mno-download -mno-stackcall -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto     -o ${OBJECTDIR}/Sound.p1 Sound.c 
+	@-${MV} ${OBJECTDIR}/Sound.d ${OBJECTDIR}/Sound.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/Sound.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
 else
 ${OBJECTDIR}/PIC16F1459-config.p1: PIC16F1459-config.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
@@ -142,6 +150,14 @@ ${OBJECTDIR}/Main.p1: Main.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -mrom=default,-0-7FF -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file -mcodeoffset=800  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-osccal -mno-resetbits -mno-save-resetbits -mno-download -mno-stackcall -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto     -o ${OBJECTDIR}/Main.p1 Main.c 
 	@-${MV} ${OBJECTDIR}/Main.d ${OBJECTDIR}/Main.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/Main.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/Sound.p1: Sound.c  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Sound.p1.d 
+	@${RM} ${OBJECTDIR}/Sound.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -mrom=default,-0-7FF -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file -mcodeoffset=800  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-osccal -mno-resetbits -mno-save-resetbits -mno-download -mno-stackcall -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto     -o ${OBJECTDIR}/Sound.p1 Sound.c 
+	@-${MV} ${OBJECTDIR}/Sound.d ${OBJECTDIR}/Sound.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/Sound.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 endif
 

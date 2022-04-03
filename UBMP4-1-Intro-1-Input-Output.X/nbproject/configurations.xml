@@ -16,6 +16,8 @@
       <itemPath>PIC16F1459-config.c</itemPath>
       <itemPath>UBMP410.c</itemPath>
       <itemPath>Main.c</itemPath>
+      <itemPath>Sound.c</itemPath>
+      <itemPath>FixedPoint.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
