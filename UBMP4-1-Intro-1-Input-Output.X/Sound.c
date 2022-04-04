@@ -6,11 +6,12 @@ const short cs2 = -19;
 const short d2 = -18;
 const short
 
-//Starts at C2 (-33) and goes to C6 (26) with A4 as the center (0) and half steps included
-//e.g. Cs2 is -32 and D2 is -31
-const signed char notes[][] = {
-                                {-33, -32, -31, -30, -29, -28, -27, -26, -25, -24, -23, -22},
-                                {-21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10},
+//Starts at C2 and goes to C6 changing rows every octave (half steps included so total = 12 per row)
+//this is in micro seconds
+//Order is C, Cs, D, Ds, E, F, Fs, G, Gs, A, As, B
+const unsigned short notes[][] = {
+                                {15288, 14430, 13620, 12856, 12134, 11453, 10810, 10204, 9631, 9090, 8580, 8099},
+                                {7644, 7214, 6810, 6427, 6067, 5726, 5405, 5101, 4815, 4545, 4290, 4049},
                                 {-9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2},
                                 {3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14},
                                 {15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26}
