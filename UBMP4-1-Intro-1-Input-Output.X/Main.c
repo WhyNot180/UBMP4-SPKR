@@ -17,6 +17,8 @@
 
 #include    "UBMP410.h"         // Include UBMP4.1 constant and function definitions
 
+#include    "Sound.h"
+
 // TODO Set linker ROM ranges to 'default,-0-7FF' under "Memory model" pull-down.
 // TODO Set linker code offset to '800' under "Additional options" pull-down.
 

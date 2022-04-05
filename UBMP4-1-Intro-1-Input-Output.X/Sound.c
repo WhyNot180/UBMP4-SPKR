@@ -1,5 +1,6 @@
 #include    "xc.h"
 #include    "UBMP410.h"
+#include    "Sound.h"
 
 //Starts at C2 and goes to B6 changing rows every octave (half steps included so total = 12 per row)
 //this is in micro seconds
