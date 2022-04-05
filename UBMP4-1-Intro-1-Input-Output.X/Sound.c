@@ -3,7 +3,7 @@
 #include    "Sound.h"
 
 //Starts at C2 and goes to B6 changing rows every octave (half steps included so total = 12 per row)
-//this is in micro seconds
+//this is the period (1/frequency) in micro seconds
 //Order is C, Cs, D, Ds, E, F, Fs, G, Gs, A, As, B
 const unsigned short notes[5][12] = {
                                 {15288, 14430, 13620, 12856, 12134, 11453, 10810, 10204, 9631, 9090, 8580, 8099},
@@ -12,6 +12,19 @@ const unsigned short notes[5][12] = {
                                 {1912, 1805, 1703, 1608, 1518, 1433, 1353, 1277, 1205, 1137, 1074, 1014},
                                 {957, 904, 853, 805, 760, 718, 678, 636, 604, 570, 539, 509}
                                 };
+
+const unsigned short C2 = 15288;
+const unsigned short Cs2 = 14430;
+const unsigned short D2 = 13620;
+const unsigned short Ds2 = 12856;
+const unsigned short E2 = 12134;
+const unsigned short F2 = 11453;
+const unsigned short Fs2 = 10810;
+const unsigned short G2 = 10204;
+const unsigned short Gs2 = 9631;
+const unsigned short A2 = 9090;
+const unsigned short As2 = 8580;
+const unsigned short B2 = 8099;
 
 void var_delay_us(unsigned short microseconds) {
     unsigned short delay = microseconds;
@@ -22,7 +35,9 @@ void var_delay_us(unsigned short microseconds) {
 }
 
 void play_note(unsigned short note, unsigned short duration) {
-    BEEPER = 1;
-    var_delay_us(note);
-    BEEPER = 0;
+    for (int i = 0; i < duration; i++) {
+        BEEPER = 1;
+        var_delay_us(note);
+        BEEPER = 0;
+    }
 }
