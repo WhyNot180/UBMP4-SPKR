@@ -12,7 +12,6 @@
 ==============================================================================*/
 
 #include    "xc.h"              // Microchip XC8 compiler include file
-#include    <math.h>
 #include    "stdint.h"          // Include integer definitions
 #include    "stdbool.h"         // Include Boolean (true/false) definitions
 
