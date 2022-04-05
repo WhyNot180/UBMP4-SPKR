@@ -22,9 +22,6 @@
 
 // The main function is required, and the program begins executing from here.
 
-double frequency;
-double count = 0;
-
 int main(void)
 {
     // Configure oscillator and I/O ports. These functions run once at start-up.
@@ -57,7 +54,7 @@ int main(void)
         } 
         //frequency = 440 * 2/12;
         // Add code for your Program Analysis and Programming Activities here:
-        if (SW3 == 0 && frequency == 0.083) {
+        if (SW3 == 0) {
             LED4 = 1;
         } else if (SW3 == 1) {
             LED4 = 0;
