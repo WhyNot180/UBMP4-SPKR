@@ -25,7 +25,7 @@
 #define SW1         PORTAbits.RA3   // S1/Reset pushbutton input
 #define BEEPER      LATAbits.LATA4  // Piezo beeper (LS1) output
 #define	LS1         LATAbits.LATA4  // Piezo beeper (LS1) output
-#define D1          LATAbits.LATA5  // LED D1/Run LED output (active-low)
+#define LD1          LATAbits.LATA5  // LED D1/Run LED output (active-low)
 #define LED1        LATAbits.LATA5  // LED D1/Run LED output (active-low)
 #define RUNLED      LATAbits.LATA5  // LED D1/Run LED output (active-low)
 
@@ -53,25 +53,25 @@
 
 #define H5IN        PORTCbits.RC4   // External I/O header H5 input
 #define H5OUT       LATCbits.LATC4  // External I/O header H5 output
-#define D3          LATCbits.LATC4  // LED D3 output
+#define LD3          LATCbits.LATC4  // LED D3 output
 #define LED3        LATCbits.LATC4  // LED D3 output
 
 #define H6IN        PORTCbits.RC5   // External I/O header H6 input
 #define H6OUT       LATCbits.LATC5  // External I/O header H6 output
-#define D4          LATCbits.LATC5  // LED D4 output
+#define LD4          LATCbits.LATC5  // LED D4 output
 #define LED4        LATCbits.LATC5  // LED D4 output
-#define D2          LATCbits.LATC5  // LED D2/IR LED output
+#define LD2          LATCbits.LATC5  // LED D2/IR LED output
 #define LED2        LATCbits.LATC5  // LED D2/IR LED output
 #define IRLED       LATCbits.LATC5  // LED2/IR LED output
 
 #define H7IN        PORTCbits.RC6   // External I/O header H7 input
 #define H7OUT       LATCbits.LATC6  // External I/O header H7 output
-#define D5          LATCbits.LATC6  // LED D5 output
+#define LD5          LATCbits.LATC6  // LED D5 output
 #define LED5        LATCbits.LATC6  // LED D5 output
 
 #define H8IN        PORTCbits.RC7   // External I/O header H8 input
 #define H8OUT       LATCbits.LATC7  // External I/O header H8 output
-#define D6          LATCbits.LATC7  // LED D6 output
+#define LD6          LATCbits.LATC7  // LED D6 output
 #define LED6        LATCbits.LATC7  // LED D6 output
 
 // ADC (A-D converter) input channel definitions for read_ADC() function
