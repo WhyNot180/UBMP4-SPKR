@@ -25,6 +25,53 @@ const unsigned short Gs2 = 9631;
 const unsigned short A2 = 9090;
 const unsigned short As2 = 8580;
 const unsigned short B2 = 8099;
+const unsigned short C3
+const unsigned short Cs3
+const unsigned short D3
+const unsigned short Ds3
+const unsigned short E3
+const unsigned short F3
+const unsigned short Fs3
+const unsigned short G3
+const unsigned short Gs3
+const unsigned short A3
+const unsigned short As3
+const unsigned short B3
+const unsigned short C4
+const unsigned short Cs4
+const unsigned short D4
+const unsigned short Ds4
+const unsigned short E4
+const unsigned short F4
+const unsigned short Fs4
+const unsigned short G4
+const unsigned short Gs4
+const unsigned short A4
+const unsigned short As4
+const unsigned short B4
+const unsigned short C5
+const unsigned short Cs5
+const unsigned short D5
+const unsigned short Ds5
+const unsigned short E5
+const unsigned short Fs5
+const unsigned short G5
+const unsigned short Gs5
+const unsigned short A5
+const unsigned short As5
+const unsigned short B5
+const unsigned short C6
+const unsigned short Cs6
+const unsigned short D6
+const unsigned short Ds6
+const unsigned short E6
+const unsigned short F6
+const unsigned short Fs6
+const unsigned short G6
+const unsigned short Gs6
+const unsigned short A6
+const unsigned short As6
+const unsigned short B6
 
 void var_delay_us(unsigned short microseconds) {
     unsigned short delay = microseconds;
