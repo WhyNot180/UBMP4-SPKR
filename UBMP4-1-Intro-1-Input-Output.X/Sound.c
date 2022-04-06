@@ -2,6 +2,14 @@
 #include    "UBMP410.h"
 #include    "Sound.h"
 
+
+unsigned int pow(unsigned int base, char power) {
+    for (char i = 0; i < power; i++) {
+        base *= base;
+    }
+    return base;
+}
+
 //Starts at C2 and goes to B6 changing rows every octave (half steps included so total = 12 per row)
 //this is the period (1/frequency) in micro seconds
 //Order is C, Cs, D, Ds, E, F, Fs, G, Gs, A, As, B
@@ -83,6 +91,7 @@ void var_delay_us(unsigned short microseconds) {
 }
 
 void play_note(unsigned short note, unsigned short duration) {
+    duration /= note;
     for (int i = 0; i < duration; i++) {
         BEEPER = 1;
         var_delay_us(note);
