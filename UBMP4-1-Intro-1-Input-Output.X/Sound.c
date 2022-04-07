@@ -70,7 +70,7 @@ const unsigned short A5 = 1137;
 const unsigned short As5 = 1074;
 const unsigned short B5 = 1014;
 const unsigned short C6 = 957;
-const unsigned short Cs6 = 904
+const unsigned short Cs6 = 904;
 const unsigned short D6 = 853;
 const unsigned short Ds6 = 805;
 const unsigned short E6 = 760;
@@ -83,7 +83,7 @@ const unsigned short As6 = 539;
 const unsigned short B6 = 509;
 
 void var_delay_us(unsigned long microseconds) {
-    unsigned short delay = microseconds;
+    unsigned long delay = microseconds;
     while (delay > 0) {
         __delay_us(1);
         delay--;
