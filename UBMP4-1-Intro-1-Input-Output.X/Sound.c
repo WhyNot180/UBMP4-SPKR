@@ -90,7 +90,7 @@ void var_delay_us(unsigned short microseconds) {
     }
 }
 
-void play_note(unsigned short note, unsigned short duration) {
+void play_note(unsigned short note, unsigned int duration) {
     duration /= note;
     for (int i = 0; i < duration; i++) {
         BEEPER = 1;

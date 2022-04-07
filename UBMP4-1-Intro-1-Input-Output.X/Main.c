@@ -33,29 +33,12 @@ int main(void)
     // Code in this while loop runs repeatedly.
     while(1)
 	{
-        // If SW2 is pressed, make a flashy light pattern
-        
-        if(SW2 == 0)
-        {
-            LED3 = 1;
-            __delay_ms(100);
-            LED4 = 1;
-            __delay_ms(100);
-            LED5 = 1;
-            __delay_ms(100);
-            LED6 = 1;
-            __delay_ms(100);
-            LED3 = 0;
-            __delay_ms(100);
-            LED4 = 0;
-            __delay_ms(100);
-            LED5 = 0;
-            __delay_ms(100);
-            LED6 = 0;
-            __delay_ms(100);
-        } 
-        //frequency = 440 * 2/12;
-        // Add code for your Program Analysis and Programming Activities here:
+        if (SW2 == 0) {
+            play_note(C2, 1000000);
+            play_note(Cs2, 1000000);
+            play_note(D2, 1000000);
+        }
+
         if (SW3 == 0) {
             LED4 = 1;
         } else if (SW3 == 1) {
