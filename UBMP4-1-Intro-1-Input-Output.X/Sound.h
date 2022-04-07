@@ -1,6 +1,8 @@
 #ifndef SOUND_H
 #define SOUND_H
 
+unsigned int pow(unsigned int base, char power);
+
 const unsigned short notes[5][12];
 
 const unsigned short C2;
