@@ -21,6 +21,7 @@ const unsigned short notes[5][12] = {
                                 {957, 904, 853, 805, 760, 718, 678, 636, 604, 570, 539, 509}
                                 };
 
+/*
 const unsigned short C2 = 15288;
 const unsigned short Cs2 = 14430;
 const unsigned short D2 = 13620;
@@ -81,6 +82,7 @@ const unsigned short Gs6 = 604;
 const unsigned short A6 = 570;
 const unsigned short As6 = 539;
 const unsigned short B6 = 509;
+*/
 
 void var_delay_us(unsigned long microseconds) {
     unsigned long delay = microseconds;
