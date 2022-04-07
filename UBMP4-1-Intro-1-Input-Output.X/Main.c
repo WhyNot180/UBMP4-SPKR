@@ -34,9 +34,9 @@ int main(void)
     while(1)
 	{
         if (SW2 == 0) {
-            play_note(C2, 1000000);
-            play_note(Cs2, 1000000);
-            play_note(D2, 1000000);
+            play_note(C3, 1000000);
+            play_note(C4, 1000000);
+            play_note(C5, 1000000);
         }
 
         if (SW3 == 0) {
