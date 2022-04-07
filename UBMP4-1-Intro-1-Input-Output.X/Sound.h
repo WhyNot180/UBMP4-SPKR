@@ -64,8 +64,8 @@ const unsigned short A6;
 const unsigned short As6;
 const unsigned short B6;
 
-void var_delay_us(unsigned short microseconds);
+void var_delay_us(unsigned long microseconds);
 
-void play_note(unsigned short note, unsigned short duration);
+void play_note(unsigned long note, unsigned long duration);
 
 #endif

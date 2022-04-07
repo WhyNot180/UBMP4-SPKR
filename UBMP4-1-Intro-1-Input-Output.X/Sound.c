@@ -82,7 +82,7 @@ const unsigned short A6 = 570;
 const unsigned short As6 = 539;
 const unsigned short B6 = 509;
 
-void var_delay_us(unsigned short microseconds) {
+void var_delay_us(unsigned long microseconds) {
     unsigned short delay = microseconds;
     while (delay > 0) {
         __delay_us(1);
@@ -90,7 +90,7 @@ void var_delay_us(unsigned short microseconds) {
     }
 }
 
-void play_note(unsigned short note, unsigned int duration) {
+void play_note(unsigned long note, unsigned long duration) {
     duration /= note;
     for (int i = 0; i < duration; i++) {
         BEEPER = 1;
