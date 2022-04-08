@@ -6,7 +6,7 @@
 unsigned int PERIOD_SCALE = 1000;
  
 // We use lower 5 bits of an integer to encode the note
-#define MUSICAL_NOTE_BITS 6
+#define MUSICAL_NOTE_BITS 5
  
 // This bit mask is used to decode the note
 #define MUSICAL_NOTE_MASK 0b00011111
