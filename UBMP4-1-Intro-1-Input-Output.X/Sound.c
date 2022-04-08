@@ -45,10 +45,13 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent)
     }
 }
  
-void playNote(char notePlus)
+void playNote(char notePlus, char note2Plus)
 {
     enum MusicalNote note = notePlus & MUSICAL_NOTE_MASK;
     unsigned long period = 0;
+
+    enum MusicalNote note2 = note2Plus & MUSICAL_NOTE_MASK;
+    unsigned long period2 = 0;
  
     switch (note)
     {
@@ -71,6 +74,9 @@ void playNote(char notePlus)
             period = lowerNotePeriods[note];
         break;
     }
+
+    switch (note2)
+    
  
     enum MusicalNoteLength noteLength = notePlus & ~MUSICAL_NOTE_MASK;
     unsigned long length = EIGHTH_NOTE_DURATION_CYCLES;
