@@ -1,102 +1,103 @@
 #include    "xc.h"
+#include    "stdbool.h"
 #include    "UBMP410.h"
 #include    "Sound.h"
-
-
+ 
+#define MIN(x, y) x < y ? x : y
+#define MAX(x, y) x < y ? y : x
+ 
+ 
 unsigned int pow(unsigned int base, char power) {
     for (char i = 0; i < power; i++) {
         base *= base;
     }
     return base;
 }
-
-//Starts at C2 and goes to B6 changing rows every octave (half steps included so total = 12 per row)
-//this is the period (1/frequency) in micro seconds
-//Order is C, Cs, D, Ds, E, F, Fs, G, Gs, A, As, B
-const unsigned short notes[5][12] = {
-                                {15288, 14430, 13620, 12856, 12134, 11453, 10810, 10204, 9631, 9090, 8580, 8099},
-                                {7644, 7214, 6810, 6427, 6067, 5726, 5405, 5101, 4815, 4545, 4290, 4049},
-                                {3822, 3607, 3405, 3214, 3034, 2864, 2703, 2551, 2408, 2273, 2146, 2025},
-                                {1912, 1805, 1703, 1608, 1518, 1433, 1353, 1277, 1205, 1137, 1074, 1014},
-                                {957, 904, 853, 805, 760, 718, 678, 636, 604, 570, 539, 509}
-                                };
-
-/*
-const unsigned short C2 = 15288;
-const unsigned short Cs2 = 14430;
-const unsigned short D2 = 13620;
-const unsigned short Ds2 = 12856;
-const unsigned short E2 = 12134;
-const unsigned short F2 = 11453;
-const unsigned short Fs2 = 10810;
-const unsigned short G2 = 10204;
-const unsigned short Gs2 = 9631;
-const unsigned short A2 = 9090;
-const unsigned short As2 = 8580;
-const unsigned short B2 = 8099;
-const unsigned short C3 = 7644;
-const unsigned short Cs3 = 7214;
-const unsigned short D3 = 6810;
-const unsigned short Ds3 = 6427;
-const unsigned short E3 = 6067;
-const unsigned short F3 = 5726;
-const unsigned short Fs3 = 5405;
-const unsigned short G3 = 5101;
-const unsigned short Gs3 = 4815;
-const unsigned short A3 = 4545;
-const unsigned short As3 = 4290;
-const unsigned short B3 = 4049;
-const unsigned short C4 = 3822;
-const unsigned short Cs4 = 3607;
-const unsigned short D4 = 3405;
-const unsigned short Ds4 = 3214;
-const unsigned short E4 = 3034;
-const unsigned short F4 = 2864;
-const unsigned short Fs4 = 2703;
-const unsigned short G4 = 2551;
-const unsigned short Gs4 = 2408;
-const unsigned short A4 = 2273;
-const unsigned short As4 = 2146;
-const unsigned short B4 = 2025;
-const unsigned short C5 = 1912;
-const unsigned short Cs5 = 1805;
-const unsigned short D5 = 1703;
-const unsigned short Ds5 = 1608;
-const unsigned short E5 = 1518;
-const unsigned short F5 = 1433;
-const unsigned short Fs5 = 1353;
-const unsigned short G5 = 1277;
-const unsigned short Gs5 = 1205;
-const unsigned short A5 = 1137;
-const unsigned short As5 = 1074;
-const unsigned short B5 = 1014;
-const unsigned short C6 = 957;
-const unsigned short Cs6 = 904;
-const unsigned short D6 = 853;
-const unsigned short Ds6 = 805;
-const unsigned short E6 = 760;
-const unsigned short F6 = 718;
-const unsigned short Fs6 = 678;
-const unsigned short G6 = 636;
-const unsigned short Gs6 = 604;
-const unsigned short A6 = 570;
-const unsigned short As6 = 539;
-const unsigned short B6 = 509;
-*/
-
-void var_delay_us(unsigned long microseconds) {
-    unsigned long delay = microseconds;
-    while (delay > 0) {
-        __delay_us(1);
-        delay--;
+ 
+#define CLOCK_FREQ 48000000
+unsigned long lowerNotePeriods[] = {
+    // These period values must align with the MusicalNote indexes
+    // Note frequency values attained from https://pages.mtu.edu/~suits/notefreqs.html
+    // The period is calculated by dividing the clock frequency the by note frequency
+    CLOCK_FREQ / 1635 * 100, // C
+    CLOCK_FREQ / 1732 * 100, // Cs
+    CLOCK_FREQ / 1835 * 100, // D
+    CLOCK_FREQ / 1945 * 100, // Ds
+    CLOCK_FREQ / 2060 * 100, // E
+    CLOCK_FREQ / 2183 * 100, // F
+    CLOCK_FREQ / 2312 * 100, // Fs
+    CLOCK_FREQ / 2450 * 100, // G
+    CLOCK_FREQ / 2596 * 100, // Gs
+    CLOCK_FREQ / 2750 * 100, // A
+    CLOCK_FREQ / 2914 * 100, // As
+    CLOCK_FREQ / 3087 * 100, // B
+};
+ 
+void _makeSound(unsigned long cycles, unsigned long period, bool silent)
+{
+    for (unsigned int c = 0; c < cycles; c++)
+    {
+        if (!silent)
+            BEEPER = !BEEPER;
+        for (unsigned long p = 0; p < period; p++)
+            ;
     }
 }
-
-void play_note(unsigned long note, unsigned long duration) {
-    duration /= note;
-    for (int i = 0; i < duration; i++) {
-        BEEPER = 1;
-        var_delay_us(note);
-        BEEPER = 0;
+ 
+void playNote(char notePlus)
+{
+    enum MusicalNote note = notePlus & MUSICAL_NOTE_MASK;
+    unsigned long period = 0;
+ 
+    switch (note)
+    {
+    case Ou:
+        currentOctave = MIN(MAX_OCTAVE, currentOctave + 1);
+        return;
+    case Od:
+        currentOctave = MAX(1, currentOctave - 1);
+        return;
+    case Or:
+        currentOctave = DEFAULT_OCTAVE;
+        return;
+    case Rest:
+        // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
+        // note length.  We just want the Rest to be silent for the correct length of time.
+        period = CLOCK_FREQ / 62;
+        break;
+    default:
+        if (note <= B)
+            period = lowerNotePeriods[note];
+        break;
     }
+ 
+    enum MusicalNoteLength noteLength = notePlus & ~MUSICAL_NOTE_MASK;
+    unsigned long length = EIGHTH_NOTE_DURATION_CYCLES;
+ 
+    switch (noteLength)
+    {
+    case QuarterNote:
+        length = length * 2;
+        break;
+    case ThreeEighthNote:
+        length = length * 3;
+        break;
+    case HalfNote:
+        length = length * 4;
+        break;
+    case SixEighthNote:
+        length = length * 6;
+        break;
+    case FullNote:
+        length = length * 8;
+        break;
+    }
+ 
+    // We need to adjust the period by the octave (and a preferred scaling value)
+    // Also, we want the note to play for the precise length of time regardless of the period
+    // so we have to adjust the number of cycles by the period
+    unsigned long adjustedPeriod = period / pow(2, currentOctave) / PERIOD_SCALE;
+    _makeSound(length / adjustedPeriod, adjustedPeriod, note == Rest ? true : false);
+ 
+    __delay_ms(50);
 }

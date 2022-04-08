@@ -1,73 +1,69 @@
 #ifndef SOUND_H
 #define SOUND_H
-
-unsigned int pow(unsigned int base, char power);
-
-const unsigned short notes[5][12];
-
-const unsigned short C2 = 15288;
-const unsigned short Cs2 = 14430;
-const unsigned short D2 = 13620;
-const unsigned short Ds2 = 12856;
-const unsigned short E2 = 12134;
-const unsigned short F2 = 11453;
-const unsigned short Fs2 = 10810;
-const unsigned short G2 = 10204;
-const unsigned short Gs2 = 9631;
-const unsigned short A2 = 9090;
-const unsigned short As2 = 8580;
-const unsigned short B2 = 8099;
-const unsigned short C3 = 7644;
-const unsigned short Cs3 = 7214;
-const unsigned short D3 = 6810;
-const unsigned short Ds3 = 6427;
-const unsigned short E3 = 6067;
-const unsigned short F3 = 5726;
-const unsigned short Fs3 = 5405;
-const unsigned short G3 = 5101;
-const unsigned short Gs3 = 4815;
-const unsigned short A3 = 4545;
-const unsigned short As3 = 4290;
-const unsigned short B3 = 4049;
-const unsigned short C4 = 3822;
-const unsigned short Cs4 = 3607;
-const unsigned short D4 = 3405;
-const unsigned short Ds4 = 3214;
-const unsigned short E4 = 3034;
-const unsigned short F4 = 2864;
-const unsigned short Fs4 = 2703;
-const unsigned short G4 = 2551;
-const unsigned short Gs4 = 2408;
-const unsigned short A4 = 2273;
-const unsigned short As4 = 2146;
-const unsigned short B4 = 2025;
-const unsigned short C5 = 1912;
-const unsigned short Cs5 = 1805;
-const unsigned short D5 = 1703;
-const unsigned short Ds5 = 1608;
-const unsigned short E5 = 1518;
-const unsigned short F5 = 1433;
-const unsigned short Fs5 = 1353;
-const unsigned short G5 = 1277;
-const unsigned short Gs5 = 1205;
-const unsigned short A5 = 1137;
-const unsigned short As5 = 1074;
-const unsigned short B5 = 1014;
-const unsigned short C6 = 957;
-const unsigned short Cs6 = 904;
-const unsigned short D6 = 853;
-const unsigned short Ds6 = 805;
-const unsigned short E6 = 760;
-const unsigned short F6 = 718;
-const unsigned short Fs6 = 678;
-const unsigned short G6 = 636;
-const unsigned short Gs6 = 604;
-const unsigned short A6 = 570;
-const unsigned short As6 = 539;
-const unsigned short B6 = 509;
-
-void var_delay_us(unsigned long microseconds);
-
-void play_note(unsigned long note, unsigned long duration);
-
+ 
+// This magic number is used to scale the calculated period of a note down
+// in order to make the sound audible.
+unsigned int PERIOD_SCALE = 1000;
+ 
+// We use lower 5 bits of an integer to encode the note
+#define MUSICAL_NOTE_BITS 6
+ 
+// This bit mask is used to decode the note
+#define MUSICAL_NOTE_MASK 0b00011111
+ 
+// Octave configuration
+#define DEFAULT_OCTAVE 4
+#define MAX_OCTAVE 8
+char currentOctave = DEFAULT_OCTAVE;
+ 
+// Here are the enumerated values for the notes for convenience
+enum MusicalNote
+{
+    C = 0,
+    Cs, // C sharp or D flat
+    D,
+    Ds,
+    E,
+    F,
+    Fs,
+    G,
+    Gs,
+    A,
+    As,
+    B,
+    Rest,
+    TheEnd, // this flag can be used to signal the end of a song
+    Ou,     // this flag signals to move up one octave
+    Od,     // this flag signals to move down one octave
+    Or      // this flag signals to reset to default octave
+};
+ 
+// Here are the enumerated values for the standard lengths of a notes.
+// Note that an eighth-note is the default length so does not need to expressed explicitly.
+enum MusicalNoteLength
+{
+    //EighthNote = 0 << MUSICAL_NOTE_BITS, // This the default
+    QuarterNote = 1 << MUSICAL_NOTE_BITS,
+    ThreeEighthNote = 2 << MUSICAL_NOTE_BITS,
+    HalfNote = 3 << MUSICAL_NOTE_BITS,
+    SixEighthNote = 4 << MUSICAL_NOTE_BITS,
+    FullNote = 5 << MUSICAL_NOTE_BITS
+};
+// This is the duration of a quarter note expressed in program-execution cycles.
+// The actual duration of the note played will depend on the processor speed/frequency.
+unsigned long EIGHTH_NOTE_DURATION_CYCLES = 70000;
+ 
+/**
+ * Play a musical note
+ *
+ * @param notePlus a combined value that represent the MusicalNote and MusicalNoteLength.  
+ * For example, a half note G can be encoded as notePlus = G | HalfNote
+ */
+void playNote(char notePlus);
+ 
+/**
+ * Make a noise on the buzzer with the given params a number of times (nTimes)
+ **/
+void makeSound(unsigned long cycles, unsigned long period);
+ 
 #endif
