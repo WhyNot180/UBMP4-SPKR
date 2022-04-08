@@ -7,11 +7,12 @@
 #define MAX(x, y) x < y ? y : x
  
  
-unsigned int pow(unsigned int base, char power) {
-    for (char i = 0; i < power; i++) {
-        base *= base;
+unsigned long ipow(unsigned long base, unsigned char exp) {
+    unsigned long result = base;
+    for (unsigned char i = 1; i < exp; i++) {
+        result *= base;
     }
-    return base;
+    return result;
 }
  
 #define CLOCK_FREQ 48000000
