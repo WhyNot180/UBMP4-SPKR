@@ -97,7 +97,7 @@ void playNote(char notePlus)
     // We need to adjust the period by the octave (and a preferred scaling value)
     // Also, we want the note to play for the precise length of time regardless of the period
     // so we have to adjust the number of cycles by the period
-    unsigned long adjustedPeriod = period / pow(2, currentOctave) / PERIOD_SCALE;
+    unsigned long adjustedPeriod = period / ipow(2, currentOctave) / PERIOD_SCALE;
     _makeSound(length / adjustedPeriod, adjustedPeriod, note == Rest ? true : false);
  
     __delay_ms(50);
