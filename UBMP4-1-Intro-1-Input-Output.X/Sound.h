@@ -16,7 +16,7 @@ unsigned int PERIOD_SCALE = 1000;
 #define MAX_OCTAVE 8
 char currentOctave = DEFAULT_OCTAVE;
 char secondaryOctave = DEFAULT_OCTAVE;
-cahr tertiaryOctave = DEFAULT_OCTAVE;
+char tertiaryOctave = DEFAULT_OCTAVE;
 
 // Here are the enumerated values for the notes for convenience
 enum MusicalNote
