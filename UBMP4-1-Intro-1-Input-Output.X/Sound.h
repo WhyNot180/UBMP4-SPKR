@@ -61,11 +61,11 @@ unsigned long EIGHTH_NOTE_DURATION_CYCLES = 70000;
  * @param notePlus a combined value that represent the MusicalNote and MusicalNoteLength.  
  * For example, a half note G can be encoded as notePlus = G | HalfNote
  */
-void playNote(char notePlus);
+void playNote(char notePlus, char note2Plus, char note3Plus)
  
 /**
  * Make a noise on the buzzer with the given params a number of times (nTimes)
  **/
-void makeSound(unsigned long cycles, unsigned long period);
+void _makeSound(unsigned long cycles, unsigned long period, bool silent, unsigned long period2, bool silent2, unsigned long period3, bool silent3);
  
 #endif
