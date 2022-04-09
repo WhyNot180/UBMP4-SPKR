@@ -80,13 +80,16 @@ void playNote(char notePlus, char note2Plus, char note3Plus)
     {
     case Ou:
         currentOctave = MIN(MAX_OCTAVE, currentOctave + 1);
-        return;
+        note = Rest;
+        break;
     case Od:
         currentOctave = MAX(1, currentOctave - 1);
-        return;
+        note = Rest;
+        break;
     case Or:
         currentOctave = DEFAULT_OCTAVE;
-        return;
+        note = Rest;
+        break;
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
@@ -103,13 +106,16 @@ void playNote(char notePlus, char note2Plus, char note3Plus)
     {
     case Ou:
         secondaryOctave = MIN(MAX_OCTAVE, secondaryOctave + 1);
-        return;
+        note2 = Rest;
+        break;
     case Od:
         secondaryOctave = MAX(1, secondaryOctave - 1);
-        return;
+        note2 = Rest;
+        break;
     case Or:
         secondaryOctave = DEFAULT_OCTAVE;
-        return;
+        note2 = Rest;
+        break;
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
@@ -126,13 +132,16 @@ void playNote(char notePlus, char note2Plus, char note3Plus)
     {
     case Ou:
         tertiaryOctave = MIN(MAX_OCTAVE, tertiaryOctave + 1);
-        return;
+        note3 = Rest;
+        break;
     case Od:
         tertiaryOctave = MAX(1, tertiaryOctave - 1);
-        return;
+        note3 = Rest;
+        break;
     case Or:
         tertiaryOctave = DEFAULT_OCTAVE;
-        return;
+        note3 = Rest;
+        break;
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
