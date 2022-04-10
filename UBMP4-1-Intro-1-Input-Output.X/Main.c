@@ -35,9 +35,8 @@ int main(void)
     {
         if (SW2 == 0) {
             playNote(Or, Or, Or);
+            playNote(Or, Or, Or);
             playNote(C | QuarterNote, E | QuarterNote, G | QuarterNote);
-            playNote(Cs | QuarterNote);
-            playNote(D | QuarterNote);
         }
  
         if (SW3 == 0) {
