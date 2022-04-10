@@ -41,26 +41,33 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent, unsigne
     bool trueSilent;
     for (unsigned int c = 0; c < cycles; c++)
     {
-        alternate = c % 3;
+        alternate = c % 6;
         switch (alternate){
             case (0):
                 truePeriod = period3;
                 trueSilent = silent3;
                 break;
             case (1):
+                truePeriod = period3;
+                trueSilent = silent3;
+                break;
+            case (2):
                 truePeriod = period;
                 trueSilent = silent;
                 break;
-            case (2):
+            case (3):
+                truePeriod = period;
+                trueSilent = silent;
+            case (4):
                 truePeriod = period2;
                 trueSilent = silent2;
-                break;
+            case (5):
+                truePeriod = period2;
+                trueSilent = silent2;
             default:
                 break;
         }
-        if (!trueSilent) BEEPER = 1;
-        for (unsigned long p = 0; p < truePeriod; p++);
-        if (!trueSilent) BEEPER = 0;
+        if (!trueSilent) BEEPER = !BEEPER;
         for (unsigned long p = 0; p < truePeriod; p++);
     }
 }
