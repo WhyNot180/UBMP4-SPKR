@@ -58,10 +58,10 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent, unsigne
             default:
                 break;
         }
-        if (!trueSilent)
-            BEEPER = !BEEPER;
-        for (unsigned long p = 0; p < truePeriod; p++)
-            ;
+        if (!trueSilent) BEEPER = 1;
+        for (unsigned long p = 0; p < truePeriod; p++);
+        if (!trueSilent) BEEPER = 0;
+        for (unsigned long p = 0; p < truePeriod; p++);
     }
 }
  
