@@ -123,7 +123,7 @@ void playNote(char notePlus, char note2Plus, char note3Plus)
         break;
     default:
         if (note2 <= B)
-            period2 = lowerNotePeriods[note];
+            period2 = lowerNotePeriods[note2];
         break;
     }
     
@@ -149,7 +149,7 @@ void playNote(char notePlus, char note2Plus, char note3Plus)
         break;
     default:
         if (note3 <= B)
-            period3 = lowerNotePeriods[note];
+            period3 = lowerNotePeriods[note3];
         break;
     }
  
