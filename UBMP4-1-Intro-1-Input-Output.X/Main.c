@@ -34,18 +34,31 @@ int main(void)
     while(1)
     {
         if (SW2 == 0) {
-            playNote(Or);
-            playNote(C | QuarterNote);
+            playNote(Or, Or, Or);
+            playNote(C | QuarterNote, E | QuarterNote, G | QuarterNote);
             playNote(Cs | QuarterNote);
             playNote(D | QuarterNote);
         }
  
         if (SW3 == 0) {
-            LED4 = 1;
-        } else if (SW3 == 1) {
-            LED4 = 0;
+            playNote(Or, Or, Or);
+            playNote(Or, Or, Ou);
+            playNote(E | QuarterNote, G | QuarterNote, C | QuarterNote);
         }
- 
+
+        if (SW4 == 0) {
+            playNote(Or, Or, Or);
+            playNote(Or, Or, Od);
+            playNote(E | QuarterNote, G | QuarterNote, C | QuarterNote);
+        }
+
+        if (SW5 == 0) {
+            playNote(Or, Or, Or);
+            playNote(C | QuarterNote, Rest | QuarterNote, Rest | QuarterNote);
+            playNote(Ou, Or, Or);
+            playNote(C | QuarterNote, Rest | QuarterNote, Rest | QuarterNote);
+        }
+
         // Activate bootloader if SW1 is pressed.
         if(SW1 == 0)
         {
