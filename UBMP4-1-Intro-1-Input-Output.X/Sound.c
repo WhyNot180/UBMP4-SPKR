@@ -48,22 +48,22 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent, unsigne
                 trueSilent = silent3;
                 break;
             case (1):
-                truePeriod = period3;
-                trueSilent = silent3;
+                truePeriod = 0;
+                trueSilent = true;
                 break;
             case (2):
                 truePeriod = period;
                 trueSilent = silent;
                 break;
             case (3):
-                truePeriod = period;
-                trueSilent = silent;
+                truePeriod = 0;
+                trueSilent = true;
             case (4):
                 truePeriod = period2;
                 trueSilent = silent2;
             case (5):
-                truePeriod = period2;
-                trueSilent = silent2;
+                truePeriod = 0;
+                trueSilent = true;
             default:
                 break;
         }
