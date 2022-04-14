@@ -14,6 +14,48 @@ unsigned long ipow(unsigned long base, unsigned char exp) {
     }
     return result;
 }
+
+unsigned char findOctave(enum Octave note) {
+    switch (note)
+    {
+    case O2:
+        return 2;
+    case O3:
+        return 3;
+    case O4:
+        return 4;
+    case O5:
+        return 5;
+    case O6:
+        return 6;
+    case O7:
+        return 7;
+    case O8:
+        return 8;
+    default:
+        return 1;
+    }
+}
+
+unsigned long findLength(enum MusicalNoteLength noteLength) {
+    switch (noteLength)
+    {
+    case EighthNote:
+        return 2;
+    case QuarterNote:
+        return 4;
+    case ThreeEighthNote:
+        return 6;
+    case HalfNote:
+        return 8;
+    case SixEighthNote:
+        return 12;
+    case FullNote:
+        return 16;
+    default:
+        return 1;
+    }
+}
  
 #define CLOCK_FREQ 48000000
 unsigned long lowerNotePeriods[] = {
@@ -72,7 +114,7 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent, unsigne
     }
 }
  
-void playNote(char notePlus, char note2Plus, char note3Plus)
+void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3Plus, unsigned int note4Plus, unsigned int note5Plus, unsigned int note6Plus)
 {
     enum MusicalNote note = notePlus & MUSICAL_NOTE_MASK;
     unsigned long period = 0;
@@ -82,21 +124,18 @@ void playNote(char notePlus, char note2Plus, char note3Plus)
 
     enum MusicalNote note3 = note3Plus & MUSICAL_NOTE_MASK;
     unsigned long period3 = 0;
- 
+
+    enum MusicalNote note4 = note4Plus & MUSICAL_NOTE_MASK;
+    unsigned long period4 = 0;
+
+    enum MusicalNote note5 = note5Plus & MUSICAL_NOTE_MASK;
+    unsigned long period5 = 0;
+
+    enum MusicalNote note6 = note6Plus & MUSICAL_NOTE_MASK;
+    unsigned long period6 = 0;
+
     switch (note)
     {
-    case Ou:
-        currentOctave = MIN(MAX_OCTAVE, currentOctave + 1);
-        note = Rest;
-        break;
-    case Od:
-        currentOctave = MAX(1, currentOctave - 1);
-        note = Rest;
-        break;
-    case Or:
-        currentOctave = DEFAULT_OCTAVE;
-        note = Rest;
-        break;
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
@@ -111,18 +150,6 @@ void playNote(char notePlus, char note2Plus, char note3Plus)
     // For secondary note
     switch (note2)
     {
-    case Ou:
-        secondaryOctave = MIN(MAX_OCTAVE, secondaryOctave + 1);
-        note2 = Rest;
-        break;
-    case Od:
-        secondaryOctave = MAX(1, secondaryOctave - 1);
-        note2 = Rest;
-        break;
-    case Or:
-        secondaryOctave = DEFAULT_OCTAVE;
-        note2 = Rest;
-        break;
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
@@ -137,18 +164,6 @@ void playNote(char notePlus, char note2Plus, char note3Plus)
     // For tertiary note
     switch (note3)
     {
-    case Ou:
-        tertiaryOctave = MIN(MAX_OCTAVE, tertiaryOctave + 1);
-        note3 = Rest;
-        break;
-    case Od:
-        tertiaryOctave = MAX(1, tertiaryOctave - 1);
-        note3 = Rest;
-        break;
-    case Or:
-        tertiaryOctave = DEFAULT_OCTAVE;
-        note3 = Rest;
-        break;
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
@@ -159,72 +174,63 @@ void playNote(char notePlus, char note2Plus, char note3Plus)
             period3 = lowerNotePeriods[note3];
         break;
     }
+
+    switch (note4)
+    {
+    case Rest:
+        // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
+        // note length.  We just want the Rest to be silent for the correct length of time.
+        period4 = CLOCK_FREQ / 62;
+        break;
+    default:
+        if (note4 <= B)
+            period4 = lowerNotePeriods[note4];
+        break;
+    }
+
+    switch (note5)
+    {
+    case Rest:
+        // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
+        // note length.  We just want the Rest to be silent for the correct length of time.
+        period5 = CLOCK_FREQ / 62;
+        break;
+    default:
+        if (note5 <= B)
+            period5 = lowerNotePeriods[note5];
+        break;
+    }
+
+    switch (note6)
+    {
+    case Rest:
+        // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
+        // note length.  We just want the Rest to be silent for the correct length of time.
+        period6 = CLOCK_FREQ / 62;
+        break;
+    default:
+        if (note6 <= B)
+            period6 = lowerNotePeriods[note6];
+        break;
+    }
  
-    enum MusicalNoteLength noteLength = notePlus & ~MUSICAL_NOTE_MASK;
-    unsigned long length = EIGHTH_NOTE_DURATION_CYCLES;
+    enum MusicalNoteLength noteLength = notePlus & ~MUSICAL_LENGTH_MASK;
+    unsigned long length = SIXTEENTH_NOTE_DURATION_CYCLES * findLength(noteLength);
 
-    enum MusicalNoteLength note2Length = note2Plus & ~MUSICAL_NOTE_MASK;
-    unsigned long length2 = EIGHTH_NOTE_DURATION_CYCLES;
+    enum MusicalNoteLength note2Length = note2Plus & ~MUSICAL_LENGTH_MASK;
+    unsigned long length2 = SIXTEENTH_NOTE_DURATION_CYCLES * findLength(note2Length);
 
-    enum MusicalNoteLength note3Length = note3Plus & ~MUSICAL_NOTE_MASK;
-    unsigned long length3 = EIGHTH_NOTE_DURATION_CYCLES;
- 
-    switch (noteLength)
-    {
-    case QuarterNote:
-        length = length * 2;
-        break;
-    case ThreeEighthNote:
-        length = length * 3;
-        break;
-    case HalfNote:
-        length = length * 4;
-        break;
-    case SixEighthNote:
-        length = length * 6;
-        break;
-    case FullNote:
-        length = length * 8;
-        break;
-    }
+    enum MusicalNoteLength note3Length = note3Plus & ~MUSICAL_LENGTH_MASK;
+    unsigned long length3 = SIXTEENTH_NOTE_DURATION_CYCLES * findLength(note3Length);
 
-    switch (note2Length)
-    {
-    case QuarterNote:
-        length2 = length2 * 2;
-        break;
-    case ThreeEighthNote:
-        length2 = length2 * 3;
-        break;
-    case HalfNote:
-        length2 = length2 * 4;
-        break;
-    case SixEighthNote:
-        length2 = length2 * 6;
-        break;
-    case FullNote:
-        length2 = length2 * 8;
-        break;
-    }
+    enum MusicalNoteLength note4Length = note4Plus & ~MUSICAL_LENGTH_MASK;
+    unsigned long length4 = SIXTEENTH_NOTE_DURATION_CYCLES * findLength(note4Length);
 
-    switch (note3Length)
-    {
-    case QuarterNote:
-        length3 = length3 * 2;
-        break;
-    case ThreeEighthNote:
-        length3 = length3 * 3;
-        break;
-    case HalfNote:
-        length3 = length3 * 4;
-        break;
-    case SixEighthNote:
-        length3 = length3 * 6;
-        break;
-    case FullNote:
-        length3 = length3 * 8;
-        break;
-    }
+    enum MusicalNoteLength note5Length = note5Plus & ~MUSICAL_LENGTH_MASK;
+    unsigned long length5 = SIXTEENTH_NOTE_DURATION_CYCLES * findLength(note5Length);
+
+    enum MusicalNoteLength note6Length = note6Plus & ~MUSICAL_LENGTH_MASK;
+    unsigned long length6 = SIXTEENTH_NOTE_DURATION_CYCLES * findLength(note6Length);
  
     // We need to adjust the period by the octave (and a preferred scaling value)
     // Also, we want the note to play for the precise length of time regardless of the period
