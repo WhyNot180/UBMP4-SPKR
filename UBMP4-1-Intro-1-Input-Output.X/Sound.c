@@ -19,6 +19,7 @@ unsigned char findOctave(enum Octave note) {
     switch (note)
     {
     case O2:
+        LED3 = 1;
         return 2;
     case O3:
         return 3;
@@ -94,49 +95,25 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
                 truePeriod = period6;
                 trueSilent = silent6;
                 break;
-            case (1):
-                truePeriod = 0;
-                trueSilent = true;
-                break;
             case (2):
                 truePeriod = period;
                 trueSilent = silent;
-                break;
-            case (3):
-                truePeriod = 0;
-                trueSilent = true;
                 break;
             case (4):
                 truePeriod = period2;
                 trueSilent = silent2;
                 break;
-            case (5):
-                truePeriod = 0;
-                trueSilent = true;
-                break;
             case (6):
                 truePeriod = period3;
                 trueSilent = silent3;
-                break;
-            case (7):
-                truePeriod = 0;
-                trueSilent = true;
                 break;
             case (8):
                 truePeriod = period4;
                 trueSilent = silent4;
                 break;
-            case (9):
-                truePeriod = 0;
-                trueSilent = true;
-                break;
             case (10):
                 truePeriod = period5;
                 trueSilent = silent5;
-                break;
-            case (11):
-                truePeriod = 0;
-                trueSilent = true;
                 break;
             default:
                 truePeriod = 0;
