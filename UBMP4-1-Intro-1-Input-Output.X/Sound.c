@@ -258,7 +258,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
             adjustedPeriod3, note3 == Rest ? true : false,
             adjustedPeriod4, note4 == Rest ? true : false,
             adjustedPeriod5, note5 == Rest ? true : false,
-            adjustedPeriod6, note6 == Rest ? true : false,);
+            adjustedPeriod6, note6 == Rest ? true : false);
  
     __delay_ms(16);
 }
