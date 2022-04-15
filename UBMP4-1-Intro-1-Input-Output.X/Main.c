@@ -38,15 +38,15 @@ int main(void)
         }
  
         if (SW3 == 0) {
-            playNote(C | QuarterNote | O4, Rest | QuarterNote | O1, Rest | QuarterNote | O1, Rest | QuarterNote | O1, Rest | QuarterNote | O1, Rest | QuarterNote | O1);
+            playNote(C | QuarterNote | O4, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote);
         }
 
         if (SW4 == 0) {
-            playNote(C | QuarterNote | O5, Rest | QuarterNote | O1, Rest | QuarterNote | O1, Rest | QuarterNote | O1, Rest | QuarterNote | O1, Rest | QuarterNote | O1);
+            playNote(C | QuarterNote | O5, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote);
         }
 
         if (SW5 == 0) {
-            playNote(E | QuarterNote | O3, Rest | QuarterNote | O1, Rest | QuarterNote | O1, Rest | QuarterNote | O1, Rest | QuarterNote | O1, Rest | QuarterNote | O1);
+            playNote(E | QuarterNote | O3, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote);
         }
 
         // Activate bootloader if SW1 is pressed.
