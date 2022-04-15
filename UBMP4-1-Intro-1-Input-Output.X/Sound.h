@@ -24,7 +24,7 @@ enum Octave
     O6 = 5 << 8,
     O7 = 6 << 8,
     O8 = 7 << 8
-}
+};
 
 // Here are the enumerated values for the notes for convenience
 enum MusicalNote
