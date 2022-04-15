@@ -19,7 +19,6 @@ unsigned char findOctave(enum Octave note) {
     switch (note)
     {
     case O2:
-        LED3 = 1;
         return 2;
     case O3:
         return 3;
@@ -225,33 +224,33 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
         break;
     }
  
-    enum MusicalNoteLength noteLength = notePlus & ~MUSICAL_LENGTH_MASK;
+    enum MusicalNoteLength noteLength = notePlus & MUSICAL_LENGTH_MASK;
     unsigned long length = SIXTEENTH_NOTE_DURATION_CYCLES * findLength(noteLength);
 
-    enum MusicalNoteLength note2Length = note2Plus & ~MUSICAL_LENGTH_MASK;
+    enum MusicalNoteLength note2Length = note2Plus & MUSICAL_LENGTH_MASK;
     unsigned long length2 = SIXTEENTH_NOTE_DURATION_CYCLES * findLength(note2Length);
 
-    enum MusicalNoteLength note3Length = note3Plus & ~MUSICAL_LENGTH_MASK;
+    enum MusicalNoteLength note3Length = note3Plus & MUSICAL_LENGTH_MASK;
     unsigned long length3 = SIXTEENTH_NOTE_DURATION_CYCLES * findLength(note3Length);
 
-    enum MusicalNoteLength note4Length = note4Plus & ~MUSICAL_LENGTH_MASK;
+    enum MusicalNoteLength note4Length = note4Plus & MUSICAL_LENGTH_MASK;
     unsigned long length4 = SIXTEENTH_NOTE_DURATION_CYCLES * findLength(note4Length);
 
-    enum MusicalNoteLength note5Length = note5Plus & ~MUSICAL_LENGTH_MASK;
+    enum MusicalNoteLength note5Length = note5Plus & MUSICAL_LENGTH_MASK;
     unsigned long length5 = SIXTEENTH_NOTE_DURATION_CYCLES * findLength(note5Length);
 
-    enum MusicalNoteLength note6Length = note6Plus & ~MUSICAL_LENGTH_MASK;
+    enum MusicalNoteLength note6Length = note6Plus & MUSICAL_LENGTH_MASK;
     unsigned long length6 = SIXTEENTH_NOTE_DURATION_CYCLES * findLength(note6Length);
  
     // We need to adjust the period by the octave (and a preferred scaling value)
     // Also, we want the note to play for the precise length of time regardless of the period
     // so we have to adjust the number of cycles by the period
-    unsigned long adjustedPeriod = period / ipow(2, findOctave(note & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
-    unsigned long adjustedPeriod2 = period2 / ipow(2, findOctave(note2 & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
-    unsigned long adjustedPeriod3 = period3 / ipow(2, findOctave(note3 & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
-    unsigned long adjustedPeriod4 = period4 / ipow(2, findOctave(note4 & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
-    unsigned long adjustedPeriod5 = period5 / ipow(2, findOctave(note5 & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
-    unsigned long adjustedPeriod6 = period6 / ipow(2, findOctave(note6 & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+    unsigned long adjustedPeriod = period / ipow(2, findOctave(notePlus & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+    unsigned long adjustedPeriod2 = period2 / ipow(2, findOctave(note2Plus & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+    unsigned long adjustedPeriod3 = period3 / ipow(2, findOctave(note3Plus & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+    unsigned long adjustedPeriod4 = period4 / ipow(2, findOctave(note4Plus & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+    unsigned long adjustedPeriod5 = period5 / ipow(2, findOctave(note5Plus & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+    unsigned long adjustedPeriod6 = period6 / ipow(2, findOctave(note6Plus & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
 
     _makeSound(length / (adjustedPeriod + adjustedPeriod2 + adjustedPeriod3 + adjustedPeriod4 + adjustedPeriod5 + adjustedPeriod6),
             adjustedPeriod, note == Rest ? true : false,
