@@ -76,37 +76,47 @@ unsigned long lowerNotePeriods[] = {
     CLOCK_FREQ / 3087 * 100, // B
 };
  
-void _makeSound(unsigned long cycles, unsigned long period, bool silent, unsigned long period2, bool silent2, unsigned long period3, bool silent3)
+void _makeSound(unsigned long cycles, unsigned long period, bool silent,
+                unsigned long period2, bool silent2,
+                unsigned long period3, bool silent3,
+                unsigned long period4, bool silent4,
+                unsigned long period5, bool silent5,
+                unsigned long period6, bool silent6)
 {
     unsigned long truePeriod;
     unsigned char alternate;
     bool trueSilent;
     for (unsigned int c = 0; c < cycles; c++)
     {
-        alternate = c % 6;
+        alternate = c % 12;
         switch (alternate){
             case (0):
-                truePeriod = period3;
-                trueSilent = silent3;
-                break;
-            case (1):
-                truePeriod = 0;
-                trueSilent = true;
+                truePeriod = period6;
+                trueSilent = silent6;
                 break;
             case (2):
                 truePeriod = period;
                 trueSilent = silent;
                 break;
-            case (3):
-                truePeriod = 0;
-                trueSilent = true;
             case (4):
                 truePeriod = period2;
                 trueSilent = silent2;
-            case (5):
+                break;
+            case (6):
+                truePeriod = period3;
+                trueSilent = silent3;
+                break;
+            case (8):
+                truePeriod = period4;
+                trueSilent = silent4;
+                break;
+            case (10):
+                truePeriod = period5;
+                trueSilent = silent5;
+                break;
+            default:
                 truePeriod = 0;
                 trueSilent = true;
-            default:
                 break;
         }
         if (!trueSilent) BEEPER = !BEEPER;
@@ -235,12 +245,20 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     // We need to adjust the period by the octave (and a preferred scaling value)
     // Also, we want the note to play for the precise length of time regardless of the period
     // so we have to adjust the number of cycles by the period
-    unsigned long adjustedPeriod = period / ipow(2, currentOctave) / PERIOD_SCALE;
-    unsigned long adjustedPeriod2 = period2 / ipow(2, secondaryOctave) / PERIOD_SCALE;
-    unsigned long adjustedPeriod3 = period3 / ipow(2, tertiaryOctave) / PERIOD_SCALE;
-    _makeSound(length / (adjustedPeriod + adjustedPeriod2 + adjustedPeriod3), adjustedPeriod, note == Rest ? true : false,
+    unsigned long adjustedPeriod = period / ipow(2, findOctave(note & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+    unsigned long adjustedPeriod2 = period2 / ipow(2, findOctave(note2 & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+    unsigned long adjustedPeriod3 = period3 / ipow(2, findOctave(note3 & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+    unsigned long adjustedPeriod4 = period4 / ipow(2, findOctave(note4 & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+    unsigned long adjustedPeriod5 = period5 / ipow(2, findOctave(note5 & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+    unsigned long adjustedPeriod6 = period6 / ipow(2, findOctave(note6 & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+
+    _makeSound(length / (adjustedPeriod + adjustedPeriod2 + adjustedPeriod3 + adjustedPeriod4 + adjustedPeriod5 + adjustedPeriod6),
+            adjustedPeriod, note == Rest ? true : false,
             adjustedPeriod2, note2 == Rest ? true : false,
-            adjustedPeriod3, note3 == Rest ? true : false);
+            adjustedPeriod3, note3 == Rest ? true : false,
+            adjustedPeriod4, note4 == Rest ? true : false,
+            adjustedPeriod5, note5 == Rest ? true : false,
+            adjustedPeriod6, note6 == Rest ? true : false,);
  
     __delay_ms(16);
 }

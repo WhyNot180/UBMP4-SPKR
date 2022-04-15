@@ -70,11 +70,16 @@ unsigned long SIXTEENTH_NOTE_DURATION_CYCLES = 35000;
  * @param notePlus a combined value that represent the MusicalNote and MusicalNoteLength.  
  * For example, a half note G can be encoded as notePlus = G | HalfNote
  */
-void playNote(char notePlus, char note2Plus, char note3Plus);
+void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3Plus, unsigned int note4Plus, unsigned int note5Plus, unsigned int note6Plus);
  
 /**
  * Make a noise on the buzzer with the given params a number of times (nTimes)
  **/
-void _makeSound(unsigned long cycles, unsigned long period, bool silent, unsigned long period2, bool silent2, unsigned long period3, bool silent3);
+void _makeSound(unsigned long cycles, unsigned long period, bool silent,
+                unsigned long period2, bool silent2,
+                unsigned long period3, bool silent3,
+                unsigned long period4, bool silent4,
+                unsigned long period5, bool silent5,
+                unsigned long period6, bool silent6);
  
 #endif
