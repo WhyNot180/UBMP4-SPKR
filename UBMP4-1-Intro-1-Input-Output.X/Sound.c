@@ -116,7 +116,6 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
                 break;
             default:
                 truePeriod = 0;
-                trueSilent = true;
                 break;
         }
         if (!trueSilent) BEEPER = !BEEPER;
