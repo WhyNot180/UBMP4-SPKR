@@ -40,8 +40,8 @@ unsigned char findOctave(enum Octave note) {
 unsigned long findLength(enum MusicalNoteLength noteLength) {
     switch (noteLength)
     {
-    //case EighthNote:
-        //return 2;
+    case EighthNote:
+        return 2;
     case QuarterNote:
         return 4;
     case ThreeEighthNote:
