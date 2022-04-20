@@ -53,16 +53,16 @@ enum MusicalNote
 enum MusicalNoteLength
 {
     //SixteenthNote = 0 << MUSICAL_NOTE_BITS, //this is the default
-    EighthNote = 1 << MUSICAL_NOTE_BITS,
-    QuarterNote = 2 << MUSICAL_NOTE_BITS,
-    ThreeEighthNote = 3 << MUSICAL_NOTE_BITS,
-    HalfNote = 4 << MUSICAL_NOTE_BITS,
-    SixEighthNote = 5 << MUSICAL_NOTE_BITS,
-    FullNote = 6 << MUSICAL_NOTE_BITS
+    //EighthNote = 1 << MUSICAL_NOTE_BITS,
+    QuarterNote = 1 << MUSICAL_NOTE_BITS,
+    ThreeEighthNote = 2 << MUSICAL_NOTE_BITS,
+    HalfNote = 3 << MUSICAL_NOTE_BITS,
+    SixEighthNote = 4 << MUSICAL_NOTE_BITS,
+    FullNote = 5 << MUSICAL_NOTE_BITS
 };
 // This is the duration of a quarter note expressed in program-execution cycles.
 // The actual duration of the note played will depend on the processor speed/frequency.
-unsigned long SIXTEENTH_NOTE_DURATION_CYCLES = 35000;
+unsigned long SIXTEENTH_NOTE_DURATION_CYCLES = 70000;//35000;
  
 /**
  * Play a musical note
