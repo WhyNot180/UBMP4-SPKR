@@ -34,19 +34,19 @@ int main(void)
     while(1)
     {
         if (SW2 == 0) {
-            playNote(C | QuarterNote | O4, E | QuarterNote | O4, G | QuarterNote | O4, C | QuarterNote | O5, E | QuarterNote | O5, G | QuarterNote | O5);
+            playNote(C | QuarterNote | O4, E | QuarterNote | O4, G | QuarterNote | O4, C | QuarterNote | O4, E | QuarterNote | O4, G | QuarterNote | O4);
         }
  
         if (SW3 == 0) {
-            playNote(C | QuarterNote | O4, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote);
+            playNote(Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, C | QuarterNote | O3);
         }
 
         if (SW4 == 0) {
-            playNote(E | QuarterNote | O4, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote);
+            playNote(E | QuarterNote | O3, E | QuarterNote | O3, E | QuarterNote | O3, E | QuarterNote | O3, E | QuarterNote | O3, E | QuarterNote | O3);
         }
 
         if (SW5 == 0) {
-            playNote(G | QuarterNote | O4, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote, Rest | QuarterNote);
+            playNote(G | QuarterNote | O3, G | QuarterNote | O3, G | QuarterNote | O3, G | QuarterNote | O3, G | QuarterNote | O3, G | QuarterNote | O3);
         }
 
         // Activate bootloader if SW1 is pressed.

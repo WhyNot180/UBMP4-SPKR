@@ -5,6 +5,7 @@
  
 #define MIN(x, y) x < y ? x : y
 #define MAX(x, y) x < y ? y : x
+#define TOTALNOTES (period == 0 ? 0 : 1) + (period2 == 0 ? 0 : 1) + (period3 == 0 ? 0 : 1) + (period4 == 0 ? 0 : 1) + (period5 == 0 ? 0 : 1) + (period6 == 0 ? 0 : 1)
  
  
 unsigned long ipow(unsigned long base, unsigned char exp) {
@@ -86,9 +87,10 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
     unsigned long truePeriod;
     unsigned char alternate;
     bool trueSilent;
+    unsigned char modulo = TOTALNOTES * 2;
     for (unsigned int c = 0; c < cycles; c++)
     {
-        alternate = c % 12;
+        alternate = c % modulo;
         switch (alternate){
             case (0):
                 truePeriod = period6;
@@ -115,7 +117,7 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
                 trueSilent = silent5;
                 break;
             default:
-                truePeriod = 0;
+                //truePeriod = 0;
                 break;
         }
         if (!trueSilent) BEEPER = !BEEPER;
@@ -148,7 +150,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
-        period = CLOCK_FREQ / 62;
+        //period = CLOCK_FREQ / 62;
         break;
     default:
         if (note <= B)
@@ -162,7 +164,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
-        period2 = CLOCK_FREQ / 62;
+        //period2 = CLOCK_FREQ / 62;
         break;
     default:
         if (note2 <= B)
@@ -176,7 +178,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
-        period3 = CLOCK_FREQ / 62;
+        //period3 = CLOCK_FREQ / 62;
         break;
     default:
         if (note3 <= B)
@@ -189,7 +191,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
-        period4 = CLOCK_FREQ / 62;
+        //period4 = CLOCK_FREQ / 62;
         break;
     default:
         if (note4 <= B)
@@ -202,7 +204,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
-        period5 = CLOCK_FREQ / 62;
+        //period5 = CLOCK_FREQ / 62;
         break;
     default:
         if (note5 <= B)
@@ -215,7 +217,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
-        period6 = CLOCK_FREQ / 62;
+        //period6 = CLOCK_FREQ / 62;
         break;
     default:
         if (note6 <= B)
@@ -250,8 +252,9 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     unsigned long adjustedPeriod4 = period4 / ipow(2, findOctave(note4Plus & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
     unsigned long adjustedPeriod5 = period5 / ipow(2, findOctave(note5Plus & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
     unsigned long adjustedPeriod6 = period6 / ipow(2, findOctave(note6Plus & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+    if (adjustedPeriod6 == 366) LED4 = 1;
 
-    _makeSound(length / (adjustedPeriod + adjustedPeriod2 + adjustedPeriod3 + adjustedPeriod4 + adjustedPeriod5 + adjustedPeriod6),
+    _makeSound(length / (MAX((adjustedPeriod + adjustedPeriod2 + adjustedPeriod3 + adjustedPeriod4 + adjustedPeriod5 + adjustedPeriod6), 1)),
             adjustedPeriod, note == Rest ? true : false,
             adjustedPeriod2, note2 == Rest ? true : false,
             adjustedPeriod3, note3 == Rest ? true : false,
