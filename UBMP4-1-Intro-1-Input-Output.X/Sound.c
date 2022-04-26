@@ -252,7 +252,6 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     unsigned long adjustedPeriod4 = period4 / ipow(2, findOctave(note4Plus & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
     unsigned long adjustedPeriod5 = period5 / ipow(2, findOctave(note5Plus & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
     unsigned long adjustedPeriod6 = period6 / ipow(2, findOctave(note6Plus & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
-    if (adjustedPeriod6 == 366) LED4 = 1;
 
     _makeSound(length / (MAX((adjustedPeriod + adjustedPeriod2 + adjustedPeriod3 + adjustedPeriod4 + adjustedPeriod5 + adjustedPeriod6), 1)),
             adjustedPeriod, note == Rest ? true : false,
