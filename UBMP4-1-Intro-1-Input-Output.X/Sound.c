@@ -150,7 +150,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
-        //period = CLOCK_FREQ / 62;
+        period = CLOCK_FREQ / 62;
         break;
     default:
         if (note <= B)
@@ -164,7 +164,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
-        //period2 = CLOCK_FREQ / 62;
+        period2 = CLOCK_FREQ / 62;
         break;
     default:
         if (note2 <= B)
@@ -178,7 +178,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
-        //period3 = CLOCK_FREQ / 62;
+        period3 = CLOCK_FREQ / 62;
         break;
     default:
         if (note3 <= B)
@@ -191,7 +191,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
-        //period4 = CLOCK_FREQ / 62;
+        period4 = CLOCK_FREQ / 62;
         break;
     default:
         if (note4 <= B)
@@ -204,7 +204,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
-        //period5 = CLOCK_FREQ / 62;
+        period5 = CLOCK_FREQ / 62;
         break;
     default:
         if (note5 <= B)
@@ -217,7 +217,7 @@ void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3P
     case Rest:
         // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
         // note length.  We just want the Rest to be silent for the correct length of time.
-        //period6 = CLOCK_FREQ / 62;
+        period6 = CLOCK_FREQ / 62;
         break;
     default:
         if (note6 <= B)
