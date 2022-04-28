@@ -90,34 +90,34 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
     unsigned char modulo = TOTALNOTES * 2;
     for (unsigned int c = 0; c < cycles; c++)
     {
-        alternate = c % modulo;
+        alternate = c % 12;
         switch (alternate){
             case (0):
-                truePeriod = period6;
-                trueSilent = silent6;
-                break;
-            case (2):
                 truePeriod = period;
                 trueSilent = silent;
                 break;
-            case (4):
+            case (2):
                 truePeriod = period2;
                 trueSilent = silent2;
                 break;
-            case (6):
+            case (4):
                 truePeriod = period3;
                 trueSilent = silent3;
                 break;
-            case (8):
+            case (6):
                 truePeriod = period4;
                 trueSilent = silent4;
                 break;
-            case (10):
+            case (8):
                 truePeriod = period5;
                 trueSilent = silent5;
                 break;
+            case (10):
+                truePeriod = period6;
+                trueSilent = silent6;
+                break;
             default:
-                //truePeriod = 0;
+                truePeriod = 0;
                 break;
         }
         if (!trueSilent) BEEPER = !BEEPER;

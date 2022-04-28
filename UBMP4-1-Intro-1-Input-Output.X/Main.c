@@ -23,6 +23,10 @@
 // TODO Set linker code offset to '800' under "Additional options" pull-down.
  
 // The main function is required, and the program begins executing from here.
+
+unsigned int undertale[6][3] = {{Fs | FullNote | O5, F | FullNote | O5, Ds | FullNote | O5, Cs | FullNote | O5, Ds | FullNote | O5, As | FullNote | O4},
+                                  {Rest | FullNote, Ds | FullNote | O3, Fs | FullNote | O3, Gs | FullNote | O3, As | FullNote | O3, Fs | FullNote | O3},
+                                  {Ds | FullNote | O2, Rest | FullNote, Rest | FullNote, Rest | FullNote, Fs | FullNote | O2, Rest | FullNote}};
  
 int main(void)
 {
@@ -34,19 +38,21 @@ int main(void)
     while(1)
     {
         if (SW2 == 0) {
-            playNote(C | QuarterNote | O4, E | QuarterNote | O4, G | QuarterNote | O4, C | QuarterNote | O4, E | QuarterNote | O4, G | QuarterNote | O4);
+            playNote(C | QuarterNote | O4, E | QuarterNote | O4, G | QuarterNote | O4, Rest | QuarterNote | O4, Rest | QuarterNote | O4, Rest | QuarterNote | O4);
         }
  
         if (SW3 == 0) {
-            playNote(Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, C | QuarterNote | O3);
+            for (int i = 0; i < 6; i++) {
+                playNote(undertale[i][0], undertale[i][1], undertale[i][2], Rest, Rest, Rest);
+            }
         }
 
         if (SW4 == 0) {
-            playNote(E | QuarterNote | O3, E | QuarterNote | O3, E | QuarterNote | O3, E | QuarterNote | O3, E | QuarterNote | O3, E | QuarterNote | O3);
+            playNote(C | QuarterNote | O3, E | QuarterNote | O3, G | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3);
         }
 
         if (SW5 == 0) {
-            playNote(G | QuarterNote | O3, G | QuarterNote | O3, G | QuarterNote | O3, G | QuarterNote | O3, G | QuarterNote | O3, G | QuarterNote | O3);
+            playNote(C | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3);
         }
 
         // Activate bootloader if SW1 is pressed.
