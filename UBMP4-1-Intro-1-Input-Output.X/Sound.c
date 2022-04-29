@@ -87,37 +87,68 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
     unsigned long truePeriod;
     unsigned char alternate;
     bool trueSilent;
-    unsigned char modulo = TOTALNOTES * 2;
+    //unsigned char modulo = TOTALNOTES * 2;
+    unsigned long duty1 = period / 100;
+    unsigned long duty2 = period2 / 100;
+    unsigned long duty3 = period3 / 100;
+    unsigned long duty4 = period4 / 100;
+    unsigned long duty5 = period5 / 100;
+    unsigned long duty6 = period6 / 100;
     for (unsigned int c = 0; c < cycles; c++)
     {
         alternate = c % 12;
         switch (alternate){
             case (0):
-                truePeriod = period;
+                truePeriod = period + duty1 * 49;
+                trueSilent = false; //silent;
+                break;
+            case (1):
+                truePeriod = duty1;
                 trueSilent = silent;
                 break;
             case (2):
-                truePeriod = period2;
+                truePeriod = period2 + duty2 * 49;
+                trueSilent = false; //silent2;
+                break;
+            case (3):
+                truePeriod = duty2;
                 trueSilent = silent2;
                 break;
             case (4):
-                truePeriod = period3;
+                truePeriod = period3 + duty3 * 49;
+                trueSilent = false; //silent3;
+                break;
+            case (5):
+                truePeriod = duty3;
                 trueSilent = silent3;
                 break;
             case (6):
-                truePeriod = period4;
+                truePeriod = period4 + duty4 * 49;
+                trueSilent = false; //silent4;
+                break;
+            case (7):
+                truePeriod = duty4;
                 trueSilent = silent4;
                 break;
             case (8):
-                truePeriod = period5;
+                truePeriod = period5 + duty5 * 49;
+                trueSilent = false; //silent5;
+                break;
+            case (9):
+                truePeriod = duty5;
                 trueSilent = silent5;
                 break;
             case (10):
-                truePeriod = period6;
+                truePeriod = period6 + duty6 * 49;
+                trueSilent = false; //silent6;
+                break;
+            case (11):
+                truePeriod = duty6;
                 trueSilent = silent6;
                 break;
             default:
                 truePeriod = 0;
+                trueSilent = false;
                 break;
         }
         if (!trueSilent) BEEPER = !BEEPER;
