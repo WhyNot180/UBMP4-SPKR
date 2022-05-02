@@ -38,7 +38,7 @@ int main(void)
     while(1)
     {
         if (SW2 == 0) {
-            playNote(C | QuarterNote | O4, E | QuarterNote | O4, G | QuarterNote | O4, Rest | QuarterNote | O4, Rest | QuarterNote | O4, Rest | QuarterNote | O4);
+            playNote(C | QuarterNote | O4, E | QuarterNote | O4, G | QuarterNote | O4, C | QuarterNote | O4, E | QuarterNote | O4, G | QuarterNote | O4);
         }
  
         if (SW3 == 0) {

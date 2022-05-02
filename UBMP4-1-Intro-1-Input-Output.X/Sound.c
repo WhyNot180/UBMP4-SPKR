@@ -84,76 +84,60 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
                 unsigned long period5, bool silent5,
                 unsigned long period6, bool silent6)
 {
-    unsigned long truePeriod;
-    unsigned char alternate;
-    bool trueSilent;
-    //unsigned char modulo = TOTALNOTES * 2;
-    unsigned long duty1 = period / 100;
-    unsigned long duty2 = period2 / 100;
-    unsigned long duty3 = period3 / 100;
-    unsigned long duty4 = period4 / 100;
-    unsigned long duty5 = period5 / 100;
-    unsigned long duty6 = period6 / 100;
+    unsigned long truePeriod = period << 1;
+    unsigned long truePeriod2 = period2 << 1;
+    unsigned long truePeriod3 = period3 << 1;
+    unsigned long truePeriod4 = period4 << 1;
+    unsigned long truePeriod5 = period5 << 1;
+    unsigned long truePeriod6 = period6 << 1;
+    unsigned char alternate = 0;
+    unsigned long waveForm = truePeriod >> 8;
+    unsigned long waveForm2 = truePeriod2 >> 8;
+    unsigned long waveForm3 = truePeriod3 >> 8;
+    unsigned long waveForm4 = truePeriod4 >> 8;
+    unsigned long waveForm5 = truePeriod5 >> 8;
+    unsigned long waveForm6 = truePeriod6 >> 8;
+    unsigned long activeP = truePeriod;
+    unsigned long activeP2 = truePeriod2;
+    unsigned long activeP3 = truePeriod3;
+    unsigned long activeP4 = truePeriod4;
+    unsigned long activeP5 = truePeriod5;
+    unsigned long activeP6 = truePeriod6;
+    char output1 = 0;
+    char output2 = 0;
+    char output3 = 0;
+    char output4 = 0;
+    char output5 = 0;
+    char output6 = 0;
     for (unsigned int c = 0; c < cycles; c++)
     {
-        alternate = c % 12;
-        switch (alternate){
-            case (0):
-                truePeriod = period + duty1 * 49;
-                trueSilent = false; //silent;
-                break;
-            case (1):
-                truePeriod = duty1;
-                trueSilent = silent;
-                break;
-            case (2):
-                truePeriod = period2 + duty2 * 49;
-                trueSilent = false; //silent2;
-                break;
-            case (3):
-                truePeriod = duty2;
-                trueSilent = silent2;
-                break;
-            case (4):
-                truePeriod = period3 + duty3 * 49;
-                trueSilent = false; //silent3;
-                break;
-            case (5):
-                truePeriod = duty3;
-                trueSilent = silent3;
-                break;
-            case (6):
-                truePeriod = period4 + duty4 * 49;
-                trueSilent = false; //silent4;
-                break;
-            case (7):
-                truePeriod = duty4;
-                trueSilent = silent4;
-                break;
-            case (8):
-                truePeriod = period5 + duty5 * 49;
-                trueSilent = false; //silent5;
-                break;
-            case (9):
-                truePeriod = duty5;
-                trueSilent = silent5;
-                break;
-            case (10):
-                truePeriod = period6 + duty6 * 49;
-                trueSilent = false; //silent6;
-                break;
-            case (11):
-                truePeriod = duty6;
-                trueSilent = silent6;
-                break;
-            default:
-                truePeriod = 0;
-                trueSilent = false;
-                break;
+        if (activeP-- == 0) {
+            activeP = truePeriod;
+        } else if (activeP <= waveForm && !silent) {
+            output1 = 1;
+        } else if (activeP >= waveForm && !silent) {
+            output1 = 0;
         }
-        if (!trueSilent) BEEPER = !BEEPER;
-        for (unsigned long p = 0; p < truePeriod; p++);
+        
+        if (activeP2-- == 0) {
+            activeP2 = truePeriod2;
+        } else if (activeP2 <= waveForm2 && !silent2) {
+            output2 = 1;
+        } else if (activeP2 >= waveForm2 && !silent2) {
+            output2 = 0;
+        }
+
+        if (activeP3-- == 0) {
+            activeP3 = truePeriod3;
+        } else if (activeP3 <= waveForm3 && !silent3) {
+            output3 = 1;
+        } else if (activeP3 >= waveForm3 && !silent3) {
+            output3 = 0;
+        }
+
+        BEEPER = output1 | output2 | output3;
     }
+    BEEPER = 0;
 }
  
 void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3Plus, unsigned int note4Plus, unsigned int note5Plus, unsigned int note6Plus)
