@@ -90,52 +90,44 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
     unsigned long truePeriod4 = period4 << 1;
     unsigned long truePeriod5 = period5 << 1;
     unsigned long truePeriod6 = period6 << 1;
+    unsigned long truePeriods[3] = {period << 1, period2 << 1, period3 << 1};
     unsigned char alternate = 0;
-    unsigned long waveForm = truePeriod >> 8;
-    unsigned long waveForm2 = truePeriod2 >> 8;
-    unsigned long waveForm3 = truePeriod3 >> 8;
-    unsigned long waveForm4 = truePeriod4 >> 8;
-    unsigned long waveForm5 = truePeriod5 >> 8;
-    unsigned long waveForm6 = truePeriod6 >> 8;
-    unsigned long activeP = truePeriod;
+    unsigned long waveForm = truePeriod >> 1;
+    unsigned long waveForm2 = truePeriod2 >> 1;
+    unsigned long waveForm3 = truePeriod3 >> 1;
+    unsigned long waveForm4 = truePeriod4 >> 1;
+    unsigned long waveForm5 = truePeriod5 >> 1;
+    unsigned long waveForm6 = truePeriod6 >> 1;
+    unsigned long waveForms[3] = {truePeriods[0] >> 4, truePeriods[1] >> 4, truePeriods[2] >> 4};
+    //unsigned long activeP = truePeriod;
     unsigned long activeP2 = truePeriod2;
     unsigned long activeP3 = truePeriod3;
     unsigned long activeP4 = truePeriod4;
     unsigned long activeP5 = truePeriod5;
     unsigned long activeP6 = truePeriod6;
+    unsigned long activeP[3] = {truePeriods[0], truePeriods[1], truePeriods[2]};
     char output1 = 0;
     char output2 = 0;
     char output3 = 0;
     char output4 = 0;
     char output5 = 0;
     char output6 = 0;
+    bool trueSilents[3] = {silent, silent2, silent3};
     for (unsigned int c = 0; c < cycles; c++)
     {
-        if (activeP-- == 0) {
-            activeP = truePeriod;
-        } else if (activeP <= waveForm && !silent) {
-            output1 = 1;
-        } else if (activeP >= waveForm && !silent) {
-            output1 = 0;
+        for (unsigned int voice = 0; voice < 3; voice++) {
+            if (--activeP[voice] == 0) {
+                activeP[voice] = truePeriods[voice];
+            } else if (activeP[voice] <= waveForms[voice] && !trueSilents[voice]) {
+                BEEPER = 1;//output1 = 1;
+            } else if (activeP[voice] >= waveForms[voice] && !trueSilents[voice]) {
+                BEEPER = 0;//output1 = 0;
+            }
+            if (c % 25000 == 0) {
+                for (unsigned int voice = 0; voice < 3; voice++) ++waveForms[voice];
+            }
         }
-        
-        if (activeP2-- == 0) {
-            activeP2 = truePeriod2;
-        } else if (activeP2 <= waveForm2 && !silent2) {
-            output2 = 1;
-        } else if (activeP2 >= waveForm2 && !silent2) {
-            output2 = 0;
-        }
-
-        if (activeP3-- == 0) {
-            activeP3 = truePeriod3;
-        } else if (activeP3 <= waveForm3 && !silent3) {
-            output3 = 1;
-        } else if (activeP3 >= waveForm3 && !silent3) {
-            output3 = 0;
-        }
-
-        BEEPER = output1 | output2 | output3;
+        //BEEPER = output1 | output2 | output3;
     }
     BEEPER = 0;
 }
