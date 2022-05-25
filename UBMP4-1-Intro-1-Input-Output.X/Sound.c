@@ -99,36 +99,50 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
     unsigned long waveForm5 = truePeriod5 >> 1;
     unsigned long waveForm6 = truePeriod6 >> 1;
     unsigned long waveForms[3] = {truePeriods[0] >> 4, truePeriods[1] >> 4, truePeriods[2] >> 4};
-    //unsigned long activeP = truePeriod;
-    unsigned long activeP2 = truePeriod2;
-    unsigned long activeP3 = truePeriod3;
-    unsigned long activeP4 = truePeriod4;
-    unsigned long activeP5 = truePeriod5;
-    unsigned long activeP6 = truePeriod6;
-    unsigned long activeP[3] = {truePeriods[0], truePeriods[1], truePeriods[2]};
+    unsigned long pitch[3] = {truePeriods[0], truePeriods[1], truePeriods[2]};
+    unsigned char coreRhythm = 1;
+    unsigned char rhythms[3] = {coreRhythm, coreRhythm, coreRhythm};
+    unsigned char coreEffect = 8;
+    unsigned char effects[3] = {coreEffect, coreEffect, coreEffect};
+    unsigned char coreStructure = 4;
+    unsigned char structures[3] = {coreStructure, coreStructure, coreStructure};
+    bool end[3] = {0, 0, 0};
     char output1 = 0;
     char output2 = 0;
     char output3 = 0;
     char output4 = 0;
     char output5 = 0;
     char output6 = 0;
+    char outputs[3][4] = {{0, 0, 0, 0},
+                            {0, 0, 0, 0},
+                            {0, 0, 0, 0}};
     bool trueSilents[3] = {silent, silent2, silent3};
-    for (unsigned int c = 0; c < cycles; c++)
-    {
-        for (unsigned int voice = 0; voice < 3; voice++) {
-            if (--activeP[voice] == 0) {
-                activeP[voice] = truePeriods[voice];
-            } else if (activeP[voice] <= waveForms[voice] && !trueSilents[voice]) {
-                BEEPER = 1;//output1 = 1;
-            } else if (activeP[voice] >= waveForms[voice] && !trueSilents[voice]) {
-                BEEPER = 0;//output1 = 0;
-            }
-            if (c % 25000 == 0) {
-                for (unsigned int voice = 0; voice < 3; voice++) ++waveForms[voice];
+    do {
+        for (unsigned int voice = 0; voice != 3; voice++) {
+            BEEPER = (outputs[voice][0] & outputs[voice][1] & outputs[voice][2] & outputs[voice][3]);
+            LED3 = outputs[voice][0] & outputs[voice][1] & outputs[voice][2] & outputs[voice][3];
+            if (pitch[voice]-- == 0) {
+                pitch[voice] = truePeriods[voice];
+                outputs[voice][0] ^= 1;
+                
+                if (effects[voice]-- == 0) {
+                    effects[voice] = coreEffect;
+                    outputs[voice][1] ^= 1;
+
+                    if (rhythms[voice]-- == 0) {
+                        rhythms[voice] = coreRhythm;
+                        outputs[voice][2] ^= 1;
+
+                        if (structures[voice]-- == 0) {
+                            structures[voice] = coreStructure;
+                            outputs[voice][3] ^= 1;
+                            end[voice] = 1;
+                        }
+                    }
+                }
             }
         }
-        //BEEPER = output1 | output2 | output3;
-    }
+    } while (!(end[0] & end[1] & end[2]));
     BEEPER = 0;
 }
  
