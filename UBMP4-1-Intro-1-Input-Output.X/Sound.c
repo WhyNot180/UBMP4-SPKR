@@ -124,6 +124,8 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
         if (pitch[2]-- == 0) pitch[2] = truePeriods[2];
         if (pitch[2] >= waveForms[2]) BEEPER = 1;
         if (pitch[2] <= waveForms[2]) BEEPER = 0;
+        //note: try adding a seperate effects counter that depends on variables that (when all on) will subtract from a shared effect counter
+        // that will then decrement their respective rhythm counters
         // BEEPER = outputs[0][0] & outputs[0][1] & outputs[0][2] & outputs[0][3];
         // LED3 = outputs[0][0] & outputs[0][1] & outputs[0][2] & outputs[0][3];
         // if (pitch[0]-- == 0) {
