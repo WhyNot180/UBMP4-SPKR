@@ -43,3 +43,17 @@ Unfortunately, this alone does not allow for effective pulse interleaving, as ea
 I suspect I might be able to have a master counter of sorts to process the effect and rhythm domains seperately of the pitches.
 
 ### May 26
+
+Today I received a surprise present from Mr. Lam! He gave me the bluetooth module I was looking for much earlier than expected *and* a bigger piezo beeper. Perhaps I could
+integrate it into my project if I have some extra time. In other news, I have made a great discovery regarding domains! The master counter works! I implemented this using
+the greatest common divisor of the periods of all the notes, however, this also results in the note not having any rhythm to it, which I need to fix. There are more exciting
+things I have discovered though! I realized that the effect counter effectively acts as a divisor of the waveform meaning that if I set it to "1" then I have a 50% duty cycle,
+and if I set it to 2 then it is a 25% duty cycle (and so on). This means I can effectively change the timbre of the note! Additionally, if I were to decrease the duty cycle
+enough then it may be used to change through volume as well! Now that I think about it, it feels kind of obvious, but I find that discovering these things on my own is
+still fun :p
+
+### May 27
+
+Today was a mostly uneventful day. The most I did was *attempt* to de-solder a header from the bluetooth module. The result was a module was without any header and holes
+plugged with solder. Before I finished, I had to leave for my next class and Mr. Lam said that he would take care of it for me (thanks). Other than that it was a pretty uneventful
+day.
