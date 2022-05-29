@@ -26,6 +26,10 @@ int findGCD(unsigned long a, unsigned long b) {
     return a;
 }
 
+long findLCM(unsigned long a, unsigned long b) {
+    return a / findGCD(a, b) * b;
+}
+
 unsigned char findOctave(enum Octave note) {
     switch (note)
     {
@@ -116,7 +120,7 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
     unsigned char effects[3] = {coreEffect, coreEffect, coreEffect};
     unsigned char coreStructure = 1;
     unsigned char structures[3] = {coreStructure, coreStructure, coreStructure};
-    unsigned long trueMasterCount = findGCD(pitch[0], findGCD(pitch[1], pitch[2]));
+    unsigned long trueMasterCount = findLCM(pitch[0], findLCM(pitch[1], pitch[2]));
     unsigned long masterCount = trueMasterCount;
     bool end[3] = {0, 0, 0};
     char outputs[3][4] = {{0, 0, 0, 0},
