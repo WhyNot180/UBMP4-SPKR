@@ -57,3 +57,13 @@ still fun :p
 Today was a mostly uneventful day. The most I did was *attempt* to de-solder a header from the bluetooth module. The result was a module was without any header and holes
 plugged with solder. Before I finished, I had to leave for my next class and Mr. Lam said that he would take care of it for me (thanks). Other than that it was a pretty uneventful
 day.
+
+### May 28
+
+Today's work was primarily focused on figuring out how to implement note durations and how to get the master counter to work properly. Before, the master counter caused the note to
+output a continuous sound regardless of the other domains. Initially, I thought that I should use the lowest common multiple as the counter, however, this made it take far too long to
+play any note, instead, I decided to make it 220kHz (clock frequency / 220000), as this happens to the sampling speed ProtoDome uses in his 1-bit generator for PIM. This worked marvelously!
+After I did that, I discovered that instead of affecting the duration of the note, as I had initially expected, it instead made a sort of ringing sound (similarly to a phone's ring-tone)
+and changed the amount of "rings" heard. After doing some more experimentation, I learned that this was actually caused by the effect domain! This means that, while it can help give a more pleasant
+tone, the way it is currently implemented creates that ringing tone. After doing some digging I saw that this was actually mentioned in Dr. Troise's paper. It seems I shall have to come up
+with a different way of changing the timbre or the duration, perhaps I could combine the pitch and effect domain bits? That would require more processing power though. Hmm, decisions, decisions.
