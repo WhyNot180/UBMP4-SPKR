@@ -155,7 +155,7 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
             masterCount = 218;
             
             if (effects[0]-- == 0) {
-                effects[0] = coreEffect;
+                effects[0] = outputs[0][1] ? coreEffect : 1;
                 outputs[0][1] ^= 1;
                 if (rhythms[0]-- == 0) {
                     rhythms[0] = coreRhythm;
@@ -164,7 +164,7 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
             }
 
             if (effects[1]-- == 0) {
-                effects[1] = coreEffect;
+                effects[1] = outputs[1][1] ? coreEffect : 1;
                 outputs[1][1] ^= 1;
                 if (rhythms[1]-- == 0) {
                     rhythms[1] = coreRhythm;
@@ -173,7 +173,7 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
             }
 
             if (effects[2]-- == 0) {
-                effects[2] = coreEffect;
+                effects[2] = outputs[2][1] ? coreEffect : 1;
                 outputs[2][1] ^= 1;
                 if (rhythms[2]-- == 0) {
                     rhythms[2] = coreRhythm;
