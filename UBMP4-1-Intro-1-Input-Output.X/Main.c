@@ -42,7 +42,7 @@ int main(void)
         }
 
         if (SW4 == 0) {
-            playNote(C | QuarterNote | O3, E | QuarterNote | O3, G | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3);
+            playNote(C | QuarterNote | O4, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3);
         }
 
         // Activate bootloader if SW1 is pressed.
