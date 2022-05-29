@@ -130,22 +130,22 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
     do {
         //note: the effect counter is effectively a divisor of the waveform (i.e. effect = 1 waveform = 50%, effect = 2 waveform = 25%)
         // try finding other relationships with other time domains
-        BEEPER = outputs[0][0] & outputs[0][1] & outputs[0][2];
-        LED3 = outputs[0][0] & outputs[0][1] & outputs[0][2];
+        BEEPER = outputs[0][0] & outputs[0][1] & !outputs[0][2];
+        LED3 = outputs[0][0] & outputs[0][1] & !outputs[0][2];
         if (pitch[0]-- == 0) {
             pitch[0] = truePeriods[0];
             outputs[0][0] ^= 1;
         }
 
-        BEEPER = outputs[1][0] & outputs[1][1] & outputs[1][2];
-        LED3 = outputs[1][0] & outputs[1][1] & outputs[1][2];
+        BEEPER = outputs[1][0] & outputs[1][1] & !outputs[1][2];
+        LED3 = outputs[1][0] & outputs[1][1] & !outputs[1][2];
         if (pitch[1]-- == 0) {
             pitch[1] = truePeriods[1];
             outputs[1][0] ^= 1;
         }
 
-        BEEPER = outputs[2][0] & outputs[2][1] & outputs[2][2];
-        LED3 = outputs[2][0] & outputs[2][1] & outputs[2][2];
+        BEEPER = outputs[2][0] & outputs[2][1] & !outputs[2][2];
+        LED3 = outputs[2][0] & outputs[2][1] & !outputs[2][2];
         if (pitch[2]-- == 0) {
             pitch[2] = truePeriods[2];
             outputs[2][0] ^= 1;
@@ -157,29 +157,28 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
             if (effects[0]-- == 0) {
                 effects[0] = coreEffect;
                 outputs[0][1] ^= 1;
+                if (rhythms[0]-- == 0) {
+                    rhythms[0] = coreRhythm;
+                    //outputs[0][2] ^= 1;
+                }
             }
 
             if (effects[1]-- == 0) {
                 effects[1] = coreEffect;
                 outputs[1][1] ^= 1;
+                if (rhythms[1]-- == 0) {
+                    rhythms[1] = coreRhythm;
+                    //outputs[1][2] ^= 1;
+                }
             }
 
             if (effects[2]-- == 0) {
                 effects[2] = coreEffect;
                 outputs[2][1] ^= 1;
-            }
-
-            if (rhythms[0]-- == 0) {
-                rhythms[0] = coreRhythm;
-                outputs[0][2] ^= 1;
-            }
-            if (rhythms[1]-- == 0) {
-                rhythms[1] = coreRhythm;
-                outputs[1][2] ^= 1;
-            }
-            if (rhythms[2]-- == 0) {
-                rhythms[2] = coreRhythm;
-                outputs[2][2] ^= 1;
+                if (rhythms[2]-- == 0) {
+                    rhythms[2] = coreRhythm;
+                    //outputs[2][2] ^= 1;
+                }
             }
         }
     } while (1);//!(end[0] & end[1] & end[2]));
