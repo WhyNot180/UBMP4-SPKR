@@ -98,21 +98,8 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
                 unsigned long period5, bool silent5,
                 unsigned long period6, bool silent6)
 {
-    unsigned long truePeriod = period << 1;
-    unsigned long truePeriod2 = period2 << 1;
-    unsigned long truePeriod3 = period3 << 1;
-    unsigned long truePeriod4 = period4 << 1;
-    unsigned long truePeriod5 = period5 << 1;
-    unsigned long truePeriod6 = period6 << 1;
     unsigned long truePeriods[3] = {!silent ? period : 1, !silent ? period2 : 1, !silent ? period3 : 1};
-    unsigned char alternate = 0;
-    unsigned long waveForm = truePeriod >> 1;
-    unsigned long waveForm2 = truePeriod2 >> 1;
-    unsigned long waveForm3 = truePeriod3 >> 1;
-    unsigned long waveForm4 = truePeriod4 >> 1;
-    unsigned long waveForm5 = truePeriod5 >> 1;
-    unsigned long waveForm6 = truePeriod6 >> 1;
-    unsigned long waveForms[3] = {truePeriods[0] >> 9, truePeriods[1] >> 9, truePeriods[2] >> 9};
+    unsigned long waveForms[3] = {period >> 4, period2 >> 4, period3 >> 4};
     unsigned long pitch[3] = {!silent ? period : 1, !silent ? period2 : 1,!silent ? period3 : 1};
     unsigned char coreRhythm = 1;
     unsigned char rhythms[3] = {coreRhythm, coreRhythm, coreRhythm};
@@ -134,14 +121,25 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
         LED3 = outputs[0][0] & outputs[0][1] & outputs[0][2];
         if (pitch[0]-- == 0) {
             pitch[0] = truePeriods[0];
-            outputs[0][0] ^= 1;
         }
+        if (pitch[0] <= waveForms[0]) {
+            outputs[0][0] = 1;
+        }
+        if (pitch[0] >= waveForms[0]) {
+            outputs[0][0] = 0;
+        }
+
 
         BEEPER = outputs[1][0] & outputs[1][1] & outputs[1][2];
         LED3 = outputs[1][0] & outputs[1][1] & outputs[1][2];
         if (pitch[1]-- == 0) {
             pitch[1] = truePeriods[1];
-            outputs[1][0] ^= 1;
+        }
+        if (pitch[1] <= waveForms[1]) {
+            outputs[1][0] = 1;
+        }
+        if (pitch[1] >= waveForms[1]) {
+            outputs[1][0] = 0;
         }
 
         BEEPER = outputs[2][0] & outputs[2][1] & outputs[2][2];
@@ -150,36 +148,42 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
             pitch[2] = truePeriods[2];
             outputs[2][0] ^= 1;
         }
+        if (pitch[2] <= waveForms[2]) {
+            outputs[2][0] = 1;
+        }
+        if (pitch[2] >= waveForms[2]) {
+            outputs[2][0] = 0;
+        }
 
         if (masterCount-- == 0) {
             masterCount = 218;
             
-            if (effects[0]-- == 0) {
-                effects[0] = outputs[0][1] ? coreEffect : 1;
+            /*if (effects[0]-- == 0) {
+                effects[0] = outputs[0][1] ? coreeffect : 1;
                 outputs[0][1] ^= 1;
                 if (rhythms[0]-- == 0) {
-                    rhythms[0] = coreRhythm;
+                    rhythms[0] = corerhythm;
                     outputs[0][2] ^= 1;
                 }
             }
 
             if (effects[1]-- == 0) {
-                effects[1] = outputs[1][1] ? coreEffect : 1;
+                effects[1] = outputs[1][1] ? coreeffect : 1;
                 outputs[1][1] ^= 1;
                 if (rhythms[1]-- == 0) {
-                    rhythms[1] = coreRhythm;
+                    rhythms[1] = corerhythm;
                     outputs[1][2] ^= 1;
                 }
             }
 
             if (effects[2]-- == 0) {
-                effects[2] = outputs[2][1] ? coreEffect : 1;
+                effects[2] = outputs[2][1] ? coreeffect : 1;
                 outputs[2][1] ^= 1;
                 if (rhythms[2]-- == 0) {
-                    rhythms[2] = coreRhythm;
+                    rhythms[2] = corerhythm;
                     outputs[2][2] ^= 1;
                 }
-            }
+            }*/
         }
     } while (1);//!(end[0] & end[1] & end[2]));
     BEEPER = 0;
