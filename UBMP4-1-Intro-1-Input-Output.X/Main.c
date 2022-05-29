@@ -40,19 +40,9 @@ int main(void)
         if (SW2 == 0) {
             playNote(C | QuarterNote | O8, E | QuarterNote | O8, G | QuarterNote | O8, C | QuarterNote | O8, E | QuarterNote | O8, G | QuarterNote | O8);
         }
- 
-        if (SW3 == 0) {
-            for (int i = 0; i < 6; i++) {
-                playNote(undertale[i][0], undertale[i][1], undertale[i][2], Rest, Rest, Rest);
-            }
-        }
 
         if (SW4 == 0) {
             playNote(C | QuarterNote | O3, E | QuarterNote | O3, G | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3);
-        }
-
-        if (SW5 == 0) {
-            playNote(C | QuarterNote | O3, C | QuarterNote | O3, C | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3);
         }
 
         // Activate bootloader if SW1 is pressed.
