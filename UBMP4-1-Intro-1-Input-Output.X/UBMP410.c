@@ -38,7 +38,7 @@ void UBMP4_config(void)
     LATB = 0b00000000;          // Clear Port B latches before configuring PORTB
     TRISB = 0b11110000;         // Enable pushbutton pins as inputs (SW2-SW5)
     ANSELB = 0b00000000;        // Make all Port B pins digital
-    WPUB = 0b11110000;          // Enable weak pull-ups on pushbutton inputs
+    WPUB = 0b01010000;          // Enable weak pull-ups on pushbutton inputs (SW2 and SW4)
 
     LATC = 0b00000000;          // Clear Port C latches before configuring PORTC
     TRISC = 0b00001111;         // Set LED pins as outputs, H1-H4 pins as inputs
