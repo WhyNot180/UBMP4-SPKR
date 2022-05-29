@@ -113,7 +113,7 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
     unsigned long waveForm5 = truePeriod5 >> 1;
     unsigned long waveForm6 = truePeriod6 >> 1;
     unsigned long waveForms[3] = {truePeriods[0] >> 9, truePeriods[1] >> 9, truePeriods[2] >> 9};
-    unsigned long pitch[3] = {period, period2,period3};
+    unsigned long pitch[3] = {!silent ? period : 0, !silent ? period2 : 0,!silent ? period3 : 0};
     unsigned char coreRhythm = 1;
     unsigned char rhythms[3] = {coreRhythm, coreRhythm, coreRhythm};
     unsigned char coreEffect = 8;
