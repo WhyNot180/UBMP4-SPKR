@@ -121,7 +121,7 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
     unsigned char coreStructure = 1;
     unsigned char structures[3] = {coreStructure, coreStructure, coreStructure};
     unsigned long trueMasterCount = findLCM(pitch[0], findLCM(pitch[1], pitch[2]));
-    unsigned long masterCount = trueMasterCount;
+    unsigned long masterCount = 218;
     bool end[3] = {0, 0, 0};
     char outputs[3][4] = {{0, 0, 0, 0},
                             {0, 0, 0, 0},
@@ -183,7 +183,7 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
             // }
         }
         if (masterCount-- == 0) {
-            masterCount = trueMasterCount;
+            masterCount = 218;
             
             if (effects[0]-- == 0) {
                 effects[0] = coreEffect;
