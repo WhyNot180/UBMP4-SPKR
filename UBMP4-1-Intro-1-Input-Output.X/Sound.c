@@ -124,8 +124,8 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
                             {0, 0, 0, 0}};
     bool trueSilents[3] = {silent, silent2, silent3};
     do {
-        //note: try adding a seperate effects counter that depends on variables that (when all on) will subtract from a shared effect counter
-        // that will then decrement their respective rhythm counters
+        //note: the effect counter is effectively a divisor of the waveform (i.e. effect = 1 waveform = 50%, effect = 2 waveform = 25%)
+        // try finding other relationships with other time domains
         BEEPER = outputs[0][0] & outputs[0][1] & outputs[0][2];
         LED3 = outputs[0][0] & outputs[0][1] & outputs[0][2];
         if (pitch[0]-- == 0) {
