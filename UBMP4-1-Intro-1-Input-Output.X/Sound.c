@@ -187,7 +187,6 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
                 if (rhythms[0]-- == 0) {
                     rhythms[0] = coreRhythm;
                     outputs[0][2] ^= 1;
-                    truePeriods[0] -= 1000;
                 }
             }
 
@@ -197,7 +196,6 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
                 if (rhythms[1]-- == 0) {
                     rhythms[1] = coreRhythm;
                     outputs[1][2] ^= 1;
-                    truePeriods[0] -= 1000;
                 }
             }
 
@@ -207,7 +205,6 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
                 if (rhythms[2]-- == 0) {
                     rhythms[2] = coreRhythm;
                     outputs[2][2] ^= 1;
-                    truePeriods[0] -= 1000;
                 }
             }
         }
