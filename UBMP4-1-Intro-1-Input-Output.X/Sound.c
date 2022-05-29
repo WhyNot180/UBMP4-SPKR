@@ -92,33 +92,33 @@ unsigned long lowerNotePeriods[] = {
 };
  
 void _makeSound(unsigned long cycles, unsigned long period, bool silent,
-                unsigned long period2, bool silent2,
-                unsigned long period3, bool silent3,
-                unsigned long period4, bool silent4,
-                unsigned long period5, bool silent5,
-                unsigned long period6, bool silent6)
+    unsigned long period2, bool silent2,
+    unsigned long period3, bool silent3,
+    unsigned long period4, bool silent4,
+    unsigned long period5, bool silent5,
+    unsigned long period6, bool silent6)
 {
-    unsigned long truePeriods[3] = {!silent ? period : 1, !silent ? period2 : 1, !silent ? period3 : 1};
-    unsigned long waveForms[3] = {period >> 4, period2 >> 4, period3 >> 4};
-    unsigned long pitch[3] = {!silent ? period : 1, !silent ? period2 : 1,!silent ? period3 : 1};
+    unsigned long truePeriods[3] = { !silent ? period << 1 : 1, !silent2 ? period2 << 1 : 1, !silent3 ? period3 << 1 : 1 };
+    unsigned long waveForms[3] = { !silent ? period >> 3 : 0, !silent2 ? period2 >> 3 : 0, !silent3 ? period3 >> 3 : 0 };
+    unsigned long pitch[3] = { !silent ? period << 1 : 1, !silent2 ? period2 << 1 : 1,!silent3 ? period3 << 1 : 1 };
     unsigned char coreRhythm = 1;
-    unsigned char rhythms[3] = {coreRhythm, coreRhythm, coreRhythm};
+    unsigned char rhythms[3] = { coreRhythm, coreRhythm, coreRhythm };
     unsigned char coreEffect = 8;
-    unsigned char effects[3] = {coreEffect, coreEffect, coreEffect};
+    unsigned char effects[3] = { coreEffect, coreEffect, coreEffect };
     unsigned char coreStructure = 1;
-    unsigned char structures[3] = {coreStructure, coreStructure, coreStructure};
+    unsigned char structures[3] = { coreStructure, coreStructure, coreStructure };
     unsigned long trueMasterCount = findLCM(pitch[0], findLCM(pitch[1], pitch[2]));
     unsigned long masterCount = 218;
-    bool end[3] = {0, 0, 0};
-    char outputs[3][4] = {{0, 0, 0, 0},
+    bool end[3] = { 0, 0, 0 };
+    char outputs[3][4] = { {0, 0, 0, 0},
                             {0, 0, 0, 0},
-                            {0, 0, 0, 0}};
-    bool trueSilents[3] = {silent, silent2, silent3};
+                            {0, 0, 0, 0} };
+    bool trueSilents[3] = { silent, silent2, silent3 };
     do {
         //note: The Rhythm domain appears to add to the notes played at once, howvever, this is the work of the *evil* effect domain
         // It essentially provides a clearer tone, but it is what causes a sort of ringing, similar to a phone
-        BEEPER = outputs[0][0] & outputs[0][1] & outputs[0][2];
-        LED3 = outputs[0][0] & outputs[0][1] & outputs[0][2];
+        BEEPER = outputs[0][0]; //& outputs[0][1] & outputs[0][2];
+        LED3 = outputs[0][0]; //& outputs[0][1] & outputs[0][2];
         if (pitch[0]-- == 0) {
             pitch[0] = truePeriods[0];
         }
@@ -130,8 +130,8 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
         }
 
 
-        BEEPER = outputs[1][0] & outputs[1][1] & outputs[1][2];
-        LED3 = outputs[1][0] & outputs[1][1] & outputs[1][2];
+        BEEPER = outputs[1][0]; //& outputs[1][1] & outputs[1][2];
+        LED3 = outputs[1][0]; //& outputs[1][1] & outputs[1][2];
         if (pitch[1]-- == 0) {
             pitch[1] = truePeriods[1];
         }
@@ -142,11 +142,10 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
             outputs[1][0] = 0;
         }
 
-        BEEPER = outputs[2][0] & outputs[2][1] & outputs[2][2];
-        LED3 = outputs[2][0] & outputs[2][1] & outputs[2][2];
+        BEEPER = outputs[2][0]; //& outputs[2][1] & outputs[2][2];
+        LED3 = outputs[2][0]; //& outputs[2][1] & outputs[2][2];
         if (pitch[2]-- == 0) {
             pitch[2] = truePeriods[2];
-            outputs[2][0] ^= 1;
         }
         if (pitch[2] <= waveForms[2]) {
             outputs[2][0] = 1;
@@ -157,7 +156,7 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
 
         if (masterCount-- == 0) {
             masterCount = 218;
-            
+
             /*if (effects[0]-- == 0) {
                 effects[0] = outputs[0][1] ? coreeffect : 1;
                 outputs[0][1] ^= 1;
