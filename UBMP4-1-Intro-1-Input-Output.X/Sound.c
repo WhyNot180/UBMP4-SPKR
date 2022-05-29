@@ -156,33 +156,18 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
 
         if (masterCount-- == 0) {
             masterCount = 218;
-
-            /*if (effects[0]-- == 0) {
-                effects[0] = outputs[0][1] ? coreeffect : 1;
-                outputs[0][1] ^= 1;
-                if (rhythms[0]-- == 0) {
-                    rhythms[0] = corerhythm;
-                    outputs[0][2] ^= 1;
-                }
+            if (rhythms[0]-- == 0) {
+                rhythms[0] = coreRhythm;
+                outputs[0][2] ^= 1;
             }
-
-            if (effects[1]-- == 0) {
-                effects[1] = outputs[1][1] ? coreeffect : 1;
-                outputs[1][1] ^= 1;
-                if (rhythms[1]-- == 0) {
-                    rhythms[1] = corerhythm;
-                    outputs[1][2] ^= 1;
-                }
+            if (rhythms[1]-- == 0) {
+                rhythms[1] = coreRhythm;
+                outputs[1][2] ^= 1;
             }
-
-            if (effects[2]-- == 0) {
-                effects[2] = outputs[2][1] ? coreeffect : 1;
-                outputs[2][1] ^= 1;
-                if (rhythms[2]-- == 0) {
-                    rhythms[2] = corerhythm;
-                    outputs[2][2] ^= 1;
-                }
-            }*/
+            if (rhythms[2]-- == 0) {
+                rhythms[2] = coreRhythm;
+                outputs[2][2] ^= 1;
+            }
         }
     } while (1);//!(end[0] & end[1] & end[2]));
     BEEPER = 0;
