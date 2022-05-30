@@ -117,8 +117,8 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
     do {
         //note: The Rhythm domain appears to add to the notes played at once, howvever, this is the work of the *evil* effect domain
         // It essentially provides a clearer tone, but it is what causes a sort of ringing, similar to a phone
-        BEEPER = outputs[0][0]; //& outputs[0][1] & outputs[0][2];
-        LED3 = outputs[0][0]; //& outputs[0][1] & outputs[0][2];
+        BEEPER = outputs[0][0] & outputs[0][2];
+        LED3 = outputs[0][0] & outputs[0][2];
         if (pitch[0]-- == 0) {
             pitch[0] = truePeriods[0];
         }
@@ -130,8 +130,8 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
         }
 
 
-        BEEPER = outputs[1][0]; //& outputs[1][1] & outputs[1][2];
-        LED3 = outputs[1][0]; //& outputs[1][1] & outputs[1][2];
+        BEEPER = outputs[1][0] & outputs[1][2];
+        LED3 = outputs[1][0] & outputs[1][2];
         if (pitch[1]-- == 0) {
             pitch[1] = truePeriods[1];
         }
@@ -142,8 +142,8 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
             outputs[1][0] = 0;
         }
 
-        BEEPER = outputs[2][0]; //& outputs[2][1] & outputs[2][2];
-        LED3 = outputs[2][0]; //& outputs[2][1] & outputs[2][2];
+        BEEPER = outputs[2][0] & outputs[2][2];
+        LED3 = outputs[2][0] & outputs[2][2];
         if (pitch[2]-- == 0) {
             pitch[2] = truePeriods[2];
         }
@@ -157,15 +157,15 @@ void _makeSound(unsigned long cycles, unsigned long period, bool silent,
         if (masterCount-- == 0) {
             masterCount = 218;
             if (rhythms[0]-- == 0) {
-                rhythms[0] = coreRhythm;
+                rhythms[0] = outputs[0][2] ? coreRhythm : 1;
                 outputs[0][2] ^= 1;
             }
             if (rhythms[1]-- == 0) {
-                rhythms[1] = coreRhythm;
+                rhythms[1] = outputs[1][2] ? coreRhythm : 100;
                 outputs[1][2] ^= 1;
             }
             if (rhythms[2]-- == 0) {
-                rhythms[2] = coreRhythm;
+                rhythms[2] = outputs[2][2] ? coreRhythm : 100;
                 outputs[2][2] ^= 1;
             }
         }
