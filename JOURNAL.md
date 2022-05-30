@@ -67,3 +67,11 @@ After I did that, I discovered that instead of affecting the duration of the not
 and changed the amount of "rings" heard. After doing some more experimentation, I learned that this was actually caused by the effect domain! This means that, while it can help give a more pleasant
 tone, the way it is currently implemented creates that ringing tone. After doing some digging I saw that this was actually mentioned in Dr. Troise's paper. It seems I shall have to come up
 with a different way of changing the timbre or the duration, perhaps I could combine the pitch and effect domain bits? That would require more processing power though. Hmm, decisions, decisions.
+
+### May 29
+
+This time my primary focus was on getting the effect and rhythm domains to comply with each other. I managed to get the effect domain to work without messing up the rhythm domain and I also discovered
+some bugs related to rests being played when they were not suppsosed to, which were fixed. The main issue I now face is getting rhythm to function *well*. It uses the master counter to 
+determine when to switch the rhythm bit on and off, but it is very inconvenient to try and figure out the specific values for the right length of note. This is what I must work on the next time
+I am working on programming. Most likely tomorrow I will be working on soldering and unsoldering the bluetooth module and the voltage divider, it's a bit ahead of schedule, but the sooner the better.
+An additional note on implementing the rhythm domain, while it *does* work currently, there does seem to be a very subtle beat frequency which will require more investigating to eliminate.
