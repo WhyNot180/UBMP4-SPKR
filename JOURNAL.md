@@ -75,3 +75,10 @@ some bugs related to rests being played when they were not suppsosed to, which w
 determine when to switch the rhythm bit on and off, but it is very inconvenient to try and figure out the specific values for the right length of note. This is what I must work on the next time
 I am working on programming. Most likely tomorrow I will be working on soldering and unsoldering the bluetooth module and the voltage divider, it's a bit ahead of schedule, but the sooner the better.
 An additional note on implementing the rhythm domain, while it *does* work currently, there does seem to be a very subtle beat frequency which will require more investigating to eliminate.
+
+### May 30
+
+Another day focused on in-school work. It was soldering once more, and I managed to solder on an expansion header and Mr. Lam helped me unsolder the resistors connected to the Tx and Rx pins.
+I initially wasn't too sure how to get the solder off without damaging anything, but Mr. Lam came to the rescue again and showed me that heating up the solder and then smacking the board will do the job
+just fine. Other than that there wasn't anything else done, so this was mostly a 'break' day for helping me organize my thoughts. Tomorrow shall be focused on getting the solder out of the holes
+and getting a bread board ready for testing if I have the available time. After school it shall mostly be focused on cleaning up my code-base.
