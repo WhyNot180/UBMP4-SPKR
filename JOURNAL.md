@@ -82,3 +82,10 @@ Another day focused on in-school work. It was soldering once more, and I managed
 I initially wasn't too sure how to get the solder off without damaging anything, but Mr. Lam came to the rescue again and showed me that heating up the solder and then smacking the board will do the job
 just fine. Other than that there wasn't anything else done, so this was mostly a 'break' day for helping me organize my thoughts. Tomorrow shall be focused on getting the solder out of the holes
 and getting a bread board ready for testing if I have the available time. After school it shall mostly be focused on cleaning up my code-base.
+
+### May 31
+
+I forgot there were 31 days in May. So, the cleanup is actually going to be tomorrow, which is somewhat convenient considering that I stayed to help with a surprise party for Mr. Moore. 
+The only thing I did was complete a prototype of the complete circuit on a bread board. In other words, I just need to program it to get it ready for testing. I didn't do much else today. Tomorrow
+in school time will be focused on testing the bluetooth module and, afterwards, a giant cleanup of my code base since it is quite ugly at the moment. Oh, I almost forgot, but I also realized that the total
+length of the Rhythm domain is equal to: master counter * rhythm counter. 
