@@ -36,7 +36,7 @@ void UBMP4_config(void)
     WPUA = 0b00001000;          // Enable weak pull-up on SW1 input only
 
     LATB = 0b00000000;          // Clear Port B latches before configuring PORTB
-    TRISB = 0b11110000;         // Enable pushbutton pins as inputs (SW2-SW5)
+    TRISB = 0b01110000;         // Enable pushbutton pins as inputs (SW2-SW5)
     ANSELB = 0b00000000;        // Make all Port B pins digital
     WPUB = 0b01010000;          // Enable weak pull-ups on pushbutton inputs (SW2 and SW4)
 
@@ -91,4 +91,19 @@ unsigned char ADC_read_channel(unsigned char channel)
         ;                       // Terminate the empty while loop
     ADON = 0;                   // Turn the A-D converter off
     return (ADRESH);            // Return the MSB (upper 8-bits) of the result
+}
+
+// Configure EUSART for HC-08 bluetooth module
+void bluetooth_config(void)
+{
+    SPBRGH = ;                  // Sets baudrate to 9600
+    SPBRGL = ;                  // Sets baudrate to 9600
+    BRGH = 1;                   // Sets high speed baudrate
+    BRG16 = 1;                  // Enables 16 bit baudrate 
+    SYNC = 0;                   // Sets to Asyncronous transmission
+    SPEN = 1;                   // Enables EUSART
+    TX9 = 0;                    // Enables 8-bit transmission
+    RX9 = 0;                    // Enables 8-bit recieving
+    TXEN = 1;                   // Enables transmission pin
+    CREN = 1;                   // Enables receiver pin
 }
