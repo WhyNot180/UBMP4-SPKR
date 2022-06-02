@@ -7,7 +7,7 @@
 #define MIN(x, y) x < y ? x : y
 #define MAX(x, y) x < y ? y : x
 #define TOTALNOTES (period == 0 ? 0 : 1) + (period2 == 0 ? 0 : 1) + (period3 == 0 ? 0 : 1)
-#define ISREST(x) x == Rest : 1 : 0
+#define ISREST(x) x == Rest ? 1 : 0
 
 // x is whether it is silent or not, y is the period, z is the amount to bitshift
 #define PERIODGATE(x, y, z) !x ? y << z : 1
