@@ -9,9 +9,9 @@ unsigned int PERIOD_SCALE = 1000;
 #define MUSICAL_NOTE_BITS 5
  
 // This bit mask is used to decode the note
-#define MUSICAL_NOTE_MASK 0b000000011111
-#define OCTAVE_NOTE_MASK 0b011100000000
-#define MUSICAL_LENGTH_MASK 0b000011100000
+#define MUSICAL_NOTE_MASK 0b0000000000011111
+#define OCTAVE_NOTE_MASK 0b0000011100000000
+#define MUSICAL_LENGTH_MASK 0b0000000011100000
  
 // Octave configuration
 enum Octave
@@ -47,6 +47,20 @@ enum MusicalNote
     Od,     // this flag signals to move down one octave
     Or      // this flag signals to reset to default octave
 };
+
+struct Chord
+{
+    uint_least16_t chordNotes[3];
+};
+
+struct NoteInfo
+{
+    unsigned long periods[3];
+    unsigned long lengths[3];
+    uint8_t silent1 : 1;
+    uint8_t silent2 : 1;
+    uint8_t silent3 : 1;
+};
  
 // Here are the enumerated values for the standard lengths of a notes.
 // Note that an eighth-note is the default length so does not need to expressed explicitly.
@@ -70,16 +84,11 @@ unsigned long SIXTEENTH_NOTE_DURATION_CYCLES = 1400000;
  * @param notePlus a combined value that represent the MusicalNote and MusicalNoteLength.  
  * For example, a half note G can be encoded as notePlus = G | HalfNote
  */
-void playNote(unsigned int notePlus, unsigned int note2Plus, unsigned int note3Plus, unsigned int note4Plus, unsigned int note5Plus, unsigned int note6Plus);
+void playNote(struct Chord chord);
  
 /**
  * Make a noise on the buzzer with the given params a number of times (nTimes)
  **/
-void _makeSound(unsigned long cycles, unsigned long period, bool silent,
-                unsigned long period2, bool silent2,
-                unsigned long period3, bool silent3,
-                unsigned long period4, bool silent4,
-                unsigned long period5, bool silent5,
-                unsigned long period6, bool silent6);
+void _makeSound(struct NoteInfo noteInformation);
  
 #endif
