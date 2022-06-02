@@ -23,10 +23,6 @@
 // TODO Set linker code offset to '800' under "Additional options" pull-down.
  
 // The main function is required, and the program begins executing from here.
-
-unsigned int undertale[6][3] = {{Fs | FullNote | O5, F | FullNote | O5, Ds | FullNote | O5, Cs | FullNote | O5, Ds | FullNote | O5, As | FullNote | O4},
-                                  {Rest | FullNote, Ds | FullNote | O3, Fs | FullNote | O3, Gs | FullNote | O3, As | FullNote | O3, Fs | FullNote | O3},
-                                  {Ds | FullNote | O2, Rest | FullNote, Rest | FullNote, Rest | FullNote, Fs | FullNote | O2, Rest | FullNote}};
  
 int main(void)
 {
@@ -34,15 +30,22 @@ int main(void)
     OSC_config();               // Configure internal oscillator for 48 MHz
     UBMP4_config();             // Configure on-board UBMP4 I/O devices
    
+    struct Chord chord;
     // Code in this while loop runs repeatedly.
     while(1)
     {
         if (SW2 == 0) {
-            playNote(C | QuarterNote | O8, E | QuarterNote | O8, G | QuarterNote | O8, C | QuarterNote | O8, E | QuarterNote | O8, G | QuarterNote | O8);
+            chord.chordNotes[0] = C | QuarterNote | O8;
+            chord.chordNotes[1] = E | QuarterNote | O8;
+            chord.chordNotes[2] = G | QuarterNote | O8;
+            playNote(chord);
         }
 
         if (SW4 == 0) {
-            playNote(C | QuarterNote | O4, Rest | QuarterNote | O4, Rest | QuarterNote | O4, Rest | QuarterNote | O4, Rest | QuarterNote | O4, Rest | QuarterNote | O4);
+            chord.chordNotes[0] = C | QuarterNote | O4;
+            chord.chordNotes[1] = Rest | QuarterNote | O4;
+            chord.chordNotes[2] = Rest | QuarterNote | O4;
+            playNote(chord);
         }
 
         // Activate bootloader if SW1 is pressed.
