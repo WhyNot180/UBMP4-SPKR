@@ -188,7 +188,7 @@ void playNote(struct Chord chord)
 {
 
     // Initializes the notePeriods with their respective values based on their letter names
-    enum MusicalNote notes[i];
+    enum MusicalNote notes[3];
     unsigned long notePeriods[3] = { 0, 0, 0 };
     for (int i = 2; i != -1; i--) {
         notes[i] = chord.chordNotes[i] & MUSICAL_NOTE_MASK;
