@@ -22,7 +22,7 @@ unsigned long ipow(unsigned long base, unsigned char exp) {
     return result;
 }
 
-int findGCD(unsigned long a, unsigned long b) {
+unsigned long findGCD(unsigned long a, unsigned long b) {
     unsigned long t = 0;
     while (b != 0) {
         t = b;
@@ -32,7 +32,7 @@ int findGCD(unsigned long a, unsigned long b) {
     return a;
 }
 
-long findLCM(unsigned long a, unsigned long b) {
+unsigned long findLCM(unsigned long a, unsigned long b) {
     return a / findGCD(a, b) * b;
 }
 
