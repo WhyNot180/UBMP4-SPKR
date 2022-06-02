@@ -89,3 +89,11 @@ I forgot there were 31 days in May. So, the cleanup is actually going to be tomo
 The only thing I did was complete a prototype of the complete circuit on a bread board. In other words, I just need to program it to get it ready for testing. I didn't do much else today. Tomorrow
 in school time will be focused on testing the bluetooth module and, afterwards, a giant cleanup of my code base since it is quite ugly at the moment. Oh, I almost forgot, but I also realized that the total
 length of the Rhythm domain is equal to: master counter * rhythm counter. 
+
+### June 1
+
+THE GREAT FLOOD TO WASH AWAY ALL SINS IS HERE!! In all seriousness, I managed to clean up my code and it is ***so*** much more *<span style="font-family:Brush Script MT;">beautiful</span>* now.
+The best part? It still works! I was worried that I might not have enough time to clean up my code, but luckily I did, and man was it worth it. I literally went from using 48% program space and
+49.6% data space to 28.7% program space and 37.7% data space being used! That's a difference of about 19 and 11!! Anyways, tomorrow will be focused on programming the bluetooth module to work and
+testing it to see if it actually works. Also, the one I currently have is an HC-08 not an HC-06 or HC-05, meaning it works with apple products, which is a plus. Also, it's bluetooth low energy
+and not standard bluetooth, so it should use less overall energy.
