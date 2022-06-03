@@ -96,14 +96,36 @@ unsigned char ADC_read_channel(unsigned char channel)
 // Configure EUSART for HC-08 bluetooth module
 void bluetooth_config(void)
 {
-    SPBRGH = ;                  // Sets baudrate to 9600
-    SPBRGL = ;                  // Sets baudrate to 9600
+    SPBRGH = 0;                  // Sets baudrate to 9600
+    SPBRGL = 1249;                  // Sets baudrate to 9600
     BRGH = 1;                   // Sets high speed baudrate
     BRG16 = 1;                  // Enables 16 bit baudrate 
     SYNC = 0;                   // Sets to Asyncronous transmission
     SPEN = 1;                   // Enables EUSART
     TX9 = 0;                    // Enables 8-bit transmission
     RX9 = 0;                    // Enables 8-bit recieving
+    GIE = 1;                    // Enables global interrupts
+    PEIE = 1;                   // Enables peripheral interrupts
+    TXIE = 0;                   // Disables interrupts on TX pin
+    RCIE = 1;                   // Enable interrupts on RX pin
     TXEN = 1;                   // Enables transmission pin
     CREN = 1;                   // Enables receiver pin
+}
+
+char bluetooth_getChar(void)
+{
+    // Checks for over-run error
+    if (OERR) {
+        CREN = 0;
+        CREN = 1; // Resets receiver pin
+    }
+
+    // If a char has been sent, return the char, otherwise return 0
+    if (RCIF == 1) {
+        while (!RCIF);
+        return RCREG;
+    }
+    else {
+        return 0;
+    }
 }

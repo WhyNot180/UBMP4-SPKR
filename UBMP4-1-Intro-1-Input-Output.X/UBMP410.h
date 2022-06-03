@@ -149,3 +149,11 @@ unsigned char ADC_read_channel(unsigned char);
 
 // TODO - Add additional function prototypes for new functions in UBMP410.c here
 
+/**
+ * Function: bluetooth_config
+ *
+ * Configure HC-08 bluetooth module with EUSART
+ */
+void bluetooth_config(void);
+
+char bluetooth_getChar(void);
