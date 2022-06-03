@@ -97,3 +97,11 @@ The best part? It still works! I was worried that I might not have enough time t
 49.6% data space to 28.7% program space and 37.7% data space being used! That's a difference of about 19 and 11!! Anyways, tomorrow will be focused on programming the bluetooth module to work and
 testing it to see if it actually works. Also, the one I currently have is an HC-08 not an HC-06 or HC-05, meaning it works with apple products, which is a plus. Also, it's bluetooth low energy
 and not standard bluetooth, so it should use less overall energy.
+
+### June 2
+
+This bluetooth stuff has succeeded in making me thoroughly confused. First off, to get the baud rate you need to use a formula to find the value you need to put into a register, but guess what?
+THERE'S TWO REGISTERS. This means it has to be a ratio, but I have no clue what that would be, and which register corresponds to which. So, I just winged it by having one be 0 and the other the
+correct value. However, whenever I write a value from my phone to the module, it is a completely different value! I don't even know what it's receiving! I tried an echo test and it worked perfectly
+fine, but when I connect it to the UBMP4 it doesn't receive the correct value. I don't know if this is due to a faulty module (unlikely) or an incorrect baudrate. Also, whenever I try to get a value 
+from the UBMP4 I only get 0xF8 and after changing the baud rate it changed to 0xFE. Tomorrow will be getting Mr. Lam to help me figure this out.
