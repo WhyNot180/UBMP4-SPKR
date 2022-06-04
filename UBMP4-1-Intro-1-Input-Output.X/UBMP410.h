@@ -156,4 +156,9 @@ unsigned char ADC_read_channel(unsigned char);
  */
 void bluetooth_config(void);
 
+/**
+ * Function: bluetooth_getChar
+ *
+ * Returns a character from RCREG and checks for over run error
+ */
 char bluetooth_getChar(void);

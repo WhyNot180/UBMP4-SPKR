@@ -104,10 +104,10 @@ void bluetooth_config(void)
     SPEN = 1;                   // Enables EUSART
     TX9 = 0;                    // Enables 8-bit transmission
     RX9 = 0;                    // Enables 8-bit recieving
-    GIE = 1;                    // Enables global interrupts
-    PEIE = 1;                   // Enables peripheral interrupts
+    GIE = 0;                    // Disables global interrupts
+    PEIE = 0;                   // Disables peripheral interrupts
     TXIE = 0;                   // Disables interrupts on TX pin
-    RCIE = 1;                   // Enable interrupts on RX pin
+    RCIE = 0;                   // Disables interrupts on RX pin
     TXEN = 1;                   // Enables transmission pin
     CREN = 1;                   // Enables receiver pin
 }

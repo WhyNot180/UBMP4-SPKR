@@ -29,40 +29,23 @@ int main(void)
     // Configure oscillator and I/O ports. These functions run once at start-up.
     OSC_config();               // Configure internal oscillator for 48 MHz
     UBMP4_config();             // Configure on-board UBMP4 I/O devices
-    bluetooth_config();
-    
-    int getValue = 0;
-    //struct Chord chord;
+    bluetooth_config();         // Configure EUSART for communicating with HC-08 bluetooth module
+    struct Chord chord;
     // Code in this while loop runs repeatedly.
     while(1)
     {
-        getValue = bluetooth_getChar();
         if (SW2 == 0) {
-            TXREG = 0x3E;
-            TXREG = 13;
-            // chord.chordNotes[1] = E | QuarterNote | O8;
-            // chord.chordNotes[0] = C | QuarterNote | O8;
-            // chord.chordNotes[2] = G | QuarterNote | O8;
-            // playNote(chord);
-
+            chord.chordNotes[0] = C | QuarterNote | O8;
+            chord.chordNotes[1] = E | QuarterNote | O8;
+            chord.chordNotes[2] = G | QuarterNote | O8;
+            playNote(chord);
         }
 
         if (SW4 == 0) {
-            getValue = bluetooth_getChar();
-            // chord.chordNotes[0] = C | QuarterNote | O4;
-            // chord.chordNotes[1] = Rest | QuarterNote | O4;
-            // chord.chordNotes[2] = Rest | QuarterNote | O4;
-            // playNote(chord);
-            if (getValue == 1) {
-                LED3 = 1;
-            }
-            else if (getValue == 0) {
-                LED4 = 1;
-            }
-            else {
-                LED3 = 0;
-                LED4 = 0;
-            }
+            chord.chordNotes[0] = C | QuarterNote | O4;
+            chord.chordNotes[1] = Rest | QuarterNote | O4;
+            chord.chordNotes[2] = Rest | QuarterNote | O4;
+            playNote(chord);
         }
 
         // Activate bootloader if SW1 is pressed.
