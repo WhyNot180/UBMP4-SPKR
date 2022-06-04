@@ -105,3 +105,11 @@ THERE'S TWO REGISTERS. This means it has to be a ratio, but I have no clue what 
 correct value. However, whenever I write a value from my phone to the module, it is a completely different value! I don't even know what it's receiving! I tried an echo test and it worked perfectly
 fine, but when I connect it to the UBMP4 it doesn't receive the correct value. I don't know if this is due to a faulty module (unlikely) or an incorrect baudrate. Also, whenever I try to get a value 
 from the UBMP4 I only get 0xF8 and after changing the baud rate it changed to 0xFE. Tomorrow will be getting Mr. Lam to help me figure this out.
+
+### June 3
+
+I had a great amount of frustration today. I managed to narrow it down to a baud rate issue, so then I had to figure out a ratio. Plot twist, there is no ratio! It is literally just two hexadecimal
+numbers stitched together so that SPBRGH is the most significant 2 digits and SPBRGL is the two least significant digits. I also happened to learn that the max value for SPBRGH is 111 (0x6F) and 232 (0xE8)
+for SPBRGL. The value I needed (1249) is equal to 0x04E1, so SPBRGH is 4 and SPBRGL is 225. After I did this everything worked perfectly! Well, on the transmitting end that is. On the receiving end I was
+still having a some issues. Luckily it turned out that I had interrupts on and it was messing with everything. In short, I learned a valuble lesson today: data sheets need to be more specific, and interrupts
+are not worth it. Tomorrow shall consist of me trying to combine the bluetooth aspects and the music aspects.
