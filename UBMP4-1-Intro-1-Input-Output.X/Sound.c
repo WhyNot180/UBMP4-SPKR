@@ -117,7 +117,7 @@ void _makeSound(struct Song song)
 
     unsigned int rhythms[3] = { song.firstRhythms[0], song.firstRhythms[1], song.firstRhythms[2] };
 
-    unsigned char effects[3] = { song.firstEffects, song.firstEffects, song.firstEffects };
+    uint8_t effects[3] = { song.firstEffects, song.firstEffects, song.firstEffects };
 
     unsigned char silents[3] = { song.silent1, song.silent2, song.silent3 };
 
@@ -243,13 +243,13 @@ void playNote(struct Chord chord)
         song.periods[i] = notePeriods[i] / ipow(2, findOctave(chord.chordNotes[i] & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
     }
 
-    for (int i = 7; i != -1; i--) {
+    for (char i = 7; i != -1; i--) {
         TXREG = i + 48;
         while (!RCIF);
         song.rhythmLengths[i] = bluetooth_getChar;
     }
 
-    for (int i = 2; i != -1; i--) {
+    for (char i = 2; i != -1; i--) {
         TXREG = i + 64;
         while (!RCIF);
         song.firstEffects[i] = bluetooth_getChar;
