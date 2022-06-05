@@ -96,6 +96,6 @@ void playNote(struct Chord chord);
 /**
  * Make a noise on the buzzer with the given params a number of times (nTimes)
  **/
-void _makeSound(struct NoteInfo noteInformation);
- 
+void _makeSound(struct Song song);
+
 #endif
