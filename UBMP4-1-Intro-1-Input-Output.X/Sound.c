@@ -117,6 +117,8 @@ void _makeSound(struct Song song)
 
     unsigned int rhythms[3] = { song.firstRhythms[0], song.firstRhythms[1], song.firstRhythms[2] };
 
+    unsigned int trueRhythms[3] = { song.firstRhythms[0], song.firstRhythms[1], song.firstRhythms[2] };
+
     uint8_t effects[3] = { song.firstEffects, song.firstEffects, song.firstEffects };
 
     unsigned char silents[3] = { song.silent1, song.silent2, song.silent3 };
@@ -172,37 +174,40 @@ void _makeSound(struct Song song)
         if (masterCount-- == 0) {
             masterCount = 218;
             if (rhythms[0]-- == 0) {
-                rhythms[0] = outputs[0][2] ? song.silentRhythm : 100;
+                rhythms[0] = outputs[0][2] ? song.silentRhythm : trueRhythms[0];
                 outputs[0][2] ^= 1;
                 if (!outputs[0][2]) {
                     TXREG = 88;
+                    while (!TRMT);
                     while (!RCIF);
                     tempData = bluetooth_getChar();
-                    rhythms[0] = coreRhythms[tempData & RHYTHM_ONE_MASK] + coreRhythms[(tempData & RHYTHM_TWO_MASK) >> 4];
+                    trueRhythms[0] = coreRhythms[tempData & RHYTHM_ONE_MASK] + coreRhythms[(tempData & RHYTHM_TWO_MASK) >> 4];
                     effects[0] = (tempData & EFFECT_MASK) >> 8;
                     waveForms[0] = WAVEFORMGATE(silents[0], truePeriods[0], effects[0]);
                 }
             }
             if (rhythms[1]-- == 0) {
-                rhythms[1] = outputs[1][2] ? song.silentRhythm : 100;
+                rhythms[1] = outputs[1][2] ? song.silentRhythm : trueRhythms[1];
                 outputs[1][2] ^= 1;
                 if (!outputs[1][2]) {
                     TXREG = 89;
+                    while (!TRMT);
                     while (!RCIF);
                     tempData = bluetooth_getChar();
-                    rhythms[1] = coreRhythms[tempData & RHYTHM_ONE_MASK] + coreRhythms[(tempData & RHYTHM_TWO_MASK) >> 4];
+                    trueRhythms[1] = coreRhythms[tempData & RHYTHM_ONE_MASK] + coreRhythms[(tempData & RHYTHM_TWO_MASK) >> 4];
                     effects[1] = (tempData & EFFECT_MASK) >> 8;
                     waveForms[1] = WAVEFORMGATE(silents[1], truePeriods[1], effects[1]);
                 }
             }
             if (rhythms[2]-- == 0) {
-                rhythms[2] = outputs[2][2] ? song.silentRhythm : 100;
+                rhythms[2] = outputs[2][2] ? song.silentRhythm : trueRhythms[2];
                 outputs[2][2] ^= 1;
                 if (!outputs[2][2]) {
                     TXREG = 90;
+                    while (!TRMT);
                     while (!RCIF);
                     tempData = bluetooth_getChar();
-                    rhythms[2] = coreRhythms[tempData & RHYTHM_ONE_MASK] + coreRhythms[(tempData & RHYTHM_TWO_MASK) >> 4];
+                    trueRhythms[2] = coreRhythms[tempData & RHYTHM_ONE_MASK] + coreRhythms[(tempData & RHYTHM_TWO_MASK) >> 4];
                     effects[2] = (tempData & EFFECT_MASK) >> 8;
                     waveForms[2] = WAVEFORMGATE(silents[2], truePeriods[2], effects[2]);
                 }
@@ -245,16 +250,19 @@ void playNote(struct Chord chord)
 
     for (char i = 7; i != -1; i--) {
         TXREG = i + 48;
+        while (!TRMT);
         while (!RCIF);
         song.rhythmLengths[i] = bluetooth_getChar;
     }
 
     for (char i = 2; i != -1; i--) {
         TXREG = i + 64;
+        while (!TRMT)
         while (!RCIF);
         song.firstEffects[i] = bluetooth_getChar;
 
         TXREG = i + 67;
+        while (!TRMT);
         while (!RCIF);
         song.firstRhythms[i] = bluetooth_getChar;
     }
