@@ -63,10 +63,10 @@ struct Song
     uint8_t silent1 : 1;
     uint8_t silent2 : 1;
     uint8_t silent3 : 1;
-    uint8_t rhythmLengths[8];
-    uint8_t silentRhythm;
-    uint8_t firstEffects[3];
-    uint8_t firstRhythms[3];
+    unsigned char rhythmLengths[8];
+    unsigned char silentRhythm;
+    unsigned char firstEffects[3];
+    unsigned char firstRhythms[3];
 };
  
 // Here are the enumerated values for the standard lengths of a notes.
