@@ -8,12 +8,14 @@ unsigned int PERIOD_SCALE = 1000;
 // We use lower 5 bits of an integer to encode the note
 #define MUSICAL_NOTE_BITS 5
  
-// This bit mask is used to decode the note
+// This bit mask is used to decode the note (only until application is created)
 #define MUSICAL_NOTE_MASK 0b0000000000011111
 #define OCTAVE_NOTE_MASK 0b0000011100000000
-#define MUSICAL_LENGTH_MASK 0b0000000011100000
 
+// bits 1-3 are for the rhythm index (as initialized at the start of the song)
+// bit 4 is for indicating whether the note should be treated as silent or not
 #define RHYTHM_MASK 0b00000111
+// bits 5-8 are for the timbre
 #define EFFECT_MASK 0b11110000
  
 // Octave configuration
@@ -51,11 +53,13 @@ enum MusicalNote
     Or      // this flag signals to reset to default octave
 };
 
+// Temporary struct for testing (only until application is created)
 struct Chord
 {
     uint_least16_t chordNotes[3];
 };
 
+// Struct for initial values at the start of song
 struct Song
 {
     unsigned long periods[3];
@@ -67,23 +71,7 @@ struct Song
     unsigned char firstEffects[3];
     unsigned char firstRhythms[3];
 };
- 
-// Here are the enumerated values for the standard lengths of a notes.
-// Note that an eighth-note is the default length so does not need to expressed explicitly.
-enum MusicalNoteLength
-{
-    //SixteenthNote = 0 << MUSICAL_NOTE_BITS, //this is the default
-    EighthNote = 1 << MUSICAL_NOTE_BITS,
-    QuarterNote = 2 << MUSICAL_NOTE_BITS,
-    ThreeEighthNote = 3 << MUSICAL_NOTE_BITS,
-    HalfNote = 4 << MUSICAL_NOTE_BITS,
-    SixEighthNote = 5 << MUSICAL_NOTE_BITS,
-    FullNote = 6 << MUSICAL_NOTE_BITS
-};
-// This is the duration of a quarter note expressed in program-execution cycles.
-// The actual duration of the note played will depend on the processor speed/frequency.
-unsigned long SIXTEENTH_NOTE_DURATION_CYCLES = 1400000;
- 
+
 /**
  * Play a musical note
  *

@@ -35,16 +35,17 @@ int main(void)
     while(1)
     {
         if (SW2 == 0) {
-            chord.chordNotes[0] = C | QuarterNote | O8;
-            chord.chordNotes[1] = E | QuarterNote | O8;
-            chord.chordNotes[2] = G | QuarterNote | O8;
+            // Indicates notes (temporary until application can be created)
+            chord.chordNotes[0] = C | O8;
+            chord.chordNotes[1] = E | O8;
+            chord.chordNotes[2] = G | O8;
             playNote(chord);
         }
 
         if (SW4 == 0) {
-            chord.chordNotes[0] = C | QuarterNote | O4;
-            chord.chordNotes[1] = Rest | QuarterNote | O4;
-            chord.chordNotes[2] = Rest | QuarterNote | O4;
+            chord.chordNotes[0] = C | O4;
+            chord.chordNotes[1] = Rest | O4;
+            chord.chordNotes[2] = Rest | O4;
             playNote(chord);
         }
 
