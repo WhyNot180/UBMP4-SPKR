@@ -181,7 +181,7 @@ void _makeSound(struct Song song)
                     while (!TRMT);
                     while (!RCIF);
                     tempData = bluetooth_getChar();
-                    trueRhythms[0] = coreRhythms[tempData & RHYTHM_ONE_MASK] + coreRhythms[(tempData & RHYTHM_TWO_MASK) >> 4];
+                    trueRhythms[0] = coreRhythms[tempData & RHYTHM_MASK];
                     effects[0] = (tempData & EFFECT_MASK) >> 8;
                     waveForms[0] = WAVEFORMGATE(silents[0], truePeriods[0], effects[0]);
                 }
@@ -194,7 +194,7 @@ void _makeSound(struct Song song)
                     while (!TRMT);
                     while (!RCIF);
                     tempData = bluetooth_getChar();
-                    trueRhythms[1] = coreRhythms[tempData & RHYTHM_ONE_MASK] + coreRhythms[(tempData & RHYTHM_TWO_MASK) >> 4];
+                    trueRhythms[1] = coreRhythms[tempData & RHYTHM_MASK];
                     effects[1] = (tempData & EFFECT_MASK) >> 8;
                     waveForms[1] = WAVEFORMGATE(silents[1], truePeriods[1], effects[1]);
                 }
@@ -207,7 +207,7 @@ void _makeSound(struct Song song)
                     while (!TRMT);
                     while (!RCIF);
                     tempData = bluetooth_getChar();
-                    trueRhythms[2] = coreRhythms[tempData & RHYTHM_ONE_MASK] + coreRhythms[(tempData & RHYTHM_TWO_MASK) >> 4];
+                    trueRhythms[2] = coreRhythms[tempData & RHYTHM_MASK];
                     effects[2] = (tempData & EFFECT_MASK) >> 8;
                     waveForms[2] = WAVEFORMGATE(silents[2], truePeriods[2], effects[2]);
                 }
@@ -256,12 +256,12 @@ void playNote(struct Chord chord)
     }
 
     for (int i = 2; i != -1; i--) {
-        TXREG = i + 64;
+        TXREG = i + 65;
         while (!TRMT)
         while (!RCIF);
         song.firstEffects[i] = bluetooth_getChar();
 
-        TXREG = i + 67;
+        TXREG = i + 68;
         while (!TRMT);
         while (!RCIF);
         song.firstRhythms[i] = bluetooth_getChar();
