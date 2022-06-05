@@ -113,3 +113,11 @@ numbers stitched together so that SPBRGH is the most significant 2 digits and SP
 for SPBRGL. The value I needed (1249) is equal to 0x04E1, so SPBRGH is 4 and SPBRGL is 225. After I did this everything worked perfectly! Well, on the transmitting end that is. On the receiving end I was
 still having a some issues. Luckily it turned out that I had interrupts on and it was messing with everything. In short, I learned a valuble lesson today: data sheets need to be more specific, and interrupts
 are not worth it. Tomorrow shall consist of me trying to combine the bluetooth aspects and the music aspects.
+
+### June 4
+
+I managed to do it! There were some problems regarding syntax, in fact, today I learned that not only does the compiler not generate an error when you call a function without parentheses, but it makes the EUSART
+spit out absolute gibberish! Even when you're only trying to access the input register! I also learned that the compiler is does not like using char in for loops especially when it's going into negatives ("comparison
+with constant -1 is never resolved, causes an infinite loop"). Luckily I managed to fix all of that and managed to change rhythm and effect (manually of course) while playing music! The only issue I have currently is
+that I get requests for multiple channels at the same time, which is very strange and worrying, as those are only asked for in seperate 'if' statements!! That's what I'll be working on tomorrow, after that
+I just need to create an app to do all the calculations and also spit out pitch values. In other words, I am ahead of schedule (yay)!!
