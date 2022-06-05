@@ -12,6 +12,10 @@ unsigned int PERIOD_SCALE = 1000;
 #define MUSICAL_NOTE_MASK 0b0000000000011111
 #define OCTAVE_NOTE_MASK 0b0000011100000000
 #define MUSICAL_LENGTH_MASK 0b0000000011100000
+
+#define RHYTHM_ONE_MASK 0b0000000000001111
+#define RHYTHM_TWO_MASK 0b0000000011110000
+#define EFFECT_MASK 0b0000111100000000
  
 // Octave configuration
 enum Octave
@@ -53,13 +57,16 @@ struct Chord
     uint_least16_t chordNotes[3];
 };
 
-struct NoteInfo
+struct Song
 {
     unsigned long periods[3];
-    unsigned long lengths[3];
     uint8_t silent1 : 1;
     uint8_t silent2 : 1;
     uint8_t silent3 : 1;
+    uint8_t rhythmLengths[8];
+    uint8_t silentRhythm;
+    uint8_t firstEffects[3];
+    uint8_t firstRhythms[3];
 };
  
 // Here are the enumerated values for the standard lengths of a notes.

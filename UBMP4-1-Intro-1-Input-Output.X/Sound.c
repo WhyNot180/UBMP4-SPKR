@@ -97,29 +97,33 @@ unsigned long lowerNotePeriods[] = {
     CLOCK_FREQ / 3087 * 100, // B
 };
  
-void _makeSound(struct NoteInfo noteInformation)
+void _makeSound(struct Song song)
 {
-    unsigned long truePeriods[3] = { PERIODGATE(noteInformation.silent1, noteInformation.periods[0], 1),
-        PERIODGATE(noteInformation.silent2, noteInformation.periods[1], 1),
-        PERIODGATE(noteInformation.silent3, noteInformation.periods[2], 1) };
+    unsigned long truePeriods[3] = { PERIODGATE(song.silent1, song.periods[0], 1),
+        PERIODGATE(song.silent2, song.periods[1], 1),
+        PERIODGATE(song.silent3, song.periods[2], 1) };
 
-    unsigned long waveForms[3] = { WAVEFORMGATE(noteInformation.silent1, noteInformation.periods[0], 3),
-        WAVEFORMGATE(noteInformation.silent2, noteInformation.periods[1], 3),
-        WAVEFORMGATE(noteInformation.silent3, noteInformation.periods[2], 3) };
+    unsigned long waveForms[3] = { WAVEFORMGATE(song.silent1, song.periods[0], song.firstEffects[0]),
+        WAVEFORMGATE(song.silent2, song.periods[1], song.firstEffects[1]),
+        WAVEFORMGATE(song.silent3, song.periods[2], song.firstEffects[2])};
 
     unsigned long pitch[3] = { truePeriods[0], truePeriods[1], truePeriods[2]};
 
-    unsigned char coreRhythm = 1;
-    unsigned char rhythms[3] = { coreRhythm, coreRhythm, coreRhythm };
+    unsigned char coreRhythms[8];
 
-    unsigned char coreEffect = 8;
-    unsigned char effects[3] = { coreEffect, coreEffect, coreEffect };
+    for (int i = 7; i != -1; i--) {
+        coreRhythms[i] = song.rhythmLengths[i];
+    }
 
-    unsigned char coreStructure = 1;
-    unsigned char structures[3] = { coreStructure, coreStructure, coreStructure };
+    unsigned int rhythms[3] = { song.firstRhythms[0], song.firstRhythms[1], song.firstRhythms[2] };
 
-    unsigned long trueMasterCount = findLCM(pitch[0], findLCM(pitch[1], pitch[2]));
+    unsigned char effects[3] = { song.firstEffects, song.firstEffects, song.firstEffects };
+
+    unsigned char silents[3] = { song.silent1, song.silent2, song.silent3 };
+
     unsigned long masterCount = 218;
+
+    uint16_t tempData = 0;
 
     char outputs[3][4] = { {0, 0, 0, 0},
                             {0, 0, 0, 0},
@@ -168,16 +172,40 @@ void _makeSound(struct NoteInfo noteInformation)
         if (masterCount-- == 0) {
             masterCount = 218;
             if (rhythms[0]-- == 0) {
-                rhythms[0] = outputs[0][2] ? coreRhythm : 1;
+                rhythms[0] = outputs[0][2] ? song.silentRhythm : 100;
                 outputs[0][2] ^= 1;
+                if (!outputs[0][2]) {
+                    TXREG = 88;
+                    while (!RCIF);
+                    tempData = bluetooth_getChar();
+                    rhythms[0] = coreRhythms[tempData & RHYTHM_ONE_MASK] + coreRhythms[(tempData & RHYTHM_TWO_MASK) >> 4];
+                    effects[0] = (tempData & EFFECT_MASK) >> 8;
+                    waveForms[0] = WAVEFORMGATE(silents[0], truePeriods[0], effects[0]);
+                }
             }
             if (rhythms[1]-- == 0) {
-                rhythms[1] = outputs[1][2] ? coreRhythm : 100;
+                rhythms[1] = outputs[1][2] ? song.silentRhythm : 100;
                 outputs[1][2] ^= 1;
+                if (!outputs[1][2]) {
+                    TXREG = 89;
+                    while (!RCIF);
+                    tempData = bluetooth_getChar();
+                    rhythms[1] = coreRhythms[tempData & RHYTHM_ONE_MASK] + coreRhythms[(tempData & RHYTHM_TWO_MASK) >> 4];
+                    effects[1] = (tempData & EFFECT_MASK) >> 8;
+                    waveForms[1] = WAVEFORMGATE(silents[1], truePeriods[1], effects[1]);
+                }
             }
             if (rhythms[2]-- == 0) {
-                rhythms[2] = outputs[2][2] ? coreRhythm : 100;
+                rhythms[2] = outputs[2][2] ? song.silentRhythm : 100;
                 outputs[2][2] ^= 1;
+                if (!outputs[2][2]) {
+                    TXREG = 90;
+                    while (!RCIF);
+                    tempData = bluetooth_getChar();
+                    rhythms[2] = coreRhythms[tempData & RHYTHM_ONE_MASK] + coreRhythms[(tempData & RHYTHM_TWO_MASK) >> 4];
+                    effects[2] = (tempData & EFFECT_MASK) >> 8;
+                    waveForms[2] = WAVEFORMGATE(silents[2], truePeriods[2], effects[2]);
+                }
             }
         }
     } while (1);
@@ -206,26 +234,39 @@ void playNote(struct Chord chord)
         }
     }
 
-    struct NoteInfo noteInformation;
+    struct Song song;
     
     // We need to adjust the period by the octave (and a preferred scaling value)
     // Also, we want the note to play for the precise length of time regardless of the period
     // so we have to adjust the number of cycles by the period
     for (int i = 2; i != -1; i--) {
-        noteInformation.periods[i] = notePeriods[i] / ipow(2, findOctave(chord.chordNotes[i] & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
+        song.periods[i] = notePeriods[i] / ipow(2, findOctave(chord.chordNotes[i] & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
     }
 
-    // TODO: replace with proper rhythm support
-    // finds the length of a note and the duration cycles of said note (legacy code)
-    for (int i = 2; i != -1; i--) {
-            enum MusicalNoteLength noteLength = chord.chordNotes[i] & MUSICAL_LENGTH_MASK;
-            noteInformation.lengths[i] = (SIXTEENTH_NOTE_DURATION_CYCLES * findLength(noteLength)) / noteInformation.periods[i];
+    for (int i = 7; i != -1; i--) {
+        TXREG = i + 48;
+        while (!RCIF);
+        song.rhythmLengths[i] = bluetooth_getChar;
     }
+
+    for (int i = 2; i != -1; i--) {
+        TXREG = i + 64;
+        while (!RCIF);
+        song.firstEffects[i] = bluetooth_getChar;
+
+        TXREG = i + 67;
+        while (!RCIF);
+        song.firstRhythms[i] = bluetooth_getChar;
+    }
+
+    TXREG = 58;
+    while (!RCIF);
+    song.silentRhythm = bluetooth_getChar;
 
     // True (1) if note is a rest, otherwise false (0)
-    noteInformation.silent1 = ISREST(notes[0]);
-    noteInformation.silent2 = ISREST(notes[1]);
-    noteInformation.silent3 = ISREST(notes[2]);
+    song.silent1 = ISREST(notes[0]);
+    song.silent2 = ISREST(notes[1]);
+    song.silent3 = ISREST(notes[2]);
 
-    _makeSound(noteInformation);
+    _makeSound(song);
 }
