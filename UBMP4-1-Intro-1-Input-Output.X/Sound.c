@@ -248,28 +248,28 @@ void playNote(struct Chord chord)
         song.periods[i] = notePeriods[i] / ipow(2, findOctave(chord.chordNotes[i] & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
     }
 
-    for (char i = 7; i != -1; i--) {
+    for (int i = 7; i != -1; i--) {
         TXREG = i + 48;
         while (!TRMT);
         while (!RCIF);
-        song.rhythmLengths[i] = bluetooth_getChar;
+        song.rhythmLengths[i] = bluetooth_getChar();
     }
 
-    for (char i = 2; i != -1; i--) {
+    for (int i = 2; i != -1; i--) {
         TXREG = i + 64;
         while (!TRMT)
         while (!RCIF);
-        song.firstEffects[i] = bluetooth_getChar;
+        song.firstEffects[i] = bluetooth_getChar();
 
         TXREG = i + 67;
         while (!TRMT);
         while (!RCIF);
-        song.firstRhythms[i] = bluetooth_getChar;
+        song.firstRhythms[i] = bluetooth_getChar();
     }
 
     TXREG = 58;
     while (!RCIF);
-    song.silentRhythm = bluetooth_getChar;
+    song.silentRhythm = bluetooth_getChar();
 
     // True (1) if note is a rest, otherwise false (0)
     song.silent1 = ISREST(notes[0]);
