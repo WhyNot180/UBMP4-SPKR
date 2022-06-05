@@ -42,7 +42,6 @@ int main(void)
         }
 
         if (SW4 == 0) {
-            chord.silentRhythm = bluetooth_getChar;
             chord.chordNotes[0] = C | QuarterNote | O4;
             chord.chordNotes[1] = Rest | QuarterNote | O4;
             chord.chordNotes[2] = Rest | QuarterNote | O4;
