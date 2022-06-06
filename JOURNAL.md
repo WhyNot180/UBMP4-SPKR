@@ -121,3 +121,9 @@ spit out absolute gibberish! Even when you're only trying to access the input re
 with constant -1 is never resolved, causes an infinite loop"). Luckily I managed to fix all of that and managed to change rhythm and effect (manually of course) while playing music! The only issue I have currently is
 that I get requests for multiple channels at the same time, which is very strange and worrying, as those are only asked for in seperate 'if' statements!! That's what I'll be working on tomorrow, after that
 I just need to create an app to do all the calculations and also spit out pitch values. In other words, I am ahead of schedule (yay)!!
+
+## June 5
+
+Huzzah! I have fixed it! Turns out that it is very picky about byte arrays and sending more than 8 bits at a time. Unfortunately, this discovery *will* force me to make it slower, but it should still be (hopefully) fast enough.
+The only way to know is to start working on that application to interact with the board. Other than that, everything is peachy. I also added more comments and removed some legacy code that was used to calculate the length of each note.
+There is only one thing left on the bucket list is starting on creating the application I need (I'm going to pretend that usb doesn't exist until I finish bluetooth).
