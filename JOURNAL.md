@@ -127,3 +127,9 @@ I just need to create an app to do all the calculations and also spit out pitch 
 Huzzah! I have fixed it! Turns out that it is very picky about byte arrays and sending more than 8 bits at a time. Unfortunately, this discovery *will* force me to make it slower, but it should still be (hopefully) fast enough.
 The only way to know is to start working on that application to interact with the board. Other than that, everything is peachy. I also added more comments and removed some legacy code that was used to calculate the length of each note.
 There is only one thing left on the bucket list is starting on creating the application I need (I'm going to pretend that usb doesn't exist until I finish bluetooth).
+
+### June 8
+
+I forgot to update the journal, oops! Oh well, not a lot of interesting things happened during that period. It was mostly just me messing around with the board in class and trying to figure out if I can get onto something other than a
+breadboard because, quite honestly, a breadboard isn't a very permanent or visually appealing way to create my circuit. Other than that I've installed android studio and am watching a 4 hour tutorial on how to make an android application.
+So far, I've learned what views and layouts are, about attributes, a little bit about XML, and some stuff about buttons. Tomorrow will be more of the same.
