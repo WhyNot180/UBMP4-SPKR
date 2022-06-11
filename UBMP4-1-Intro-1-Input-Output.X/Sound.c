@@ -237,7 +237,12 @@ void _makeSound(struct Song song)
  
 void playNote(struct Chord chord)
 {
-
+    while (!RCIF) {
+        TXREG = 1;
+        while (!TRMT);
+    }
+    __delay_ms(500);
+    char throwAway = bluetooth_getChar();
     // Initializes the notePeriods with their respective values based on their letter names
     enum MusicalNote notes[3];
     unsigned long notePeriods[3] = { 0, 0, 0 };
