@@ -133,3 +133,12 @@ There is only one thing left on the bucket list is starting on creating the appl
 I forgot to update the journal, oops! Oh well, not a lot of interesting things happened during that period. It was mostly just me messing around with the board in class and trying to figure out if I can get onto something other than a
 breadboard because, quite honestly, a breadboard isn't a very permanent or visually appealing way to create my circuit. Other than that I've installed android studio and am watching a 4 hour tutorial on how to make an android application.
 So far, I've learned what views and layouts are, about attributes, a little bit about XML, and some stuff about buttons. Tomorrow will be more of the same.
+
+### June 9
+
+Today I burned myself while trying to unsolder the buzzer on the board. Not much else happened today. I'll try soldering on the big buzzer with some wires tomorrow.
+
+### June 10
+
+I wasn't able to unsolder the buzzer on my own so Mr. Lam ended up helping me (again). After that I haphazardly soldered the wires onto the buzzer and then onto the board. Tomorrow will be me continuing to try and learn android development and
+android studio.
