@@ -36,9 +36,9 @@ int main(void)
     {
         if (SW2 == 0) {
             // Indicates notes (temporary until application can be created)
-            chord.chordNotes[0] = C | O8;
-            chord.chordNotes[1] = E | O8;
-            chord.chordNotes[2] = G | O8;
+            chord.chordNotes[0] = C | O6;
+            chord.chordNotes[1] = E | O6;
+            chord.chordNotes[2] = G | O6;
             playNote(chord);
         }
 
