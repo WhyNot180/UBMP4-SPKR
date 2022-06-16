@@ -148,3 +148,8 @@ android studio.
 Not much happened during previous days, as I was working on projects in other classes. Today I discovered that the point at which notes start blending into each other because of the lack of an FPU is at G6. I also discovered that the 6th octave is
 optimal for making out individual notes in the c major chord. However, this may not be the case, as the sound from the initial chord is different from that which is supplied through bluetooth. In other words, the chord I hard-coded in sounds better than
 the values supplied through bluetooth, I am not sure as to why this is and will be working on a solution tomorrow. Other than that I was learning more about android development, in a few more days I may be able to begin making the android app :)
+
+### **June 15**
+
+Today was focused on android development. I think I have almost learned enough to start proper development on the application. I've looked into the android libraries for bluetooth low-energy and they look pretty straight forward to use. I'm just a little
+unsure if I can get everything finished in time for the showcase on the 24th. Well, time to find out later, right now I've got work to do!
