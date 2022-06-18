@@ -153,3 +153,8 @@ the values supplied through bluetooth, I am not sure as to why this is and will 
 
 Today was focused on android development. I think I have almost learned enough to start proper development on the application. I've looked into the android libraries for bluetooth low-energy and they look pretty straight forward to use. I'm just a little
 unsure if I can get everything finished in time for the showcase on the 24th. Well, time to find out later, right now I've got work to do!
+
+### **June 18**
+
+Today was completely focused on android development. I managed to get the app to request the required permissions for Bluetooth Low Energy (Bluetooth, coarse location, and fine location permissions). If it does not receive these permissions it will terminate,
+as the whole point is to use it with BLE and therefore it makes no sense to be unable to use it. I plan to add other functions for bluetooth tomorrow.
