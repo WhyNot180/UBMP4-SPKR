@@ -158,3 +158,8 @@ unsure if I can get everything finished in time for the showcase on the 24th. We
 
 Today was completely focused on android development. I managed to get the app to request the required permissions for Bluetooth Low Energy (Bluetooth, coarse location, and fine location permissions). If it does not receive these permissions it will terminate,
 as the whole point is to use it with BLE and therefore it makes no sense to be unable to use it. I plan to add other functions for bluetooth tomorrow.
+
+### **June 18**
+
+Much progress was made today. After much difficulty, I managed to fix the permission requests (which were broken) and get the addresses and names of nearby BLE devices. I initially thought that I needed both coarse and fine location permissions, but turns out
+that doing that breaks everything, probably because the fine location permission counts as both already. Anyways, tomorrow should be focused on connecting to the UBMP4 and then comes the dreaded ***DEBUGGING***.
