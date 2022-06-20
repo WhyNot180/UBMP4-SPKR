@@ -163,3 +163,8 @@ as the whole point is to use it with BLE and therefore it makes no sense to be u
 
 Much progress was made today. After much difficulty, I managed to fix the permission requests (which were broken) and get the addresses and names of nearby BLE devices. I initially thought that I needed both coarse and fine location permissions, but turns out
 that doing that breaks everything, probably because the fine location permission counts as both already. Anyways, tomorrow should be focused on connecting to the UBMP4 and then comes the dreaded ***DEBUGGING***.
+
+### **June 19**
+
+I have not fully completed the connection code. However, I believe most of the boiler plate is there and that part of the app should be ready for debugging tomorrow, then I can begin trying to send information to the actual bluetooth device, and finally I can begin
+reading from an external file which I hope to make the app able to parse and send the corresponding info to the board. I intend for the files to be similar to sheet music, except it will most likely include more letters rather than shapes.
