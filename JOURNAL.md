@@ -168,3 +168,8 @@ that doing that breaks everything, probably because the fine location permission
 
 I have not fully completed the connection code. However, I believe most of the boiler plate is there and that part of the app should be ready for debugging tomorrow, then I can begin trying to send information to the actual bluetooth device, and finally I can begin
 reading from an external file which I hope to make the app able to parse and send the corresponding info to the board. I intend for the files to be similar to sheet music, except it will most likely include more letters rather than shapes.
+
+### **June 20**
+
+I have gotten notifications from the HC-08 to work on my app! Now that all the setup is finished (finally...) I can work on the part that gets the values and sends them. I'm not sure if I'll get this done in time for the deadline, but it should be pretty darn close 
+to finished. Really, it might just be a day or two away from being finished, then again I do still have to debug it... Well, time to continue working tirelessly.
