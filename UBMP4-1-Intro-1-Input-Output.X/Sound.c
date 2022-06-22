@@ -12,13 +12,15 @@
 void receivePitchData(unsigned char sendHigh, unsigned char sendLow, unsigned long* truePeriod, unsigned long* pitch, unsigned long* waveForm, unsigned char silent, uint8_t effect) {
     unsigned long pitchData[2] = {0, 0};
     // asks for pitch info
-    TXREG = sendHigh;
-    while (!TRMT);
-    while (!RCIF);
+    while (!RCIF) {
+        TXREG = sendHigh;
+        while (!TRMT);
+    }
     pitchData[0] = bluetooth_getChar();
-    TXREG = sendLow;
-    while (!TRMT);
-    while (!RCIF);
+    while (!RCIF) {
+        TXREG = sendLow;
+        while (!TRMT);
+    }
     pitchData[1] = bluetooth_getChar();
     *truePeriod = PERIODGATE(silent, ((pitchData[0] << 8) | pitchData[1]), 1); // Stitches together the 8-bit data into a 16-bit int
     *pitch = *truePeriod;
@@ -27,9 +29,10 @@ void receivePitchData(unsigned char sendHigh, unsigned char sendLow, unsigned lo
 
 void receiveRhythmData(unsigned char send, unsigned char* coreRhythm, unsigned int* trueRhythm, unsigned char* silent, uint8_t* effect) {
     // asks for rhythm, silent, and effect info
-    TXREG = send;
-    while (!TRMT);
-    while (!RCIF);
+    while (!RCIF) {
+        TXREG = send;
+        while (!TRMT);
+    }
     char tempData = bluetooth_getChar();
     coreRhythm += (tempData & RHYTHM_MASK);
     *trueRhythm = *coreRhythm;
@@ -173,9 +176,10 @@ void playNote(void)
 
     // Initializes core rhythm lengths by asking for them from connected bluetooth device
     for (int i = 7; i != -1; i--) {
-        TXREG = i + 48; // sends numbers 7-1 in ascii
-        while (!TRMT); // Waits for TXREG to be empty
-        while (!RCIF); // Waits for RCREG to be not empty
+        while (!RCIF) {
+            TXREG = i + 48; // sends numbers 7-1 in ascii
+            while (!TRMT); // Waits for TXREG to be empty
+        } // Waits for RCREG to be not empty
         song.rhythmLengths[i] = bluetooth_getChar();
     }
     
@@ -189,9 +193,11 @@ void playNote(void)
     receivePitchData(101, 102, &song.periods[2], &throwAwayLong, &throwAwayLong, song.silents[2], 0);
 
     // Initializes the length of silence between notes
-    TXREG = 58; // sends ':' in ascii
-    while (!TRMT);
-    while (!RCIF);
+    
+    while (!RCIF) {
+        TXREG = 58; // sends ':' in ascii
+        while (!TRMT);
+    }
     song.silentRhythm = bluetooth_getChar();
 
     _makeSound(song);
