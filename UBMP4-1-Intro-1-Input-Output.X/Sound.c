@@ -78,6 +78,18 @@ void receivePitchData(unsigned char sendHigh, unsigned char sendLow, unsigned lo
     *pitch = *truePeriod;
     *waveForm = WAVEFORMGATE(silent, *truePeriod, effect);
 }
+
+void receiveRhythmData(unsigned char send, unsigned char* coreRhythm, unsigned char* trueRhythm, unsigned char* silent, uint8_t* effect) {
+    // asks for rhythm, silent, and effect info
+    TXREG = send; // sends 'Y' in ascii
+    while (!TRMT);
+    while (!RCIF);
+    char tempData = bluetooth_getChar();
+    coreRhythm += (tempData & RHYTHM_MASK);
+    *trueRhythm = *coreRhythm;
+    *effect = (tempData & EFFECT_MASK) >> 4;
+    *silent = tempData & (1 << 3);
+}
  
 void _makeSound(struct Song song)
 {
@@ -173,42 +185,18 @@ void _makeSound(struct Song song)
                 rhythms[0] = outputs[0][1] ? song.silentRhythm : trueRhythms[0];
                 outputs[0][1] ^= 1;
                 if (!outputs[0][1]) {
-                    // asks for rhythm, silent, and effect info
-                    TXREG = 88; // sends 'X' in ascii
-                    while (!TRMT);
-                    while (!RCIF);
-                    tempData = bluetooth_getChar();
-                    trueRhythms[0] = coreRhythms[tempData & RHYTHM_MASK];
-                    effects[0] = (tempData & EFFECT_MASK) >> 4;
-                    silents[0] = tempData & (1 << 3);
+
+                    receiveRhythmData(88, coreRhythms, &trueRhythms[0], &silents[0], &effects[0]);
 
                     receivePitchData(97, 98, &truePeriods[0], &pitch[0], &waveForms[0], silents[0], effects[0]);
-                    /*
-                    // asks for pitch info
-                    TXREG = 97; // sends 'a' in ascii
-                    while (!TRMT);
-                    while (!RCIF);
-                    pitchData[0] = bluetooth_getChar();
-                    TXREG = 98; // sends 'b' in ascii
-                    while (!TRMT);
-                    while (!RCIF);
-                    pitchData[1] = bluetooth_getChar();
-                    truePeriods[0] = PERIODGATE(silents[0], ((pitchData[0] << 8) | pitchData[1]), 1); // Stitches together the 8-bit data into a 16-bit int
-                    pitch[0] = truePeriods[0];
-                    waveForms[0] = WAVEFORMGATE(silents[0], truePeriods[0], effects[0]); */
                 }
             }
             if (rhythms[1]-- == 0) {
                 rhythms[1] = outputs[1][1] ? song.silentRhythm : trueRhythms[1];
                 outputs[1][1] ^= 1;
                 if (!outputs[1][1]) {
-                    TXREG = 89; // sends 'Y' in ascii
-                    while (!TRMT);
-                    while (!RCIF);
-                    tempData = bluetooth_getChar();
-                    trueRhythms[1] = coreRhythms[tempData & RHYTHM_MASK];
-                    effects[1] = (tempData & EFFECT_MASK) >> 4;
-                    silents[1] = tempData & (1 << 3);
+
+                    receiveRhythmData(89, coreRhythms, &trueRhythms[1], &silents[1], &effects[1]);
 
                     receivePitchData(99, 100, &truePeriods[1], &pitch[1], &waveForms[1], silents[1], effects[1]);
                 }
@@ -217,13 +205,8 @@ void _makeSound(struct Song song)
                 rhythms[2] = outputs[2][1] ? song.silentRhythm : trueRhythms[2];
                 outputs[2][1] ^= 1;
                 if (!outputs[2][1]) {
-                    TXREG = 90; // sends 'Z' in ascii
-                    while (!TRMT);
-                    while (!RCIF);
-                    tempData = bluetooth_getChar();
-                    trueRhythms[2] = coreRhythms[tempData & RHYTHM_MASK];
-                    effects[2] = (tempData & EFFECT_MASK) >> 4;
-                    silents[2] = tempData & (1 << 3);
+
+                    receiveRhythmData(90, coreRhythms, &trueRhythms[2], &silents[2], &effects[2]);
 
                     receivePitchData(101, 102, &truePeriods[2], &pitch[2], &waveForms[2], silents[2], effects[2]);
                 }
