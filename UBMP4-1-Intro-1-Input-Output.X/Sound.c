@@ -181,9 +181,9 @@ void playNote(void)
         song.rhythmLengths[i] = bluetooth_getChar();
     }
     
-    receiveRhythmData(88, &song.rhythmLengths, &song.firstRhythms[0], &song.silents[0], &song.firstEffects[0]);
-    receiveRhythmData(89, &song.rhythmLengths, &song.firstRhythms[1], &song.silents[1], &song.firstEffects[1]);
-    receiveRhythmData(90, &song.rhythmLengths, &song.firstRhythms[2], &song.silents[2], &song.firstEffects[2]);
+    receiveRhythmData(88, song.rhythmLengths, &song.firstRhythms[0], &song.silents[0], &song.firstEffects[0]);
+    receiveRhythmData(89, song.rhythmLengths, &song.firstRhythms[1], &song.silents[1], &song.firstEffects[1]);
+    receiveRhythmData(90, song.rhythmLengths, &song.firstRhythms[2], &song.silents[2], &song.firstEffects[2]);
 
     unsigned long throwAwayLong = 0;
     receivePitchData(97, 98, &song.periods[0], &throwAwayLong, &throwAwayLong, song.silents[0], 0);

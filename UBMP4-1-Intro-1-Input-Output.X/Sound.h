@@ -15,7 +15,7 @@ struct Song
     unsigned char rhythmLengths[8];
     unsigned char silentRhythm;
     unsigned char firstEffects[3];
-    unsigned char firstRhythms[3];
+    unsigned int firstRhythms[3];
 };
 
 /**
