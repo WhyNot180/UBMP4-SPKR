@@ -79,7 +79,7 @@ void receivePitchData(unsigned char sendHigh, unsigned char sendLow, unsigned lo
     *waveForm = WAVEFORMGATE(silent, *truePeriod, effect);
 }
 
-void receiveRhythmData(unsigned char send, unsigned char* coreRhythm, unsigned char* trueRhythm, unsigned char* silent, uint8_t* effect) {
+void receiveRhythmData(unsigned char send, unsigned char* coreRhythm, unsigned int* trueRhythm, unsigned char* silent, uint8_t* effect) {
     // asks for rhythm, silent, and effect info
     TXREG = send; // sends 'Y' in ascii
     while (!TRMT);
