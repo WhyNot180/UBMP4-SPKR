@@ -40,9 +40,7 @@ void receiveRhythmData(unsigned char send, unsigned char* coreRhythm, unsigned i
 void _makeSound(struct Song song)
 {
     // The full length periods of each note
-    unsigned long truePeriods[3] = { PERIODGATE(song.silents[0], song.periods[0], 1),
-        PERIODGATE(song.silents[1], song.periods[1], 1),
-        PERIODGATE(song.silents[2], song.periods[2], 1) };
+    unsigned long truePeriods[3] = { song.periods[0], song.periods[1], song.periods[2] };
 
     // The duty cycle of each note (e.g. if truePeriod[n] = 100 and firstEffects[n] = 4 then waveForms[n] = 6)
     unsigned long waveForms[3] = { WAVEFORMGATE(song.silents[0], truePeriods[0], song.firstEffects[0]),
