@@ -3,65 +3,11 @@
 #include    "stdbool.h"
 #include    "UBMP410.h"
 #include    "Sound.h"
- 
-#define MIN(x, y) x < y ? x : y
-#define MAX(x, y) x < y ? y : x
-#define TOTALNOTES (period == 0 ? 0 : 1) + (period2 == 0 ? 0 : 1) + (period3 == 0 ? 0 : 1)
-#define ISREST(x) x == Rest ? 1 : 0
 
 // x is whether it is silent or not, y is the period, z is the amount to bitshift
 #define PERIODGATE(x, y, z) !x ? y << z : 1
 #define WAVEFORMGATE(x, y, z) !x ? y >> z : 0
- 
- 
-unsigned long ipow(unsigned long base, unsigned char exp) {
-    unsigned long result = base;
-    for (unsigned char i = 1; i < exp; i++) {
-        result *= base;
-    }
-    return result;
-}
 
-unsigned char findOctave(enum Octave note) {
-    switch (note)
-    {
-    case O2:
-        return 2;
-    case O3:
-        return 3;
-    case O4:
-        return 4;
-    case O5:
-        return 5;
-    case O6:
-        return 6;
-    case O7:
-        return 7;
-    case O8:
-        return 8;
-    default:
-        return 1;
-    }
-}
- 
-#define CLOCK_FREQ 48000000
-unsigned long lowerNotePeriods[] = {
-    // These period values must align with the MusicalNote indexes
-    // Note frequency values attained from https://pages.mtu.edu/~suits/notefreqs.html
-    // The period is calculated by dividing the clock frequency the by note frequency
-    CLOCK_FREQ / 1635 * 100, // C
-    CLOCK_FREQ / 1732 * 100, // Cs
-    CLOCK_FREQ / 1835 * 100, // D
-    CLOCK_FREQ / 1945 * 100, // Ds
-    CLOCK_FREQ / 2060 * 100, // E
-    CLOCK_FREQ / 2183 * 100, // F
-    CLOCK_FREQ / 2312 * 100, // Fs
-    CLOCK_FREQ / 2450 * 100, // G
-    CLOCK_FREQ / 2596 * 100, // Gs
-    CLOCK_FREQ / 2750 * 100, // A
-    CLOCK_FREQ / 2914 * 100, // As
-    CLOCK_FREQ / 3087 * 100, // B
-};
 
 void receivePitchData(unsigned char sendHigh, unsigned char sendLow, unsigned long* truePeriod, unsigned long* pitch, unsigned long* waveForm, unsigned char silent, uint8_t effect) {
     unsigned long pitchData[2] = {0, 0};
@@ -94,14 +40,14 @@ void receiveRhythmData(unsigned char send, unsigned char* coreRhythm, unsigned i
 void _makeSound(struct Song song)
 {
     // The full length periods of each note
-    unsigned long truePeriods[3] = { PERIODGATE(song.silent1, song.periods[0], 1),
-        PERIODGATE(song.silent2, song.periods[1], 1),
-        PERIODGATE(song.silent3, song.periods[2], 1) };
+    unsigned long truePeriods[3] = { PERIODGATE(song.silents[0], song.periods[0], 1),
+        PERIODGATE(song.silents[1], song.periods[1], 1),
+        PERIODGATE(song.silents[2], song.periods[2], 1) };
 
     // The duty cycle of each note (e.g. if truePeriod[n] = 100 and firstEffects[n] = 4 then waveForms[n] = 6)
-    unsigned long waveForms[3] = { WAVEFORMGATE(song.silent1, truePeriods[0], song.firstEffects[0]),
-        WAVEFORMGATE(song.silent2, truePeriods[1], song.firstEffects[1]),
-        WAVEFORMGATE(song.silent3, truePeriods[2], song.firstEffects[2])};
+    unsigned long waveForms[3] = { WAVEFORMGATE(song.silents[0], truePeriods[0], song.firstEffects[0]),
+        WAVEFORMGATE(song.silents[1], truePeriods[1], song.firstEffects[1]),
+        WAVEFORMGATE(song.silents[2], truePeriods[2], song.firstEffects[2])};
 
     // Counters for the pitch of each note
     unsigned long pitch[3] = { truePeriods[0], truePeriods[1], truePeriods[2]};
@@ -123,7 +69,7 @@ void _makeSound(struct Song song)
     uint8_t effects[3] = { song.firstEffects, song.firstEffects, song.firstEffects };
 
     // 1 if note is rest else false
-    unsigned char silents[3] = { song.silent1, song.silent2, song.silent3 };
+    unsigned char silents[3] = { song.silents[0], song.silents[1], song.silents[2] };
 
     // FOSC / sample rate (48000000 / 220000)
     unsigned long masterCount = 218;
@@ -235,14 +181,14 @@ void playNote(void)
         song.rhythmLengths[i] = bluetooth_getChar();
     }
     
-    receiveRhythmData(88, &song.rhythmLengths, &song.firstRhythms[0], &song.silent1, &song.firstEffects[0]);
-    receiveRhythmData(89, &song.rhythmLengths, &song.firstRhythms[1], &song.silent2, &song.firstEffects[1]);
-    receiveRhythmData(90, &song.rhythmLengths, &song.firstRhythms[2], &song.silent3, &song.firstEffects[2]);
+    receiveRhythmData(88, &song.rhythmLengths, &song.firstRhythms[0], &song.silents[0], &song.firstEffects[0]);
+    receiveRhythmData(89, &song.rhythmLengths, &song.firstRhythms[1], &song.silents[1], &song.firstEffects[1]);
+    receiveRhythmData(90, &song.rhythmLengths, &song.firstRhythms[2], &song.silents[2], &song.firstEffects[2]);
 
     unsigned long throwAwayLong = 0;
-    receivePitchData(97, 98, &song.periods[0], &throwAwayLong, &throwAwayLong, song.silent1, 0);
-    receivePitchData(99, 100, &song.periods[1], &throwAwayLong, &throwAwayLong, song.silent2, 0);
-    receivePitchData(101, 102, &song.periods[2], &throwAwayLong, &throwAwayLong, song.silent3, 0);
+    receivePitchData(97, 98, &song.periods[0], &throwAwayLong, &throwAwayLong, song.silents[0], 0);
+    receivePitchData(99, 100, &song.periods[1], &throwAwayLong, &throwAwayLong, song.silents[1], 0);
+    receivePitchData(101, 102, &song.periods[2], &throwAwayLong, &throwAwayLong, song.silents[2], 0);
 
     // Initializes the length of silence between notes
     TXREG = 58; // sends ':' in ascii

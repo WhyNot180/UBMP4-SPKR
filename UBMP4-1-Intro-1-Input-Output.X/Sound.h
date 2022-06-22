@@ -11,9 +11,7 @@
 struct Song
 {
     unsigned long periods[3];
-    uint8_t silent1 : 1;
-    uint8_t silent2 : 1;
-    uint8_t silent3 : 1;
+    uint8_t silents[3];
     unsigned char rhythmLengths[8];
     unsigned char silentRhythm;
     unsigned char firstEffects[3];
