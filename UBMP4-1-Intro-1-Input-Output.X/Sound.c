@@ -66,11 +66,11 @@ unsigned long lowerNotePeriods[] = {
 void receivePitchData(unsigned char sendHigh, unsigned char sendLow, unsigned long* truePeriod, unsigned long* pitch, unsigned long* waveForm, unsigned char silent, uint8_t effect) {
     unsigned long pitchData[2] = {0, 0};
     // asks for pitch info
-    TXREG = sendHigh; // sends 'a' in ascii
+    TXREG = sendHigh;
     while (!TRMT);
     while (!RCIF);
     pitchData[0] = bluetooth_getChar();
-    TXREG = sendLow; // sends 'b' in ascii
+    TXREG = sendLow;
     while (!TRMT);
     while (!RCIF);
     pitchData[1] = bluetooth_getChar();
@@ -81,7 +81,7 @@ void receivePitchData(unsigned char sendHigh, unsigned char sendLow, unsigned lo
 
 void receiveRhythmData(unsigned char send, unsigned char* coreRhythm, unsigned int* trueRhythm, unsigned char* silent, uint8_t* effect) {
     // asks for rhythm, silent, and effect info
-    TXREG = send; // sends 'Y' in ascii
+    TXREG = send;
     while (!TRMT);
     while (!RCIF);
     char tempData = bluetooth_getChar();
@@ -216,7 +216,7 @@ void _makeSound(struct Song song)
     BEEPER = 0;
 }
  
-void playNote(struct Chord chord)
+void playNote(void)
 {
     while (!RCIF) {
         TXREG = 1;
@@ -224,33 +224,8 @@ void playNote(struct Chord chord)
     }
     __delay_ms(500);
     char throwAway = bluetooth_getChar();
-    // Initializes the notePeriods with their respective values based on their letter names
-    enum MusicalNote notes[3];
-    unsigned long notePeriods[3] = { 0, 0, 0 };
-    for (int i = 2; i != -1; i--) {
-        notes[i] = chord.chordNotes[i] & MUSICAL_NOTE_MASK;
-        switch (notes[i])
-        {
-        case Rest:
-            // It shouldn't matter what the period is, as long as the total cycles normalizes to the proper
-            // note length.  We just want the Rest to be silent for the correct length of time.
-            notePeriods[i] = CLOCK_FREQ / 62;
-            break;
-        default:
-            if (notes[i] <= B)
-                notePeriods[i] = lowerNotePeriods[notes[i]];
-            break;
-        }
-    }
 
     struct Song song;
-    
-    // We need to adjust the period by the octave (and a preferred scaling value)
-    // Also, we want the note to play for the precise length of time regardless of the period
-    // so we have to adjust the number of cycles by the period
-    for (int i = 2; i != -1; i--) {
-        song.periods[i] = notePeriods[i] / ipow(2, findOctave(chord.chordNotes[i] & OCTAVE_NOTE_MASK)) / PERIOD_SCALE;
-    }
 
     // Initializes core rhythm lengths by asking for them from connected bluetooth device
     for (int i = 7; i != -1; i--) {
@@ -259,29 +234,20 @@ void playNote(struct Chord chord)
         while (!RCIF); // Waits for RCREG to be not empty
         song.rhythmLengths[i] = bluetooth_getChar();
     }
+    
+    receiveRhythmData(88, &song.rhythmLengths, &song.firstRhythms[0], &song.silent1, &song.firstEffects[0]);
+    receiveRhythmData(89, &song.rhythmLengths, &song.firstRhythms[1], &song.silent2, &song.firstEffects[1]);
+    receiveRhythmData(90, &song.rhythmLengths, &song.firstRhythms[2], &song.silent3, &song.firstEffects[2]);
 
-    // Initializes effects and rhythms for the first note
-    for (int i = 2; i != -1; i--) {
-        TXREG = i + 65; // sends characters C-A in ascii
-        while (!TRMT)
-        while (!RCIF);
-        song.firstEffects[i] = bluetooth_getChar();
-
-        TXREG = i + 68; // sends characters F-D in ascii
-        while (!TRMT);
-        while (!RCIF);
-        song.firstRhythms[i] = bluetooth_getChar();
-    }
+    unsigned long throwAwayLong = 0;
+    receivePitchData(97, 98, &song.periods[0], &throwAwayLong, &throwAwayLong, song.silent1, 0);
+    receivePitchData(99, 100, &song.periods[1], &throwAwayLong, &throwAwayLong, song.silent2, 0);
+    receivePitchData(101, 102, &song.periods[2], &throwAwayLong, &throwAwayLong, song.silent3, 0);
 
     // Initializes the length of silence between notes
     TXREG = 58; // sends ':' in ascii
     while (!RCIF);
     song.silentRhythm = bluetooth_getChar();
-
-    // True (1) if note is a rest, otherwise false (0)
-    song.silent1 = ISREST(notes[0]);
-    song.silent2 = ISREST(notes[1]);
-    song.silent3 = ISREST(notes[2]);
 
     _makeSound(song);
 }

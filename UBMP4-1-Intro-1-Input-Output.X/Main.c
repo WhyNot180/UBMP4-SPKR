@@ -30,23 +30,11 @@ int main(void)
     OSC_config();               // Configure internal oscillator for 48 MHz
     UBMP4_config();             // Configure on-board UBMP4 I/O devices
     bluetooth_config();         // Configure EUSART for communicating with HC-08 bluetooth module
-    struct Chord chord;
     // Code in this while loop runs repeatedly.
     while(1)
     {
         if (SW2 == 0) {
-            // Indicates notes (temporary until application can be created)
-            chord.chordNotes[0] = C | O6;
-            chord.chordNotes[1] = E | O6;
-            chord.chordNotes[2] = G | O6;
-            playNote(chord);
-        }
-
-        if (SW4 == 0) {
-            chord.chordNotes[0] = C | O4;
-            chord.chordNotes[1] = Rest | O4;
-            chord.chordNotes[2] = Rest | O4;
-            playNote(chord);
+            playNote();
         }
 
         // Activate bootloader if SW1 is pressed.
