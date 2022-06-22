@@ -173,3 +173,8 @@ reading from an external file which I hope to make the app able to parse and sen
 
 I have gotten notifications from the HC-08 to work on my app! Now that all the setup is finished (finally...) I can work on the part that gets the values and sends them. I'm not sure if I'll get this done in time for the deadline, but it should be pretty darn close 
 to finished. Really, it might just be a day or two away from being finished, then again I do still have to debug it... Well, time to continue working tirelessly.
+
+### **June 21**
+
+I successfully managed to send values to and from the app and the UBMP4. I plan to set it up nicer tomorrow and make it not reliant on pre-set conditions. By this I mean that I used to automatically pass in a hard coded value for the first note, I am now removing this,
+as it is no longer needed for testing. Tomorrow will be focused on, first and foremost, updating my README file and other various clean up tasks, afterwards I shall finish it and try to possibly make it sound better.
