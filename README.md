@@ -1,14 +1,14 @@
-# UBMP4-Music-Player
+# **UBMP4-Music-Player**
 
-## What is this project about?
+## **What is this project about?**
 
 This is a project for the UBMP4, designed to play relatively complex music, created via Microchip's MPLAB Xpress IDE.
 
-## Who is this project for?
+## **Who is this project for?**
 
 This is a personal project, however, anyone who would like to use this code, or modify a copy, is welcome to do so.
 
-## Hardware
+## **Hardware**
 
 This project uses a UBMP4.1 with a few added changes:
 
@@ -21,13 +21,13 @@ Bread board schematic:
 
 ![](UBMP4-SPKRSchematic.png)
 
-## How to install
+## **How to install**
 
 This project can be cloned to MPLab and compiled, then it can be sent to the UBMP4 through the usb-c connection.
 
-The android app can be found here and is currently not on the app store and is currently designed to run through the use of android studio.
+The android app can be found at its github page and is currently not on the app store and is currently designed to run through the use of android studio.
 
-## Instructions
+## **Instructions**
 
 1. Give the UBMP4 power by connecting it to a 5 volt supply or by plugging a usb-c cable into the board and a 5 volt supply.
 2. Press button SW2.
@@ -36,7 +36,7 @@ The android app can be found here and is currently not on the app store and is c
 5. Press scan
 6. Tap the pause/resume button to pause/resume the music
 
-## Project limitations
+## **Project limitations**
 
 The UBMP4 uses a PIC16F1459 microcontroller, notable features include: 
 
@@ -47,7 +47,7 @@ The UBMP4 uses a PIC16F1459 microcontroller, notable features include:
 The UBMP4 has one built-in piezo buzzer, more can potentially be added, but in this project we will only be using the one.
 More information can be found at the [UBMP4 website](https://mirobo.tech/ubmp4) and [Microchip's site for the microcontroller](https://www.microchip.com/en-us/product/PIC16F1459)
 
-## Features
+## **Features**
 
 ### Sound creation
 
@@ -97,7 +97,7 @@ The UBMP4 sends a value to the BLE module through UART and the module sends it t
 
 More information can be found at the app's github.
 
-## The Future...
+## **The Future...**
 
 I originally planned to have more features in the app, such as the ability to read music off of a file (e.g. txt), however, do to time limitations I was unable to accomplish this. In the future I plan to add features such as those, and to continue
 to bug-fix the code. Perhaps I could even make it read midi or wav files. <html>&#129300;<html/>
