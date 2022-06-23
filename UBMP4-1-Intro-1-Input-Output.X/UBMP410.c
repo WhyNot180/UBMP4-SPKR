@@ -36,9 +36,9 @@ void UBMP4_config(void)
     WPUA = 0b00001000;          // Enable weak pull-up on SW1 input only
 
     LATB = 0b00000000;          // Clear Port B latches before configuring PORTB
-    TRISB = 0b11110000;         // Enable pushbutton pins as inputs (SW2-SW5)
+    TRISB = 0b01110000;         // Enable pushbutton pins as inputs (SW2-SW5)
     ANSELB = 0b00000000;        // Make all Port B pins digital
-    WPUB = 0b11110000;          // Enable weak pull-ups on pushbutton inputs
+    WPUB = 0b01010000;          // Enable weak pull-ups on pushbutton inputs (SW2 and SW4)
 
     LATC = 0b00000000;          // Clear Port C latches before configuring PORTC
     TRISC = 0b00001111;         // Set LED pins as outputs, H1-H4 pins as inputs
@@ -91,4 +91,41 @@ unsigned char ADC_read_channel(unsigned char channel)
         ;                       // Terminate the empty while loop
     ADON = 0;                   // Turn the A-D converter off
     return (ADRESH);            // Return the MSB (upper 8-bits) of the result
+}
+
+// Configure EUSART for HC-08 bluetooth module
+void bluetooth_config(void)
+{
+    SPBRGH = 4;                  // Sets baudrate to 9600
+    SPBRGL = 225;                  // Sets baudrate to 9600
+    BRGH = 1;                   // Sets high speed baudrate
+    BRG16 = 1;                  // Enables 16 bit baudrate 
+    SYNC = 0;                   // Sets to Asyncronous transmission
+    SPEN = 1;                   // Enables EUSART
+    TX9 = 0;                    // Enables 8-bit transmission
+    RX9 = 0;                    // Enables 8-bit recieving
+    GIE = 0;                    // Disables global interrupts
+    PEIE = 0;                   // Disables peripheral interrupts
+    TXIE = 0;                   // Disables interrupts on TX pin
+    RCIE = 0;                   // Disables interrupts on RX pin
+    TXEN = 1;                   // Enables transmission pin
+    CREN = 1;                   // Enables receiver pin
+}
+
+char bluetooth_getChar(void)
+{
+    // Checks for over-run error
+    if (OERR) {
+        CREN = 0;
+        CREN = 1; // Resets receiver pin
+    }
+
+    // If a char has been sent, return the char, otherwise return 0
+    if (RCIF == 1) {
+        while (!RCIF);
+        return RCREG;
+    }
+    else {
+        return 0;
+    }
 }

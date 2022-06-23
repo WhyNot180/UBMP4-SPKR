@@ -29,24 +29,12 @@ int main(void)
     // Configure oscillator and I/O ports. These functions run once at start-up.
     OSC_config();               // Configure internal oscillator for 48 MHz
     UBMP4_config();             // Configure on-board UBMP4 I/O devices
-   
+    bluetooth_config();         // Configure EUSART for communicating with HC-08 bluetooth module
     // Code in this while loop runs repeatedly.
     while(1)
     {
         if (SW2 == 0) {
-            playNote(C | QuarterNote | O4, E | QuarterNote | O4, G | QuarterNote | O4, C | QuarterNote | O4, E | QuarterNote | O4, G | QuarterNote | O4);
-        }
- 
-        if (SW3 == 0) {
-            playNote(Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, Rest | QuarterNote | O3, C | QuarterNote | O3);
-        }
-
-        if (SW4 == 0) {
-            playNote(E | QuarterNote | O3, E | QuarterNote | O3, E | QuarterNote | O3, E | QuarterNote | O3, E | QuarterNote | O3, E | QuarterNote | O3);
-        }
-
-        if (SW5 == 0) {
-            playNote(G | QuarterNote | O3, G | QuarterNote | O3, G | QuarterNote | O3, G | QuarterNote | O3, G | QuarterNote | O3, G | QuarterNote | O3);
+            playNote();
         }
 
         // Activate bootloader if SW1 is pressed.
