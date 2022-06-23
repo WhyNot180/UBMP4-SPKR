@@ -72,7 +72,7 @@ void _makeSound(struct Song song)
     // 1 if note is rest else false
     unsigned char silents[3] = { song.silents[0], song.silents[1], song.silents[2] };
 
-    // FOSC / sample rate (48000000 / 220000)
+    // FOSC / sample rate (48000000 / 2200000)
     unsigned long masterCount = 22;
 
     // Variable for storing rhythm and effect info from bluetooth
