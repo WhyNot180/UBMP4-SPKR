@@ -21,6 +21,14 @@ Bread board schematic:
 
 ![](UBMP4-SPKRSchematic.png)
 
+UBMP4:
+
+![](UBMP4.jpg)
+
+HC-08:
+
+![](HC-08.jpg)
+
 ## **How to install**
 
 This project can be cloned to MPLab and compiled, then it can be sent to the UBMP4 through the usb-c connection.
