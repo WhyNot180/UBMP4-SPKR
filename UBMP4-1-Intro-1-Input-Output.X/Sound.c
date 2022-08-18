@@ -8,6 +8,32 @@
 #define PERIODGATE(x, y, z) !x ? y << z : 1
 #define WAVEFORMGATE(x, y, z) !x ? y >> z : 0
 
+void __interrupt() test(void) {
+    if (RCIE && RCIF) {
+        
+        RCIE = 0;
+
+        //TODO: Add static global variables for arguments to allow access to them in the interrupt
+        if (bluetooth_getChar == 0) {
+            receiveRhythmData(88, coreRhythms, &trueRhythms[0], &silents[0], &effects[0]);
+            receivePitchData(97, 98, &truePeriods[0], &pitch[0], &waveForms[0], silents[0], effects[0]);
+        }
+
+        if (bluetooth_getChar == 1) {
+            receiveRhythmData(89, coreRhythms, &trueRhythms[1], &silents[1], &effects[1]);
+            receivePitchData(99, 100, &truePeriods[1], &pitch[1], &waveForms[1], silents[1], effects[1]);
+        }
+
+        if (bluetooth_getChar == 2) {
+            receiveRhythmData(90, coreRhythms, &trueRhythms[2], &silents[2], &effects[2]);
+            receivePitchData(101, 102, &truePeriods[2], &pitch[2], &waveForms[2], silents[2], effects[2]);
+        }
+
+        RCIE = 1;
+        RCIF = 0;
+    }
+    return;
+}
 
 void receivePitchData(unsigned char sendHigh, unsigned char sendLow, unsigned long* truePeriod, unsigned long* pitch, unsigned long* waveForm, unsigned char silent, uint8_t effect) {
     unsigned long pitchData[2] = {0, 0};
