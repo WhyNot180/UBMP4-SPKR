@@ -34,7 +34,7 @@ int main(void)
     while(1)
     {
         if (SW2 == 0) {
-            playNote();
+            _makeSound();
         }
 
         // Activate bootloader if SW1 is pressed.
