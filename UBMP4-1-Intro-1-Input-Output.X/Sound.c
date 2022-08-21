@@ -8,11 +8,14 @@
 #define PERIODGATE(y, z) y << z
 #define WAVEFORMGATE(y, z) y >> z
 
-static unsigned long truePeriods[3];
-static unsigned long waveForms[3];
-static unsigned long pitch[3];
+// The full length periods of each note
+static unsigned long truePeriods[3] = { 0, 0, 0 };
 
+// The duty cycle of each note (e.g. if truePeriod[n] = 100 and firstEffects[n] = 4 then waveForms[n] = 6)
+static unsigned long waveForms[3] = { 0, 0, 0 };
 
+// Counters for the pitch of each note
+static unsigned long pitch[3] = { 0, 0, 0 };
 
 void receivePitchData(unsigned char sendHigh, unsigned char sendLow, unsigned char sendEffect, unsigned long* truePeriod, unsigned long* pitch, unsigned long* waveForm) {
     unsigned long pitchData[2] = {0, 0};
@@ -42,7 +45,7 @@ void __interrupt() test(void) {
     if (RCIE && RCIF) {
         
         RCIE = 0;
-        unsigned char 
+
         //TODO: Add static global variables for arguments to allow access to them in the interrupt
         if (bluetooth_getChar() == 0) {
             receivePitchData(97, 98, 88, &truePeriods[0], &pitch[0], &waveForms[0]);
@@ -63,14 +66,6 @@ void __interrupt() test(void) {
 
 void _makeSound(void)
 {
-    // The full length periods of each note
-    truePeriods[3] = { 0, 0, 0 };
-
-    // The duty cycle of each note (e.g. if truePeriod[n] = 100 and firstEffects[n] = 4 then waveForms[n] = 6)
-    waveForms[3] = { 0, 0, 0 };
-
-    // Counters for the pitch of each note
-    pitch[3] = { 0, 0, 0 };
 
     // Output [n][0] is for pitch and effect domain and output [n][1] is for rhythm domain
     char outputs[3] = { 0, 0, 0 };
