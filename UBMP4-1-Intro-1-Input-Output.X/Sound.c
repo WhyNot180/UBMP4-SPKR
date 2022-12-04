@@ -17,22 +17,22 @@ static unsigned long waveForms[3] = { 0, 0, 0 };
 // Counters for the pitch of each note
 static unsigned long pitch[3] = { 0, 0, 0 };
 
-void receivePitchData(unsigned char sendHigh, unsigned char sendLow, unsigned char sendEffect, unsigned long* truePeriod, unsigned long* pitch, unsigned long* waveForm) {
+void receivePitchData(unsigned long* truePeriod, unsigned long* pitch, unsigned long* waveForm) {
     unsigned long pitchData[2] = {0, 0};
     // asks for rhythm, silent, and effect info
     while (!RCIF) {
-        TXREG = sendEffect;
+        TXREG = 0;
         while (!TRMT);
     }
     char effect = bluetooth_getChar();
     // asks for pitch info
     while (!RCIF) {
-        TXREG = sendHigh;
+        TXREG = 1;
         while (!TRMT);
     }
     pitchData[0] = bluetooth_getChar();
     while (!RCIF) {
-        TXREG = sendLow;
+        TXREG = 2;
         while (!TRMT);
     }
     pitchData[1] = bluetooth_getChar();
@@ -45,18 +45,17 @@ void __interrupt() test(void) {
     if (RCIE && RCIF) {
         
         RCIE = 0;
-
-        //TODO: Add static global variables for arguments to allow access to them in the interrupt
-        if (bluetooth_getChar() == 0) {
-            receivePitchData(97, 98, 88, &truePeriods[0], &pitch[0], &waveForms[0]);
+        char channel = bluetooth_getChar();
+        if (channel == 0) {
+            receivePitchData(&truePeriods[0], &pitch[0], &waveForms[0]);
         }
 
-        if (bluetooth_getChar() == 1) {
-            receivePitchData(99, 100, 89, &truePeriods[1], &pitch[1], &waveForms[1]);
+        if (channel == 1) {
+            receivePitchData(&truePeriods[1], &pitch[1], &waveForms[1]);
         }
 
-        if (bluetooth_getChar() == 2) {
-            receivePitchData(101, 102, 90, &truePeriods[2], &pitch[2], &waveForms[2]);
+        if (channel == 2) {
+            receivePitchData(&truePeriods[2], &pitch[2], &waveForms[2]);
         }
 
         RCIE = 1;

@@ -126,6 +126,6 @@ char bluetooth_getChar(void)
         return RCREG;
     }
     else {
-        return 0;
+        return -1;
     }
 }
