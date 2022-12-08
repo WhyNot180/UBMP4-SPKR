@@ -45,6 +45,7 @@ void __interrupt() test(void) {
     if (RCIE && RCIF) {
         
         RCIE = 0;
+        RCIF = 0;
         char channel = bluetooth_getChar();
         if (channel == 0) {
             receivePitchData(&truePeriods[0], &pitch[0], &waveForms[0]);
@@ -60,7 +61,6 @@ void __interrupt() test(void) {
 
         RCIE = 1;
     }
-    return;
 }
 
 void _makeSound(void)
@@ -71,7 +71,6 @@ void _makeSound(void)
 
     do {
         BEEPER = outputs[0];
-        LED3 = outputs[0];
         // Decrements pitch counter every cycle of the while loop and if it is less than the duty cycle (i.e 6.25%) then the output is one else it is 0
         if (pitch[0]-- == 0) {
             pitch[0] = truePeriods[0];
@@ -85,7 +84,6 @@ void _makeSound(void)
 
 
         BEEPER = outputs[1];
-        LED3 = outputs[1];
         if (pitch[1]-- == 0) {
             pitch[1] = truePeriods[1];
         }
@@ -97,7 +95,6 @@ void _makeSound(void)
         }
 
         BEEPER = outputs[2];
-        LED3 = outputs[2];
         if (pitch[2]-- == 0) {
             pitch[2] = truePeriods[2];
         }
